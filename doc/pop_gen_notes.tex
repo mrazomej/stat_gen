@@ -1,0 +1,48 @@
+% Preamble
+\input{./TeX_preamble.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Begin packages
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Commenting
+\newcommand{\manuelComment}[1]{\textcolor{ForestGreen}{(MR:~#1)}} % Commenting
+\newcommand{\robComment}[1]{\textcolor{red}{(RP:~#1)}} % Commenting
+
+% To bold the first sentence of every figure caption
+\newcommand{\captionStroke}[1]{\textbf{#1}}
+
+% To define more useful LaTeX commands
+\usepackage{xparse}
+
+% Equation referencing
+\DeclareDocumentCommand \eref{oooo}
+{\IfNoValueTF{#2}{Eq.~(\ref{#1})}{\IfNoValueTF{#3}{Eqs.~(\ref{#1}) and
+(\ref{#2})}{\IfNoValueTF{#4}{Eqs.~(\ref{#1})-(\ref{#3})}{Eqs.~(\ref{#1})-(\ref{#4})}}}}
+
+% Figure referencing
+\DeclareDocumentCommand \fref{ooo}
+{\IfNoValueTF{#2}{Fig.~\ref{#1}}{\IfNoValueTF{#3}{Figs.~\ref{#1} and
+\ref{#2}}{Figs.~\ref{#1}-\ref{#3}}}}
+
+% Letters for figure sub-parts
+\newcommand{\letter}[1]{#1} % For main text. Ex: As shown in Fig. 12A
+\newcommand{\letterParen}[1]{(#1)} % For captions. Ex: (A) Low limit and (B) high limit
+
+%% Macros for faster typing of variables
+\newcommand{\Nns}{N_{NS}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Begin document
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title{\textbf{Notes on population genetics}}
+\author{Manuel Razo and Rob Phillips}
+%\date{\today}
+
+\begin{document}
+\maketitle
+	\input{Lassig_2007}
+
+	% Bibliography
+	\bibliography{library}
+
+\end{document}
