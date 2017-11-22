@@ -294,3 +294,150 @@ This Bayesian model can again be projected onto energies
 	\caption{fig3}
   \label{fig_bayesian_dna}
 \end{figure}
+
+\subsection{Evolution of regulatory DNA.}
+
+In this section of the paper Lassig explores the application of population
+genetics ideas to the evolution of regulatory sequences. In principle the
+statistical picture developed so far lacks two things:
+\begin{enumerate}
+  \item the specific functionality that binding provides to the transcription
+  factor, since the PWM formalism doesn't care about the functionality of
+  binding
+  \item The sense of time and dynamics as dictated by the evolutionary history
+  of these sequences. It is important to highlight that functional loci evolve
+  fundamentally different from background sequences since these functional loci
+  are subject to natural selection.
+\end{enumerate}
+It is therefore why at this point we will integrate the biophysics of binding
+with the evolution of functional sequences.
+
+\subsubsection{Deterministic population dynamics and fitness.}
+
+Let us begin with a deterministic approach. We will be describing the evolution
+of a population with different genotypes for the binding sequence. We assume
+that the relevant phenotype is the binding energy for which we can use the PWM
+approach to map form genotype to phenotype. For our discussion we will imagine
+a population of asexual organisms in which recombination is non-existent.
+The dynamics of this population can be written as
+\begin{equation}
+  \dt{N_\bb{a}(t)} = F_\bb{a}(t) \cdot N_\bb{a}(t),
+\end{equation}
+where $F_\bb{a}(t)$ is the Malthusian fitness for sequence $\bb{a}$ at time $t$.
+For simplicity let's focus on two genotypes: $\bb{a} = (a_1, a_2, \ldots, a_l)$
+and $\bb{b} = (b_1, b_2, \ldots, b_l)$. We can write a similar equation for
+genotype $\bb{b}$. The total number of organisms at any time is then given by
+\begin{equation}
+  N_\tot(t) \equiv N_\bb{a}(t) + N_\bb{b}(t).
+\end{equation}
+Let's assume we are interested in tracking the relative abundance of $\bb{b}$.
+We then define $x(t) \equiv {N_\bb{b}(t) \over N_\tot(t)}$. We can write the
+dynamics for both $N_\tot(t)$ and $x(t)$ as
+\begin{align}
+\dt{N_\tot} &= \bar{F} N_\tot(t),\\
+&= F_\bb{a}(t) N_\bb{a}(t) + F_\bb{b}(t) N_\bb{b}(t),\\
+&= N_\tot(t) \left[ F_\bb{a}(t) (1 - x(t)) + F_\bb{b} x(t) \right],
+\end{align}
+and
+\begin{equation}
+  \dt{x} = {d \over dt} \left( {N_\bb{b}(t) \over N_\tot(t)} \right)
+  = {\dot{N}_\bb{b}(t) N_\tot(t) - N_\bb{b}(t) \dot{N}_\tot(t) \over
+     N_\tot(t)^2},
+\end{equation}
+where $\dot{f} \equiv df/dt$. If we substitute the equations for the time
+derivatives of the number of organisms we have
+\begin{equation}
+  \dt{x} = {F_\bb{b}(t) N_\bb{b}(t) N_\tot(t) \over N_\tot(t)^2} -
+  {N_\bb{b}(t) \left[ F_\bb{a}(t)N_\bb{a}(t) + F_\bb{b}(t)N_\bb{b}(t) \right]
+  \over N_\tot(t)^2}.
+\end{equation}
+This can be further simplified to
+\begin{align}
+  \dt{x} &= F_\bb{b}(t) \overbrace{N_\bb{b}(t) \over N_\tot(t)}^{x(t)} -
+  \overbrace{N_\bb{b}(t) \over N_\tot(t)}^{x(t)}
+  \left[ F_\bb{a}(t) (1 - x(t)) + F_\bb{b}(t) x(t) \right],\\
+  &= x(t) \left[ F_\bb{b}(t) (1 - x(t)) - F_\bb{a}(t) (1 - x(t)) \right].
+\end{align}
+
+Therefore the time derivative of the relative abundance of the genotype $\bb{b}$
+can be simply written as
+\begin{equation}
+  \dt{x} = \DF(t) x(t) (1 - x(t)),
+\end{equation}
+where $\DF \equiv F_\bb{b}(t) - F_\bb{a}(t)$.
+
+If we assume $\DF(t)$ to be independent of time we can solve $\dot x(t)$ as
+\begin{equation}
+  \dt{x} = \DF x(t) (1 - x(t)) = \DF \left( x(t) - x(t)^2 \right),
+\end{equation}
+which is a first order linear differential equation that can be solved by the
+method of separation of variables as
+\begin{equation}
+  \int {dx \over x (1 - x)} = \DF \int dt.
+\end{equation}
+Focusing on the left-hand side we can use partial fraction decomposition as
+\begin{equation}
+  {A \over x} + {B \over 1 - x} = {1 \over x (1 - x)}.
+\end{equation}
+This implies that for $x = 1$, $B = 1$ and for $x = 0$, $A = 1$. Therefore the
+integral can be rewritten as
+\begin{equation}
+  \int {dx \over x (1 - x)} = \int {dx \over x} + \int {dx \over 1 - x}
+  = \ln x - \ln (1 - x) + C.
+\end{equation}
+
+Therefore we have that
+\begin{equation}
+  \ln \left( {x \over 1 - x} \right) = \DF t + C.
+\end{equation}
+To remove the integration constant we can specify the initial condition
+$x(0) = x_o$. With this we find that $C = \ln (x_o / 1 - x_o)$. Substituting
+this and exponentiating both sides of the equation gives
+\begin{equation}
+  {x \over 1 - x} = e^{\DF t} \left( {x_o \over 1 - x_o } \right).
+\end{equation}
+Solving for $x$ we find
+\begin{align}
+  &x = e^{\DF t} \left( {x_o} \over 1 - x_o \right)(1 - x),\\
+  \Rightarrow &x \left[ 1 + e^{\DF t} \left( {x_o} \over 1 - x_o \right) \right]
+  = e^{\DF t} \left( {x_o \over 1 - x_o} \right),\\
+  \Rightarrow &x \left[ 1 - x_o + e^{\DF t} x_o \right] = e^{\DF t} x_o.
+\end{align}
+Therefore the dynamics of the relative abundance of genotype $\bb{b}$ are given
+by
+\begin{equation}
+  x(t) = {e^{\DF t} x_o \over 1 + x_o \left( e^{\DF t} - 1 \right)}.
+\end{equation}
+
+Given the equation for $\dot{x}(t)$ we can say something about the dynamics and
+the stable points. Since we have that
+\begin{equation}
+  \dt{x} = \DF (x(t) - x(t)^2),
+\end{equation}
+we can plot the linear and the quadratic term to see the stable points as shown
+in \fref[fig_phase_portrait]. For $\DF > 0$ we have two stable points, one
+attractor at $x = 1$ and one repeller at $x = 0$. The opposite is true for the
+case where $\DF < 0$. Finally from the equation we can see that the approach to
+stationary phase takes a characteristic time of order $\tau \sim {1 \over \DF}$.
+
+\begin{figure}[h!]
+	\centering \includegraphics[scale=0.5]{../fig/lassig_2007/phase_portrait.png}
+	\caption{fig3}
+  \label{fig_phase_portrait}
+\end{figure}
+
+This is not other than a simple version of Fisher's fundamental theorem of
+natural selection: Any population with initially coexisting phenotype of
+different fitness will evolve towards a state in which only the fittest
+phenotype is present. There is a very interesting paragraph on Lassig's paper
+related to my ideas and projects. So it is worth quoting it here:
+{\it Fisher's theorem seems to prove the popularized Darwinian notion of the
+"survival of the fittest". However, it rests on very restrictive assumptions
+that are never fulfilled in a natural population. The deterministic growth law
+(32) neglects mutations and recombinations, as well as the reproductive
+fluctuations present in any population due to its finite number of individuals.
+These other evolutionary forces have to be incorporated in our theoretical
+picture before we can even define fitness as a measurable quantity and before
+the theory can address the important case of neutral evolution.}
+
+\subsubsection{Stochastic dynamics and genetic drift.}
