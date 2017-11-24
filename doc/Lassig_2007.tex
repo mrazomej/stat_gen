@@ -441,3 +441,369 @@ picture before we can even define fitness as a measurable quantity and before
 the theory can address the important case of neutral evolution.}
 
 \subsubsection{Stochastic dynamics and genetic drift.}
+
+Using the stochastic processes formalism we will now incoorporate random
+fluctuations in reproductive success of our modeled population. With a Langevin
+dynamics framework we can write the growth law as
+\begin{equation}
+  \dt{N_\bb{a}} = F_\bb{a}(t) N_\bb{a}(t) + \chi_\bb{a}(t),
+\end{equation}
+where $\chi_\bb{a}(t)$ is the noise term in the growth. To make analytical
+progress we define $\chi_\bb{a}$ to be Gaussian distributed with mean
+\begin{equation}
+  \moment{\chi_\bb{a}} = 0.
+\end{equation}
+The correlation function $\moment{\chi_\bb{a}(t) \chi_\bb{b}(t)}$ between
+genotypes $\bb{a}$ and $\bb{b}$ is set to be
+\begin{equation}
+  \moment{\chi_\bb{a}(t) \chi_\bb{b}(t)} = N_\bb{a}(t)
+                                           \delta(t - t') \delta_\bb{ab}.
+\end{equation}
+What this equation says is first of all that all genotypes noise is independent
+of other genotypes via the delta function $\delta_\bb{ab}$ which is equal to one
+if and only if $\bb{a} = \bb{b}$. Second of all this equation tells us that the
+noise is completely uncorrelated over time; this is set by the delta function
+$\delta(t - t')$ which is one only if $t' = t$. What that implies is that the
+function will only be non-zero when evaluated as
+\begin{equation}
+  \moment{\chi_\bb{a}(t) \chi_\bb{a}(t)} = \moment{\chi_\bb{a}(t)^2} = N_\bb{a}.
+\end{equation}
+Since $\moment{\chi_\bb{a}(t)} = 0$, $\moment{\chi_\bb{a}(t)}^2$ is the variance
+of the random noise which is set to be $N_\bb{a}(t)$ as for a Poisson process.
+Note that formally $N_\bb{a}(t)$ must be interpreted as the {\it effective
+population size} rather than the absolute population size.
+
+If we project this stochastic growth to population fraction we find just as
+before
+\begin{equation}
+  \dt{x} = \dt{}\left( {N_\bb{b}(t) \over N_\tot(t)} \right) =
+  {\dot{N}_\bb{b}(t) N_\tot(t) - N_\bb{b}(t) \dot{N}_\tot(t) \over
+     N_\tot(t)^2}.
+\end{equation}
+
+Substituting the definition of the time derivatives we find
+\begin{equation}
+  \dt{x} = {\left[ F_\bb{b}(t) N_\bb{b}(t) + \chi_\bb{b}(t)  \right] N_\tot(t)
+  \over N_\tot(t)^2} -
+  {N_\bb{b}(t)
+  \left[ F_\bb{b}(t) N_\bb{b}(t) + \chi_\bb{b}(t) +
+         F_\bb{a}(t) N_\bb{a}(t) + \chi_\bb{a}(t)\right] \over N_\tot(t)^2}.
+\end{equation}
+We now divide each term by $N_\tot(t)^2$, obtaining
+\begin{equation}
+  \dt{x} = F_\bb{b}(t)x(t) + {\chi_\bb{b}(t) \over N_\tot(t)} -
+  x(t) \left[ F_\bb{b}(t)x(t) + {\chi_\bb{b}(t) \over N_\tot(t)} +
+              F_\bb{a}(t)(1 - x(t)) + {\chi_\bb{a}(t) \over N_\tot(t)} \right].
+\end{equation}
+We can then factorize terms to obtain
+\begin{equation}
+  \dt{x} = \DF(t) x(t) (1 - x(t)) + {1 \over N_\tot(t)}
+  \left( \chi_\bb{b}(t)(1 - x(t)) - \chi_\bb{a}(t) x(t) \right).
+\end{equation}
+
+We can cleverly transform the last terms if we note that
+\begin{align}
+  {\partial x \over \partial N_\bb{b}} &= {\partial \over \partial N_\bb{b}}
+  \left( {N_\bb{b} \over N_\tot} \right), \\
+  &= {1 \over N_\tot^2} \left[ 1 \cdot N_\tot - N_\bb{b} \cdot 1 \right],\\
+  &= {1 \over N_\tot}(1 - x).
+\end{align}
+And similarly
+\begin{align}
+  {\partial x \over \partial N_\bb{a}} &= {\partial \over \partial N_\bb{a}}
+  \left( {N_\bb{b} \over N_\tot} \right), \\
+  &= {0 \over N_\tot^2} \left[ 1 \cdot N_\tot - N_\bb{b} \cdot 1 \right],\\
+  &= - {x \over N_\tot}.
+\end{align}
+With this we can rewrite $\dot{x}(t)$ as
+\begin{equation}
+  \dt{x} = \DF(t) x(t) (1 - x(t)) + \overbrace{
+  {\partial x \over \partial N_\bb{b}} \chi_\bb{b}(t) +
+  {\partial x \over \partial N_\bb{a}} \chi_\bb{a}(t)
+  }^{\chi_x(t)}.
+\end{equation}
+Since our definition of $\chi_x(t)$ involves a sum of Gaussian random variables
+we know that $\chi_x(t)$ is Gaussian distributed itself. We can use two rules
+about adding Gaussian random variables: If we add two Gaussian random variables
+with mean $\mu_1$ and $\mu_2$ and variance $\sigma_1^2$ and $\sigma_2^2$, the
+sum of these variables gives a variable of the form
+\begin{equation}
+  X_1 + X_2 \sim \mathcal{N}\left( \mu_1 + \mu_2,
+                                   \sigma_1^2 + \sigma_2^2 \right).
+\end{equation}
+Also a linear transformation of a Gaussian random variable gives
+\begin{equation}
+  a + b \mathcal{N} \left( \mu, \sigma^2 \right) =
+  \mathcal{N}(a + b \mu, b^2 \sigma^2).
+\end{equation}
+
+Using these rules we have that
+\begin{align}
+{(1 - x(t)) \over N_\tot(t)} \cdot \chi_\bb{b}(t) &=
+{(1 - x(t)) \over N_\tot(t)} \cdot \mathcal{N}(0, N_\bb{b}(t)),\\
+&= \mathcal{N}\left( 0, {(1 - x(t))^2 \over N_\tot(t)^2} N_\bb{b}(t) \right),\\
+&= \mathcal{N}\left( 0, {(1 - x(t))^2 x(t) \over N_\tot(t)} \right).
+\end{align}
+Also
+\begin{align}
+  -{x(t) \over N_\tot(t)} \chi_\bb{a}(t) &=
+  -{x(t) \over N_\tot(t)} \mathcal{N}\left( 0, N_\bb{a}(t) \right),\\
+&= \mathcal{N}\left( 0, {x(t)^2 \over N_\tot(t)^2} N_\bb{a}(t) \right),\\
+&= \mathcal{N}\left( 0, {x(t)^2 (1 - x(t)) \over N_\tot(t)} \right).
+\end{align}
+
+Since $\chi_x(t)$ is given by the sum of these random variables we have that
+\begin{equation}
+  \chi_x(t) \sim \mathcal{N}\left(0,  {(1 - x(t))^2 x(t) \over N_\tot(t)} +
+   {x(t)^2 (1 - x(t)) \over N_\tot(t)} \right).
+\end{equation}
+
+Simplifying the variance we have
+\begin{align}
+  {(1 - x(t))^2 x(t) \over N_\tot(t)} + {x(t)^2 (1 - x(t)) \over N_\tot(t)} &=
+  {x(t) - 2 x(t)^2 + x(t)^3 + x(t)^2 - x(t)^3 \over N_\tot(t)},\\
+  &= {x(t) - x(t)^2 \over N_\tot(t)}, \\
+  &= {x(t) (1 - x(t)) \over N_\tot(t)}.
+\end{align}
+Therefore $\chi_x$ is distributed as
+\begin{equation}
+  \chi_x(t) \sim \mathcal{N} \left( 0, {x(t) (1 - x(t)) \over N_\tot(t)}
+  \right).
+\end{equation}
+This can be written in terms of the autocorrelation function as
+\begin{equation}
+  \moment{\chi_x(t) \chi_x(t')} = {x(1 - x) \over N_\tot} \delta(t - t'),
+\end{equation}
+where all we are saying is that the fractional noise $\chi_x$ is completely
+random and is not correlated in time with itself.
+
+\subsubsection{From Langevin dynamics to Fokker-Planck equations.}
+
+\manuelComment{In a single statement with no derivation Lassig uses the
+Langevin equation for the genotype fraction to derive a corresponding Fokker-
+Planck equation. This is far from trivial and the derivation requires some
+heavy machinery.}
+The full derivation of the connection between Langevin dynamics and Fokker-
+Planck formulation will be left for a separate set of notes \manuelComment(to
+be written later on). for our purpose it suffices to say that from a Langevin
+equation of the form
+\begin{equation}
+  \dt{x} = A(x, t) + B(x, t) \xi(t),
+\end{equation}
+where $A(x, t)$ is known as the drift or directional term and $B(x, t)$ is the
+stochastic coefficient of the diffusion random term $\xi(t)$ with properties
+\begin{equation}
+  \moment{\xi(t)} = 0,
+\end{equation}
+and
+\begin{equation}
+  \moment{\xi(t) \xi(t')} = 2D \delta(t - t'),
+\end{equation}
+we have a corresponding Fokker-Planck equation of the form
+\begin{equation}
+  {\partial P \over \partial t} = - {\partial \over \partial x}
+  \left\{ \left[ A(x, t) + D B(x, t) {\partial B(x, t) \over \partial x}
+  \right] P \right\} +
+  D {\partial^2 \over \partial x^2} \left\{ \left[ B(x, t)^2 \right] P \right\}.
+\end{equation}
+
+Let's now find the corresponding terms in our equation. We have that the
+directional or drift term is given by
+\begin{equation}
+  A(x, t) = \DF(t) x(t) (1 - x(t)).
+\end{equation}
+For the diffusion term $\chi_x \sim \mathcal{N} \left( 0, x(1-x)/N_\tot \right)$
+we will redefine it to be
+\begin{equation}
+  \chi_x = \left[ {x (1 - x) \over N_\tot} \right]^{1/2} \xi_x,
+\end{equation}
+where $\xi_x \sim \mathcal{N}(0, 1)$, so that the $x$ dependence of the variance
+is sent to the $B(x, t)$ coefficient. With this we then have that
+\begin{equation}
+  B(x, t) = \left[ {x (1 - x) \over N_\tot} \right]^{1/2}.
+\end{equation}
+For simplicity from now on we won't make the time dependence explicit, such that
+$x \equiv x(t)$, also we will simply write $N \equiv N_\tot(t)$.
+
+Since we have $\moment{\xi_x(t) \xi_x(t't)} = \delta(t - t')$, it must be the
+case that $D \equiv {1 \over 2}$. Let's now try to build the Fokker-Planck
+equation
+\begin{equation}
+  {\partial P \over \partial t} = - {\partial \over \partial x}
+  \left\{ \left[ \DF x (1 - x) +
+  \textcolor{purple}{{1 \over 2} \left( {x (1 - x) \over N} \right)^{1/2}
+  {\partial \over \partial x} \left( x (1 - x) \over N \right)^{1/2}}
+  \right] P \right\} +
+  {1 \over 2} {\partial^2 \over \partial x^2} \left[ {x (1 - x) \over N} P
+  \right].
+\end{equation}
+
+This result is almost directly Lassig's and more correctly Kimura's formulation
+of diffusion theory except for the second term highlighted in
+\textcolor{purple}{red}. This term represents the {\it noise-induced drift} term
+that I have personally never seen before. Let's epxlore this term a little bit
+further by taking the derivative
+\begin{align}
+  -{\partial \over \partial x} \left\{ {1 \over 2}
+  \left( {x (1 - x) \over N} \right)^{1/2}
+  {\partial \over \partial x} \left( {x (1 - x) \over N} \right)^{1/2} P
+  \right\} &=
+  - {1 \over 2 N} {\partial \over \partial x} \left\{ [x (1 - x)]^{1/2}
+  \left[ {1 \over 2} {{(1 - x) - x} \over [x (1 - x)]^{1/2}} \right] P
+  \right\},\\
+  &= -{1 \over 4 N} {\partial \over \partial x}\left\{ (1 - 2 x) P \right\}.
+\end{align}
+\manuelComment{I find this term quite interesting. My interpretation is the
+following: The diffusion term ${1\over 2} \partial_{xx} x (1 - x) P$ has "no
+sense of direction." The magnitude of the jump depends on where are you standing
+on the real line, but it is equally likely to jump left or right. This can be
+clearly seen if one takes the "spread the butter" approach. There is easy to
+note that indeed the magnitude of the jump depends on where are you standing
+in frequency space, but the magnitude applies to both directions left and right.
+In the case of this directional term $- {1 \over 2} \partial x (1 - 2x) P$
+breaks the symmetry of these jumps. The closer you get to 1 or 0, the more you
+jump towards that direction. That is why at $x = {1 \over 2}$ this term
+vanishes.}
+
+The two versions of the Fokker-Planck equation are then:
+\paragraph{Lassig / Kimura}
+\begin{equation}
+  {\partial P \over \partial t} = {1 \over 2N}
+  {\partial^2 \over \partial x^2} \left[ x (1 - x) P \right] -
+  \DF {\partial \over \partial x} \left[ x (1 - x)  \right]
+\end{equation}
+
+\paragraph{Complete equation}
+\begin{equation}
+  {\partial P \over \partial t} = {1 \over 2N}
+  {\partial^2 \over \partial x^2} \left[ x (1 - x) P \right] -
+  \DF {\partial \over \partial x} \left[ x (1 - x)  \right] -
+  {1 \over 4N} {\partial \over \partial x} \left[ (1 - 2x) P \right].
+\end{equation}
+
+The steady-state solution of this Fokker-Planck equation is fo the form
+\begin{equation}
+  P(x) = {C \over V(x)} \exp \left\{ 2 \int dx {M(x) \over V(x)} \right\},
+\end{equation}
+where $M(x)$ includes all directional processes and $V(x)$ captures all
+diffusive processes. For our specific equation we have
+\begin{equation}
+  M(x) = \DF x (1 - x) + \overbrace{{1 \over 4N} (1 - 2x)}^
+  {\text{extra term from the noise-induced drift}},
+\end{equation}
+and
+\begin{equation}
+  V(x) = {1 \over N} x (1 - x).
+\end{equation}
+
+This means that the integral in the steady state solution takes the form
+\begin{equation}
+  \int dx {M(x) \over V(x)} = \int dx \left[ {N \over} \right]
+  \left( \DF x (1 - x) + {1 \over 4N} (1 - 2x) \right).
+\end{equation}
+Solving this integral gives
+\begin{align}
+  \int dx {M(x) \over V(x)} &= \int dx N \DF +
+  {1 \over 4} \int dx {(1 - 2x) \over x (1 - x)}, \\
+  &= N \DF x + {1 \over 4} \ln \left[ x ( 1 - x) \right].
+\end{align}
+
+Substituting this into the steady state distribution we have
+\begin{equation}
+  P(x) \propto {N \over x (1 - x)} \exp \left\{ 2N \DF x +
+  {1 \over 4} \ln[x (1 - x)] \right\}.
+\end{equation}
+
+\manuelComment{The last term ${1 \over 4} \ln[x (1 - x)]$ is the one that comes
+from the noise- induced drift and is usually not found in other derivations. It
+is worth exploring later on the consequences of this term.}
+
+This Fokker-Planck equation has two absorbing boundaries at $x = \{0, 1 \}$. All
+trajectories of our Langevin dynamics will eventually lead to one of these
+boundaries with probability 1. That means that there is a family of stationary
+states
+\begin{equation}
+  P(x) = \overbrace{(1 - \phi) \delta(x)}^{\text{fixation at }x=0} +
+         \overbrace{\phi \delta(1 - x)}^{\text{fixation at }x=1},
+\end{equation}
+where $\phi$ is the fixation probability of genotype $\bb{b}$. The value of
+$\phi$ depends on the initial conditions $x_o, t_o$ and it can be computed by
+solving the ``backwards diffusion equation'' also known as the Kolmogorov
+reverse equation. \manuelComment{The derivation of this equation will be later
+type into my Diffusion Theory notes}. The general form of the Kolmogorov reverse
+equation is given by
+\begin{equation}
+  {\partial P(x, t \mid x_o, t_o) \over \partial t} =
+  M(x_o) {\partial P(x, t \mid x_o, t_o) \over \partial x} +
+  {V(x_o) \over 2} {\partial^2 P(x, t \mid x_o, t_o) \over \partial x^2},
+\end{equation}
+where $M(x_o)$ and $V(x_o)$ correspond to the directional/drift and the
+diffusion coefficients, respectively, evaluated at the starting frequency $x_o$.
+For our particular case we have
+\begin{equation}
+  M(x_o) = \DF x_o (1 - x_o) + \overbrace{{1 \over 4N} (1 - 2x_o)}^
+  {\text{extra noise-induced drift}},
+\end{equation}
+and
+\begin{equation}
+  V(x_o) = {x_o (1 - x_o) \over N}.
+\end{equation}
+
+The solution for the equilibrium distribution for this equation is given by
+\begin{equation}
+  {\partial P(x, t \mid x_o, t_o) \over \partial x_o} =
+  C \exp \left\{ -2 \int_0^{x_o} dx {M(x) \over V(x)} \right\},
+\end{equation}
+where $C$ serves as the normalization constant. This means that
+\begin{equation}
+  C = \left[ \int_0^1 dx_o'
+      \exp \left\{ -2 \int_0^{x_o} dx {M(x) \over V(x)} \right\} \right]^{-1}
+\end{equation}
+
+Let's focus on the integral inside the exponent.
+\manuelComment{Following Lassig, Kimura \& Rice I will ignore for now the
+noise-induced drift term. But it is a very interesting term that I need to come
+back at some point}.
+\begin{equation}
+  \int_o^{x_o'} dx {M(x) \over V(x)} =
+  \int_o^{x_o'} dx {N \over x (1 - x) \DF x(1 - x)} =
+  \left. N \DF x \right\rvert_0^{x_o'} = N \DF x_o'.
+\end{equation}
+
+With this result in hand we have
+\begin{equation}
+  \phi(x_o, \DF, N) = { \int_0^{x_o} dx_o' \exp \left\{ -2 N \DF x_o'  \right\}
+  \over
+  \int_0^1 dx_o' \exp \left\{ -2 N \DF x_o'  \right\}.}
+\end{equation}
+
+Solving these integrals we find
+\begin{align}
+\phi(x_o, \DF, N) &= \left. {e^{-2 N \DF x} \over -2 N \DF}\right\rvert_0^{x_o}
+\cdot \left.{-2 N \DF \over e^{-2N \DF x}}\right\rvert_0^1,\\
+&= {e^{-2 N \DF x_o} - 1 \over e^{-2 N \DF} - 1},\\
+&= {1 - e^{-2 N \DF x_o} \over 1 - e^{-2 N \DF}}.\\
+\end{align}
+
+For neutral evolution we have that $N\DF \ll 1$. This allow us to rewrite
+$e^{2 N \DF x_o} \approx 1 - 2 N \DF x_o$ by Taylor expanding around $N \DF$.
+This approximation allow us to rewrite
+\begin{equation}
+  \phi(x_o, N\DF \rightarrow 0) \approx
+  {1 - (1 - 2 N \DF x_o) \over 1 - (1 - 2 N \DF)} = x_o.
+\end{equation}
+
+\subsubsection{Mutation process and evolutionary equilibria}
+
+So far we have only focused on two evolutionary forces, namely selection and
+drift. But the main substrate for evolution to act is through the appearance of
+variants due to mutation processes. So we have to account for this in our
+theoretical framework. In this section we will include the description of
+mutations as a first-order reaction with a constant rate per unit time of
+mutations. Let's start by writing down again the corresponding Langevin equation
+for growth including a transition between phenotype \bb{a} and \bb{b}. The
+dynamics of phenotype \bb{a} are given by
+\begin{equation}
+  \dt{N_\bb{a}} = F_\bb{a}(t) \N_\bb{a}(t) +
+  \sum_\bb{a} \left[  \right]
+\end{equation}
