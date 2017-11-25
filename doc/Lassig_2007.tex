@@ -1028,3 +1028,53 @@ fitness $F$ as
 \begin{equation}
   Q(F) = \sum_{\bb{a}} Q(\bb{a}) \delta (F(\bb{a}) - F).
 \end{equation}
+
+The same mapping can be written for the binding energy. Since by assumption all
+genotypes with the same phenotype, i.e. the same binding energy have the same
+fitness, this distribution reflects the non-trivial balance between genetic
+drift and selection. In the strong selection limit the exponent is dominated by
+the $2 N F$ term, and the distribution $Q(F)$ takes appreciable values only
+around points near the maximum fitness, i.e. where $F_{\max} - F \geq  1 / 2N$.
+
+In the case of moderate selection there is a balance between both terms and for
+weak selection the distribution $Q(F)$ can be approximated by its neutral
+counterpart $P_o(F)$.
+
+The analogy to statistical mechanics is now very transparent. the fitness plays
+the function of the energy, the sequence entropy plays the role of the entropy,
+and finally the effective population size $2N$ plays an analogous role to the
+inverse thermal energy $(k_BT)^{-1}$.
+
+The dynamics of substitutions establish a rather general evolutionary grounding
+of genomic distributions developed in the previous section. Recall that we
+defined the {\it log likelihood} score as
+\begin{equation}
+  S(\bb{a}) = \log \left( {Q(\bb{a}) \over P_o(\bb{a})} \right).
+\end{equation}
+Note that this is the score $S(\bb{a})$ and not the sequence entropy
+$S_o(\bb{a})$. \manuelComment{I should have used a different notation.}
+
+Substituting our result for $Q(\bb{a})$ we find
+\begin{equation}
+  S(\bb{a}) = \log \left( {P_o(\bb{a})
+  \exp\left\{ 2 N F(\bb{a}) + C \right\} \over P_o(\bb{a})} \right),
+\end{equation}
+therefore
+\begin{equation}
+  S(\bb{a}) = 2 N F(\bb{a}) + C.
+\end{equation}
+
+This is a remarkable result! What this relationship allow us to do is to infer
+quantitative evolutionary patterns from sequence data of a given genome. Quoting
+Lassig he says:
+
+{\it  ``This relationship between score and fitness is a cornerstone of the
+theoretical picture developed so far, which links its population genetic,
+Bioinformatics and biophysical arches. It relates a key evolutionary variable
+with the statistics of genomic frequency counts. The physical binding energy is
+an appropriate phenotypic variable on which fitness and score depend, because
+molecular function is determined by binding interactions.''}
+
+Lassig then goes to discuss how to apply this relationship to regulatory DNA.
+This is overall a beautiful review that goes through so many amazing concepts.
+One of my all-time favorites by far!
