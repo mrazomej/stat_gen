@@ -698,7 +698,7 @@ and
 
 This means that the integral in the steady state solution takes the form
 \begin{equation}
-  \int dx {M(x) \over V(x)} = \int dx \left[ {N \over} \right]
+  \int dx {M(x) \over V(x)} = \int dx \left[ {N \over x (1 - x)} \right]
   \left( \DF x (1 - x) + {1 \over 4N} (1 - 2x) \right).
 \end{equation}
 Solving this integral gives
@@ -786,7 +786,8 @@ Solving these integrals we find
 \end{align}
 
 For neutral evolution we have that $N\DF \ll 1$. This allow us to rewrite
-$e^{2 N \DF x_o} \approx 1 - 2 N \DF x_o$ by Taylor expanding around $N \DF$.
+$e^{2 N \DF x_o} \approx 1 - 2 N \DF x_o$ by Taylor expanding around
+$N \DF \approx 0$.
 This approximation allow us to rewrite
 \begin{equation}
   \phi(x_o, N\DF \rightarrow 0) \approx
@@ -801,9 +802,229 @@ variants due to mutation processes. So we have to account for this in our
 theoretical framework. In this section we will include the description of
 mutations as a first-order reaction with a constant rate per unit time of
 mutations. Let's start by writing down again the corresponding Langevin equation
-for growth including a transition between phenotype \bb{a} and \bb{b}. The
-dynamics of phenotype \bb{a} are given by
+for growth including a transition between phenotype $\bb{a}$ and $\bb{b}$. The
+dynamics of phenotype $\bb{a}$ are given by
 \begin{equation}
-  \dt{N_\bb{a}} = F_\bb{a}(t) \N_\bb{a}(t) +
-  \sum_\bb{a} \left[  \right]
+  \dt{N_\bb{a}} = F_\bb{a}(t) N_\bb{a}(t) +
+  \sum_\bb{a} \left[ \mu_\btoa N_\bb{b}(t) -
+  \mu_\atob N_\bb{a}(t) \right] + \chi_\bb{a}(t),
+\end{equation}
+where we sum over all possible genotypes $\bb{b} \neq \bb{a}$. $\mu_\btoa$ and
+$\mu_\atob$ correspond to the mutation rates from some genotype $\bb{b}$ to
+$\bb{a}$ and the opposite, respectively. If we again take the simplifying
+assumption that there are only two genotypes $\bb{a}$ and $\bb{b}$ competing we
+can write as before an equation for the fraction
+\begin{equation}
+  x(t) \equiv {N_\bb{b}(t) \over N_\tot(t)}.
+\end{equation}
+This equation would take the form
+\begin{equation}
+  \dt{x} = \DF x (1 - x) + \mu_\atob (1 - x) - \mu_\btoa x + \chi_x.
+\end{equation}
+
+We can again build the corresponding Fokker-Planck equation.
+\manuelComment{For simplicity I will again ignore the noise-induced drift term
+with the promise that I will come back to it in the future.}
+\begin{equation}
+  {\partial P \over \partial t} =
+  - \DF {\partial \over \partial x} \left[ x (1 - x) P \right] -
+  \mu_\atob {\partial \over \partial x} \left[ (1 - x) P \right] +
+  \mu_\btoa {\partial \over \partial x} \left[ x P \right] +
+  {1 \over 2N} {\partial^2 \over \partial x^2} \left[ x (1 - x) P \right].
+\end{equation}
+\manuelComment{Lassig has a typo on Eq. 45 where he writes ${1 \over N}$ rather
+than ${1 \over 2N}$.}
+
+We can find the steady state distribution for time independent fitness $\DF$ by
+computing
+\begin{equation}
+  P(x) = {C \over V(x)} \exp\left\{ 2 \int dx {M(x) \over V(x)} \right\}.
+\end{equation}
+For the integral in the exponent we have
+\begin{equation}
+  \int dx \overbrace{{N \over x (1 - x)}}^{1 \over V(x)}
+  \overbrace{\left[ \DF x ( 1 - x) + \mu_\atob (1 - x) - \mu_\btoa x \right]}^
+  {M(x)} =
+  N \left[ \DF x + \mu_\atob \ln x + \mu_\btoa \ln (1 - x) \right].
+\end{equation}
+
+This result gives a steady-state distribution of the form
+\begin{equation}
+  P(x) \propto {N \over x (1 - x)} \exp\left\{ 2 N \DF x \right\}
+  \cdot x^{N \mu_\atob} \cdot (1 - x)^{N \mu_\btoa}.
+\end{equation}
+As Lassig writes this equation resembles a Boltzmann distribution
+\begin{equation}
+  P(x) = {1 \over \mathcal{Z}} x^{N \mu_\atob - 1} (1 - x)^{N \mu_\btoa - 1}
+  \exp \left\{ 2 N \DF x \right\},
+\end{equation}
+\manuelComment{where $\mathcal{Z}$ he claims can be expressed in terms of
+Bessel and Gamma functions.}
+
+In the regime where $N \mu \ll 1$, which is relevant for eukaryotes and
+prokaryotes, but not for viral systems, the fixation probability of a new
+mutation is given approximately by the probability of the mutant appearing
+$(\mu_\atob N)$ times the fixation probability $\phi(x_o = {1 \over N}, \DF, N)$
+as derived for $\mu = 0$ (since $N \mu \ll 1$). So we have that the substitution
+$u_\atob$ is given by
+\begin{align}
+  u_\atob &\approx (N \mu_\atob) \phi(x_o = {1 \over N}, \DF, N),\\
+  &= (N \mu_\atob) {1 - e^{2 \DF} \over 1 - e^{2N \DF}}.
+\end{align}
+
+This implies that as $\DF$ grows $> 0$ the substitution rate does the same. The
+opposite is true for $\DF < 0$. For {\it weak selection}
+$(N \lvert \DF \rvert \ll 1)$ we can use our Taylor expansion approximation
+$e^{-2 N \DF} \approx 1 - 2 N \DF$. Using this we have
+\begin{align}
+  u_\atob &\approx (N \mu_\atob) {1 - (1 - 2 \DF) \over 1 - (1 - 2 N \DF)}\\
+  &= N \mu_\atob \left( 2 \DF \over 2 N \DF \right) = \mu_\atob.
+\end{align}
+This is a very interesting result! This is not other than Kimura's original
+result for neutral evolution in which the substitution rate is {\it
+indepdendent of the population size} and only depends on the mutation rate
+(often called the neutral mutation rate for that reason).
+
+On the other side of the spectrum for {\it strong selection}
+$(N \lvert \DF \rvert \gg 1 \gg \lvert \DF \rvert)$ we have the asymptotic
+behavior
+\begin{align}
+  u_\atob &\approx (N \mu_\atob) \left( 1 - e^{-2 \DF} \right),\\
+  &\approx (N \mu_\atob) \left( 1 - (1 - 2 \DF) \right),
+  \text{ since by assumption } \DF \ll 1, \\
+  = 2 N \DF \mu_\atob,
+\end{align}
+for $2 N \DF \gg 1$, and
+\begin{align}
+  u_\atob &\approx {(N \mu_\atob) (\overbrace{2 \DF}^{\text{negative numebr}})
+  \over -e^{-2 N \DF}},\\
+  &= 2 N \lvert \DF \rvert \mu_\atob e^{2 N \DF}.
+\end{align}
+These two results are simply different limits that can be written in a compact
+form as
+\begin{equation}
+  u_\atob =
+  \begin{cases}
+    2 N \DF \mu_\atob & \text{for } N \DF \gg 1\\
+    2 N \lvert \DF \rvert \mu_\atob e^{2 N \DF} & \text{for } N \DF \ll 1
+  \end{cases}.
+\end{equation}
+
+The backwards substitution rate $u_\btoa$ is given by the same equation with
+$\Delta F_{\bb{ba}} \equiv - \DF$. Taking the ratio of these two rates with
+$\DF > 0$ gives
+\begin{equation}
+  {u_\atob \over u_\btoa} = {(N \mu_\atob)
+  {1 - e^{-2 \DF} \over 1 - e^{-2 N \DF}} \over
+  (N \mu_\btoa) {1 - e^{-2 \Delta F_{\bb{ba}}} \over
+  1 - e^{-2 N \Delta F_{\bb{ba}}}}}.
+\end{equation}
+For $\DF \ll 1$ we have (note that we say $\DF$ and not $N \DF$)
+\begin{align}
+  {u_\atob \over u_\btoa} &= {\mu_\atob \over \mu_\btoa} \cdot
+  \left( {1 - e^{-2 N \Delta F_{\bb{ba}}} \over 1 - e^{-2N \DF}} \right)\cdot
+  \left( {2 \DF \over - 2 \DF} \right),\\
+  &= - {\mu_\atob \over \mu_\btoa}
+  \left( {1 - e^{2 N \DF} \over 1 - e^{-2N \DF}} \right).
+\end{align}
+
+For strong selection $(N \DF \gg 1)$ we have
+\begin{equation}
+  {u_\atob \over u_\btoa} = {\mu_\atob \over \mu_\btoa}
+  \exp \left( 2 N \DF \right)
+\end{equation}
+This result gives an interesting insight. What this is telling us is that the
+evolution of a population can be described as a sequence of transitions between
+monomorphic genotype states, where the substitution rate is dictated by the
+mutation rate of an individual, the fitness difference between genotypes and the
+effective population size.
+
+\subsubsection{Neutral dynamics in sequence space, sequence entropy.}
+
+The evolutionary picture we have depicted so far can be generalized for multiple
+genotypes. For example for a sequence of length $l$ There is a $4l$	dimensional
+sequence space of that specific genomic loci. If we let $\bb{a}$ and $\bb{b}$ be
+two sequences separated exactly by one nucleotide (Hamming distance of 1) we can
+model the transition $\bb{a} \rightarrow \bb{b}$ under different scenarios. For
+the case of neutral evolution the substitution rate $u_\atob$ equals to the
+neutral mutation rate $\mu_\atob$. This mutation rate can be inferred from DNA
+sequence alignments of sufficiently close species.
+
+At evolutionary equilibrium we can assume that the substitution dynamics obey
+detail balance, i.e. The transition rates between two contiguous sequences
+separated by one nucleotide should satisfy
+\begin{equation}
+  u_\atob = u_\btoa \; \therefore \mu_\atob = \mu_\btoa.
+\end{equation}
+
+Let $P_o(\bb{a})$ be the probability of finding genotype $\bb{a}$ under neutral
+evolution. The detail balance condition imposes the relationship
+\begin{equation}
+  {\mu_\atob \over \mu_\btoa} = {P_o(\bb{b}) \over P_o(\bb{a})}.
+\end{equation}
+So at equilibrium the quantity $\mu_\atob P_o(\bb{a}) - \mu_\btoa P_o(\bb{b})$
+vanishes for each elementary transition. That means that any distribution
+$P_o(\bb{a})$ that satisfies this condition is {\it stationary}. But not every
+such dynamics is a stationary distribution. The classic example of a
+distribution that is not stationary is when three sequences $\bb{a}$, $\bb{b}$
+and $\bb{c}$ have a steady state with a flow that does not satisfy detail
+balance.
+
+However experimental evidence shows that detail balance is a very good
+approximation for the genomic substitution dynamics with some exceptions at CpG
+islands in eukaryotes.
+
+As before we can project this distribution into a specific quantitative trait as
+an independent variable. The obvious variable of choice to map this distribution
+is the binding energy. We map it as
+\begin{equation}
+  P_o(E) = \sum_\bb{a} \delta (E(\bb{a}) - E).
+\end{equation}
+We now define the sequence entropy as the log of the neutral distribution, i.e.
+\begin{equation}
+  S_o(E) = \log P_o (E).
+\end{equation}
+
+\subsubsection{Dynamics under selection, the score-fitness relation.}
+
+In cases in which the locus is under selection, the dynamics need to account for
+that. For this there needs to be an arbitrary function $F(\bb{a})$ that maps
+from genotype to a fitness value. If we assume that each nucleotide in the
+sequence contributes independently to the fitness, i.e.
+\begin{equation}
+  F(\bb{a}) = \sum_{i = 1}^l f_i (a_i),
+\end{equation}
+then the substitution rate for an elementary change of one nucleotide must
+satify
+\begin{equation}
+  {u_\atob \over u_\btoa} = {Q (\bb{a}) \over Q(\bb{a})},
+\end{equation}
+where $Q(\bb(a))$ is the distribution of genotypes under selection. In the
+limit of strong selection, i.e. $N \DF \gg 1$ we showed before that
+\begin{equation}
+  {u_\atob \over u_\btoa} \approx {\mu_\atob \over \mu_\btoa}
+  \exp \left\{ 2 N \DF \right\} = {Q(\bb{b}) \over Q(\bb{a})}.
+\end{equation}
+
+Since we know that for neutral evolution
+\begin{equation}
+  {\mu_\atob \over \mu_\btoa} = {P_o(\bb{b}) \over P_o(\bb{a})},
+\end{equation}
+we have
+\begin{equation}
+  {Q(\bb{b}) \over Q(\bb{a})} = {P_o(\bb{b}) \over P_o(\bb{a})}
+  \exp \left\{ 2 N \DF \right\}.
+\end{equation}
+
+This means that the relationship between $Q(\bb{a})$ and $P_o(\bb{a})$ is given
+by
+\begin{equation}
+  Q(\bb{a}) = P_o(\bb{a}) \exp \left\{ 2 N F(\bb{a}) + C \right\},
+\end{equation}
+where $C$ is a normalization constant. It is starting to look familiar, right?
+
+We can again project this distribution to a useful quantity, in this case the
+fitness $F$ as
+\begin{equation}
+  Q(F) = \sum_{\bb{a}} Q(\bb{a}) \delta (F(\bb{a}) - F).
 \end{equation}
