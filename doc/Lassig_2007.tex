@@ -2,7 +2,7 @@
 regulation}
 
 In this section we will be exploring with all the glorious details all the
-derivations done by Michael Lassig in his beautiful review paper for BMC
+derivations done by Michael L\"{a}ssig in his beautiful review paper for BMC
 Bioinformatics 2007.
 
 \subsection{Biophysics of transcriptional regulation}
@@ -55,7 +55,7 @@ We can compute the mean and variance of this expected Gaussian distribution by
 scrambling the genome and computing the resulting binding energies.
 \fref[fig_tf_binding_ecoli](b) shows this prediction align the actual genomic
 data. It can be seen that for the most part the genome is indeed randomly
-distributed. But, \manuelComment{as done by Lassig in a very confusing way}, we
+distributed. But, \manuelComment{as done by L\"{a}ssig in a very confusing way}, we
 can zoom into the low energy tail to find that there are several low energy
 sequences that are overrepresented in the genome that might be there not by
 chance.
@@ -72,7 +72,7 @@ we are extremely familiar with that theory and my work is plagued with repeated
 instances of this theory.}
 
 \subsection{Sensitivity and genomic design of regulation}
-Lassig goes into a very interesting and clever series of back-of-the-envelope
+L\"{a}ssig goes into a very interesting and clever series of back-of-the-envelope
 calculations about the design of regulatory binding sites given the physics of
 transcription factor binding. The beautiful thing about these calculations is
 that the numbers that come out are in perfect agreement with the inferred
@@ -132,7 +132,7 @@ So the binding energy should be of order $-15 \; k_BT$ which is in perfect
 agreement with the {\it lac} repressor.
 
 \subsubsection{Programmability and evolvability of regulatory networks.}
-In this section Lassig discusses very interesting points about the competition
+In this section L\"{a}ssig discusses very interesting points about the competition
 between strong binding and evolvability.
 
 If the cell wants to have a very specific binding of a transcription factor to
@@ -147,7 +147,7 @@ molecule sensitivity. This may result from a compromise between programmability
 and evolvability, i.e. "binding sites are complicated enough to work."
 
 \subsection{Bioinformatics of regulatory DNA.}
-Lassig has come with a couple of methods to infer functional regulatory DNA that
+L\"{a}ssig has come with a couple of methods to infer functional regulatory DNA that
 takes into account the evolutionary history of the sequence. In this section we
 will go through the logic of how to make these inferences.
 
@@ -297,7 +297,7 @@ This Bayesian model can again be projected onto energies
 
 \subsection{Evolution of regulatory DNA.}
 
-In this section of the paper Lassig explores the application of population
+In this section of the paper L\"{a}ssig explores the application of population
 genetics ideas to the evolution of regulatory sequences. In principle the
 statistical picture developed so far lacks two things:
 \begin{enumerate}
@@ -429,7 +429,7 @@ stationary phase takes a characteristic time of order $\tau \sim {1 \over \DF}$.
 This is not other than a simple version of Fisher's fundamental theorem of
 natural selection: Any population with initially coexisting phenotype of
 different fitness will evolve towards a state in which only the fittest
-phenotype is present. There is a very interesting paragraph on Lassig's paper
+phenotype is present. There is a very interesting paragraph on L\"{a}ssig's paper
 related to my ideas and projects. So it is worth quoting it here:
 {\it Fisher's theorem seems to prove the popularized Darwinian notion of the
 "survival of the fittest". However, it rests on very restrictive assumptions
@@ -579,7 +579,7 @@ random and is not correlated in time with itself.
 
 \subsubsection{From Langevin dynamics to Fokker-Planck equations.}
 
-\manuelComment{In a single statement with no derivation Lassig uses the
+\manuelComment{In a single statement with no derivation L\"{a}ssig uses the
 Langevin equation for the genotype fraction to derive a corresponding Fokker-
 Planck equation. This is far from trivial and the derivation requires some
 heavy machinery.}
@@ -638,7 +638,7 @@ equation
   \right].
 \end{equation}
 
-This result is almost directly Lassig's and more correctly Kimura's formulation
+This result is almost directly L\"{a}ssig's and more correctly Kimura's formulation
 of diffusion theory except for the second term highlighted in
 \textcolor{purple}{red}. This term represents the {\it noise-induced drift} term
 that I have personally never seen before. Let's epxlore this term a little bit
@@ -666,7 +666,7 @@ jump towards that direction. That is why at $x = {1 \over 2}$ this term
 vanishes.}
 
 The two versions of the Fokker-Planck equation are then:
-\paragraph{Lassig / Kimura}
+\paragraph{L\"{a}ssig / Kimura}
 \begin{equation}
   {\partial P \over \partial t} = {1 \over 2N}
   {\partial^2 \over \partial x^2} \left[ x (1 - x) P \right] -
@@ -761,7 +761,7 @@ where $C$ serves as the normalization constant. This means that
 \end{equation}
 
 Let's focus on the integral inside the exponent.
-\manuelComment{Following Lassig, Kimura \& Rice I will ignore for now the
+\manuelComment{Following L\"{a}ssig, Kimura \& Rice I will ignore for now the
 noise-induced drift term. But it is a very interesting term that I need to come
 back at some point}.
 \begin{equation}
@@ -832,7 +832,7 @@ with the promise that I will come back to it in the future.}
   \mu_\btoa {\partial \over \partial x} \left[ x P \right] +
   {1 \over 2N} {\partial^2 \over \partial x^2} \left[ x (1 - x) P \right].
 \end{equation}
-\manuelComment{Lassig has a typo on Eq. 45 where he writes ${1 \over N}$ rather
+\manuelComment{L\"{a}ssig has a typo on Eq. 45 where he writes ${1 \over N}$ rather
 than ${1 \over 2N}$.}
 
 We can find the steady state distribution for time independent fitness $\DF$ by
@@ -853,7 +853,7 @@ This result gives a steady-state distribution of the form
   P(x) \propto {N \over x (1 - x)} \exp\left\{ 2 N \DF x \right\}
   \cdot x^{N \mu_\atob} \cdot (1 - x)^{N \mu_\btoa}.
 \end{equation}
-As Lassig writes this equation resembles a Boltzmann distribution
+As L\"{a}ssig writes this equation resembles a Boltzmann distribution
 \begin{equation}
   P(x) = {1 \over \mathcal{Z}} x^{N \mu_\atob - 1} (1 - x)^{N \mu_\btoa - 1}
   \exp \left\{ 2 N \DF x \right\},
@@ -1066,7 +1066,7 @@ therefore
 
 This is a remarkable result! What this relationship allow us to do is to infer
 quantitative evolutionary patterns from sequence data of a given genome. Quoting
-Lassig he says:
+L\"{a}ssig he says:
 
 {\it  ``This relationship between score and fitness is a cornerstone of the
 theoretical picture developed so far, which links its population genetic,
@@ -1075,6 +1075,6 @@ with the statistics of genomic frequency counts. The physical binding energy is
 an appropriate phenotypic variable on which fitness and score depend, because
 molecular function is determined by binding interactions.''}
 
-Lassig then goes to discuss how to apply this relationship to regulatory DNA.
+L\"{a}ssig then goes to discuss how to apply this relationship to regulatory DNA.
 This is overall a beautiful review that goes through so many amazing concepts.
 One of my all-time favorites by far!
