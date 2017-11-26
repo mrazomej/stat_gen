@@ -1,9 +1,9 @@
 \section{From Biophysics to Evolutionary Genetics: Statistical aspects of gene
 regulation}
 
-In this section we will be exploring with all the glorious details all the
-derivations done by Michael L\"{a}ssig in his beautiful review paper for BMC
-Bioinformatics 2007.
+In this section we will be exploring with glorious details all the derivations
+done by Michael L\"{a}ssig in his beautiful review paper for BMC Bioinformatics
+2007.
 
 \subsection{Biophysics of transcriptional regulation}
 As an area of expertise in the lab, we are very familiar with the statistical
@@ -39,7 +39,7 @@ a position has either the optimal base-pair $a_i^*$ or not, i.e.
 \end{cases}
 \end{equation}
 with $\varepsilon \sim 1 \; k_BT$. This approximation allows us to define the
-binding energy of a sequence a s a function of the Hamming distance
+binding energy of a sequence as a function of the Hamming distance
 $d(\mathbf{a}, \mathbf{a^*})$, i.e. the number of base-pair mismatches between
 sequences,
 \begin{equation}
@@ -77,10 +77,10 @@ calculations about the design of regulatory binding sites given the physics of
 transcription factor binding. The beautiful thing about these calculations is
 that the numbers that come out are in perfect agreement with the inferred
 binding energies for the {\it lac} repressor that we have always used. Let's go
-through each of these calculations:
+through each of these calculations.
 
-a) In a genome of length $\Nns \sim 5\times 10^6$ there must be at least one
-{\it minimum energy} binding sites. If the genome was completely random
+a) In a genome of length $\Nns \sim 5\times 10^6$ there must be at most one
+{\it minimum energy} binding site. If the genome was completely random
 otherwise that would imply that the probability of finding the site would be
 given by
 \begin{equation}
@@ -102,15 +102,18 @@ therefore
 \begin{equation}
   l \geq {\log \Nns \over \log 4} \sim 10.
 \end{equation}
+This result is in perfect agreement with the known transcription factor binding
+site size that we know for prokaryotes.
 
 b) If for a binding site of length $l$ there are $l$ possible sub-optimal
 binding sites with Hamming distance 1, these sites should \textbf{not} suppress
 binding to the optimal binding site. What this means is that it should hold
 true that
 \begin{equation}
-  e^{-\beta E^*} \geq l e^{-\beta (E^* + \varepsilon)}.
+  e^{-\beta E^*} \geq l e^{-\beta (E^* + \varepsilon)},
 \end{equation}
-Solving for the energy difference $\varepsilon$ we find
+where $\beta \equiv (k_BT)^{-1}$. Solving for the energy difference
+$\varepsilon$ we find
 \begin{align}
   -\beta E^* \leq \ln (l) - \beta (E^* + \varepsilon)\\
   \ln (l) \leq \beta \varepsilon \sim 2-3.
@@ -119,7 +122,7 @@ This implies that each base-pair should contribute with $\sim 2-3 \; k_BT$.
 
 c) Finally the entirety of the {\it background genome} should not suppress
 binding to the optimal binding site. Since we defined $E^*$ with respect to the
-binding to the non-specific background it must hold true that
+average binding to the non-specific background it must hold true that
 \begin{equation}
   e^{-\beta E^*} \geq \Nns e^{-\beta E_{NS}} = \Nns,
 \end{equation}
@@ -137,14 +140,15 @@ between strong binding and evolvability.
 
 If the cell wants to have a very specific binding of a transcription factor to
 its corresponding functional binding site, the concept of {\it differential
-programmability} would favor complicated molecular structures with long binding
-sites to achieve large binding energies. However this competes with the {\it
-evolvability} of the system via stochastic mutations.
+programmability} as a network design principle would favor complicated
+molecular structures with long binding sites to achieve large binding energies.
+However this competes with the {\it evolvability} of the system via stochastic
+mutations.
 
 Given the order-of-magnitude calculations in the previous section it seems that
 indeed for the prokaryote case the gene regulatory machinery has almost single-
 molecule sensitivity. This may result from a compromise between programmability
-and evolvability, i.e. "binding sites are complicated enough to work."
+and evolvability, i.e. ``binding sites are complicated enough to work.''
 
 \subsection{Bioinformatics of regulatory DNA.}
 L\"{a}ssig has come with a couple of methods to infer functional regulatory DNA that
@@ -157,15 +161,16 @@ Assuming that the genome is a Markov sequence with uniform probability for each
 of the four nucleotides $P_o(a) = 1/4$, $a \in \{A, G, C, T \}$, we have that a
 sequence $\mathbf{a}$ of length $k$ has a probability of occurring of the form
 \begin{equation}
-  P_o(\mathbf{a}) \prod_{i=1}^k P_o(a_i).
+  P_o(\mathbf{a}) = \prod_{i=1}^k P_o(a_i).
 \end{equation}
 
 Under the assumption that each base-pair contributes linearly to the total
 binding site energy we can project the probability of sequences to the
+probability of certain binding energy as
 \begin{equation}
   P_o(E) = \sum_{\mathbf{a}} P_o(\mathbf{a}) \delta(E - E(\mathbf{a})),
 \end{equation}
-where $\delta(x)$ is the delta function. What this equation syas is that the
+where $\delta(x)$ is the delta function. What this equation says is that the
 probability of finding a sequence with binding energy $E$ is given by the sum
 over all possible sequences, where the delta function guarantees that only the
 sequences that happen to have the desired binding energy will contribute to the
@@ -184,7 +189,7 @@ this distribution in terms of the non-specific distribution $P_o(\mathbf{a})$ as
 \end{equation}
 where $S(\mathbf{a})$ is called the {\it relative log-likelihood score} of the
 distributions $P_o(\mathbf{a})$ and $Q(\mathbf{a})$. This quantity will be shown
-to have an ipmortant evolutionary meaning, but for now we can trivially see that
+to have an important evolutionary meaning, but for now we can trivially see that
 this should be of the form
 \begin{equation}
   S(\mathbf{a}) = \log \left( {Q(\mathbf{a}) \over P_o(\mathbf{a})} \right).
@@ -223,7 +228,7 @@ as well as the score function
 \end{equation}
 Hence we can write
 \begin{equation}
-  Q(E) = P_o(E)\exp\left[ S(E) \right]
+  Q(E) = P_o(E)\exp\left[ S(E) \right].
 \end{equation}
 
 \subsubsection{Bayesian model for genomic loci.}
@@ -303,7 +308,7 @@ statistical picture developed so far lacks two things:
 \begin{enumerate}
   \item the specific functionality that binding provides to the transcription
   factor, since the PWM formalism doesn't care about the functionality of
-  binding
+  binding.
   \item The sense of time and dynamics as dictated by the evolutionary history
   of these sequences. It is important to highlight that functional loci evolve
   fundamentally different from background sequences since these functional loci
@@ -334,9 +339,9 @@ Let's assume we are interested in tracking the relative abundance of $\bb{b}$.
 We then define $x(t) \equiv {N_\bb{b}(t) \over N_\tot(t)}$. We can write the
 dynamics for both $N_\tot(t)$ and $x(t)$ as
 \begin{align}
-\dt{N_\tot} &= \bar{F} N_\tot(t),\\
+\dt{N_\tot} &= \bar{F}(t) N_\tot(t),\\
 &= F_\bb{a}(t) N_\bb{a}(t) + F_\bb{b}(t) N_\bb{b}(t),\\
-&= N_\tot(t) \left[ F_\bb{a}(t) (1 - x(t)) + F_\bb{b} x(t) \right],
+&= N_\tot(t) \left[ F_\bb{a}(t) (1 - x(t)) + F_\bb{b}(t) x(t) \right],
 \end{align}
 and
 \begin{equation}
@@ -364,7 +369,7 @@ can be simply written as
 \begin{equation}
   \dt{x} = \DF(t) x(t) (1 - x(t)),
 \end{equation}
-where $\DF \equiv F_\bb{b}(t) - F_\bb{a}(t)$.
+where $\DF(t) \equiv F_\bb{b}(t) - F_\bb{a}(t)$.
 
 If we assume $\DF(t)$ to be independent of time we can solve $\dot x(t)$ as
 \begin{equation}
@@ -429,16 +434,17 @@ stationary phase takes a characteristic time of order $\tau \sim {1 \over \DF}$.
 This is not other than a simple version of Fisher's fundamental theorem of
 natural selection: Any population with initially coexisting phenotype of
 different fitness will evolve towards a state in which only the fittest
-phenotype is present. There is a very interesting paragraph on L\"{a}ssig's paper
-related to my ideas and projects. So it is worth quoting it here:
+phenotype is present. There is a very interesting paragraph on L\"{a}ssig's
+paper related to my ideas and projects. So it is worth quoting it here:
+
 {\it Fisher's theorem seems to prove the popularized Darwinian notion of the
-"survival of the fittest". However, it rests on very restrictive assumptions
+``survival of the fittest''. However, it rests on very restrictive assumptions
 that are never fulfilled in a natural population. The deterministic growth law
-(32) neglects mutations and recombinations, as well as the reproductive
-fluctuations present in any population due to its finite number of individuals.
-These other evolutionary forces have to be incorporated in our theoretical
-picture before we can even define fitness as a measurable quantity and before
-the theory can address the important case of neutral evolution.}
+neglects mutations and recombinations, as well as the reproductive fluctuations
+present in any population due to its finite number of individuals. These other
+evolutionary forces have to be incorporated in our theoretical picture before we
+can even define fitness as a measurable quantity and before the theory can
+address the important case of neutral evolution.}
 
 \subsubsection{Stochastic dynamics and genetic drift.}
 
@@ -466,7 +472,8 @@ noise is completely uncorrelated over time; this is set by the delta function
 $\delta(t - t')$ which is one only if $t' = t$. What that implies is that the
 function will only be non-zero when evaluated as
 \begin{equation}
-  \moment{\chi_\bb{a}(t) \chi_\bb{a}(t)} = \moment{\chi_\bb{a}(t)^2} = N_\bb{a}.
+  \moment{\chi_\bb{a}(t) \chi_\bb{a}(t)} = \moment{\chi_\bb{a}(t)^2} =
+  N_\bb{a}(t).
 \end{equation}
 Since $\moment{\chi_\bb{a}(t)} = 0$, $\moment{\chi_\bb{a}(t)}^2$ is the variance
 of the random noise which is set to be $N_\bb{a}(t)$ as for a Poisson process.
@@ -512,7 +519,7 @@ And similarly
 \begin{align}
   {\partial x \over \partial N_\bb{a}} &= {\partial \over \partial N_\bb{a}}
   \left( {N_\bb{b} \over N_\tot} \right), \\
-  &= {0 \over N_\tot^2} \left[ 1 \cdot N_\tot - N_\bb{b} \cdot 1 \right],\\
+  &= {1 \over N_\tot^2} \left[ 0 \cdot N_\tot - N_\bb{b} \cdot 1 \right],\\
   &= - {x \over N_\tot}.
 \end{align}
 With this we can rewrite $\dot{x}(t)$ as
@@ -524,14 +531,16 @@ With this we can rewrite $\dot{x}(t)$ as
 \end{equation}
 Since our definition of $\chi_x(t)$ involves a sum of Gaussian random variables
 we know that $\chi_x(t)$ is Gaussian distributed itself. We can use two rules
-about adding Gaussian random variables: If we add two Gaussian random variables
-with mean $\mu_1$ and $\mu_2$ and variance $\sigma_1^2$ and $\sigma_2^2$, the
-sum of these variables gives a variable of the form
+about adding Gaussian random variables:
+
+1) If we add two Gaussian random variables with mean $\mu_1$ and $\mu_2$ and
+variance $\sigma_1^2$ and $\sigma_2^2$, the sum of these variables gives a
+variable of the form
 \begin{equation}
   X_1 + X_2 \sim \mathcal{N}\left( \mu_1 + \mu_2,
                                    \sigma_1^2 + \sigma_2^2 \right).
 \end{equation}
-Also a linear transformation of a Gaussian random variable gives
+2) A linear transformation of a Gaussian random variable gives
 \begin{equation}
   a + b \mathcal{N} \left( \mu, \sigma^2 \right) =
   \mathcal{N}(a + b \mu, b^2 \sigma^2).
@@ -584,8 +593,8 @@ Langevin equation for the genotype fraction to derive a corresponding Fokker-
 Planck equation. This is far from trivial and the derivation requires some
 heavy machinery.}
 The full derivation of the connection between Langevin dynamics and Fokker-
-Planck formulation will be left for a separate set of notes \manuelComment(to
-be written later on). for our purpose it suffices to say that from a Langevin
+Planck formulation will be left for a separate set of notes \manuelComment{to
+be written later on}. for our purpose it suffices to say that from a Langevin
 equation of the form
 \begin{equation}
   \dt{x} = A(x, t) + B(x, t) \xi(t),
@@ -625,7 +634,7 @@ is sent to the $B(x, t)$ coefficient. With this we then have that
 For simplicity from now on we won't make the time dependence explicit, such that
 $x \equiv x(t)$, also we will simply write $N \equiv N_\tot(t)$.
 
-Since we have $\moment{\xi_x(t) \xi_x(t't)} = \delta(t - t')$, it must be the
+Since we have $\moment{\xi_x(t) \xi_x(t')} = \delta(t - t')$, it must be the
 case that $D \equiv {1 \over 2}$. Let's now try to build the Fokker-Planck
 equation
 \begin{equation}
@@ -654,15 +663,15 @@ further by taking the derivative
   &= -{1 \over 4 N} {\partial \over \partial x}\left\{ (1 - 2 x) P \right\}.
 \end{align}
 \manuelComment{I find this term quite interesting. My interpretation is the
-following: The diffusion term ${1\over 2} \partial_{xx} x (1 - x) P$ has "no
-sense of direction." The magnitude of the jump depends on where are you standing
-on the real line, but it is equally likely to jump left or right. This can be
-clearly seen if one takes the "spread the butter" approach. There is easy to
-note that indeed the magnitude of the jump depends on where are you standing
-in frequency space, but the magnitude applies to both directions left and right.
-In the case of this directional term $- {1 \over 2} \partial x (1 - 2x) P$
-breaks the symmetry of these jumps. The closer you get to 1 or 0, the more you
-jump towards that direction. That is why at $x = {1 \over 2}$ this term
+following: The diffusion term ${1\over 2} \partial_{xx} x (1 - x) P$ has ``no
+sense of direction.'' The magnitude of the jump depends on where are you
+standing on the real line, but it is equally likely to jump left or right. This
+can be clearly seen if one takes the ``spread the butter'' approach. There is
+easy to note that indeed the magnitude of the jump depends on where are you
+standing in frequency space, but the magnitude applies to both directions left
+and right. In the case of this directional term $- {1 \over 2} \partial_x (1 -
+2x) P$ breaks the symmetry of these jumps. The closer you get to 1 or 0, the
+more you jump towards that direction. That is why at $x = {1 \over 2}$ this term
 vanishes.}
 
 The two versions of the Fokker-Planck equation are then:
@@ -681,7 +690,9 @@ The two versions of the Fokker-Planck equation are then:
   {1 \over 4N} {\partial \over \partial x} \left[ (1 - 2x) P \right].
 \end{equation}
 
-The steady-state solution of this Fokker-Planck equation is fo the form
+The steady-state solution of this Fokker-Planck for a time-independent fitness
+function $\DF$ equation is fo the form \manuelComment{The set of notes deriving
+this result will be also written later on.}
 \begin{equation}
   P(x) = {C \over V(x)} \exp \left\{ 2 \int dx {M(x) \over V(x)} \right\},
 \end{equation}
@@ -696,7 +707,7 @@ and
   V(x) = {1 \over N} x (1 - x).
 \end{equation}
 
-This means that the integral in the steady state solution takes the form
+This means that the integral in the steady-state solution takes the form
 \begin{equation}
   \int dx {M(x) \over V(x)} = \int dx \left[ {N \over x (1 - x)} \right]
   \left( \DF x (1 - x) + {1 \over 4N} (1 - 2x) \right).
@@ -708,7 +719,7 @@ Solving this integral gives
   &= N \DF x + {1 \over 4} \ln \left[ x ( 1 - x) \right].
 \end{align}
 
-Substituting this into the steady state distribution we have
+Substituting this into the steady-state distribution we have
 \begin{equation}
   P(x) \propto {N \over x (1 - x)} \exp \left\{ 2N \DF x +
   {1 \over 4} \ln[x (1 - x)] \right\}.
@@ -766,7 +777,7 @@ noise-induced drift term. But it is a very interesting term that I need to come
 back at some point}.
 \begin{equation}
   \int_o^{x_o'} dx {M(x) \over V(x)} =
-  \int_o^{x_o'} dx {N \over x (1 - x) \DF x(1 - x)} =
+  \int_o^{x_o'} dx {N \over x (1 - x)} \DF x(1 - x) =
   \left. N \DF x \right\rvert_0^{x_o'} = N \DF x_o'.
 \end{equation}
 
@@ -785,10 +796,9 @@ Solving these integrals we find
 &= {1 - e^{-2 N \DF x_o} \over 1 - e^{-2 N \DF}}.\\
 \end{align}
 
-For neutral evolution we have that $N\DF \ll 1$. This allow us to rewrite
-$e^{2 N \DF x_o} \approx 1 - 2 N \DF x_o$ by Taylor expanding around
-$N \DF \approx 0$.
-This approximation allow us to rewrite
+For neutral evolution we have that $N\lvert \DF \rvert \ll 1$. This allow us to
+rewrite $e^{2 N \DF x_o} \approx 1 - 2 N \DF x_o$ by Taylor expanding around $N
+\DF \approx 0$. This approximation allow us to rewrite
 \begin{equation}
   \phi(x_o, N\DF \rightarrow 0) \approx
   {1 - (1 - 2 N \DF x_o) \over 1 - (1 - 2 N \DF)} = x_o.
@@ -806,7 +816,7 @@ for growth including a transition between phenotype $\bb{a}$ and $\bb{b}$. The
 dynamics of phenotype $\bb{a}$ are given by
 \begin{equation}
   \dt{N_\bb{a}} = F_\bb{a}(t) N_\bb{a}(t) +
-  \sum_\bb{a} \left[ \mu_\btoa N_\bb{b}(t) -
+  \sum_\bb{b} \left[ \mu_\btoa N_\bb{b}(t) -
   \mu_\atob N_\bb{a}(t) \right] + \chi_\bb{a}(t),
 \end{equation}
 where we sum over all possible genotypes $\bb{b} \neq \bb{a}$. $\mu_\btoa$ and
@@ -835,7 +845,7 @@ with the promise that I will come back to it in the future.}
 \manuelComment{L\"{a}ssig has a typo on Eq. 45 where he writes ${1 \over N}$ rather
 than ${1 \over 2N}$.}
 
-We can find the steady state distribution for time independent fitness $\DF$ by
+We can find the steady-state distribution for time independent fitness $\DF$ by
 computing
 \begin{equation}
   P(x) = {C \over V(x)} \exp\left\{ 2 \int dx {M(x) \over V(x)} \right\}.
@@ -864,12 +874,12 @@ Bessel and Gamma functions.}
 In the regime where $N \mu \ll 1$, which is relevant for eukaryotes and
 prokaryotes, but not for viral systems, the fixation probability of a new
 mutation is given approximately by the probability of the mutant appearing
-$(\mu_\atob N)$ times the fixation probability $\phi(x_o = {1 \over N}, \DF, N)$
+$(N \mu_\atob)$ times the fixation probability $\phi(x_o = {1 \over N}, \DF, N)$
 as derived for $\mu = 0$ (since $N \mu \ll 1$). So we have that the substitution
 $u_\atob$ is given by
 \begin{align}
-  u_\atob &\approx (N \mu_\atob) \phi(x_o = {1 \over N}, \DF, N),\\
-  &= (N \mu_\atob) {1 - e^{2 \DF} \over 1 - e^{2N \DF}}.
+  u_\atob &\approx (N \mu_\atob) \phi\left( x_o = {1 \over N}, \DF, N \right),\\
+  &= (N \mu_\atob) {1 - e^{- 2 \DF} \over 1 - e^{- 2 N \DF}}.
 \end{align}
 
 This implies that as $\DF$ grows $> 0$ the substitution rate does the same. The
@@ -892,7 +902,7 @@ behavior
   u_\atob &\approx (N \mu_\atob) \left( 1 - e^{-2 \DF} \right),\\
   &\approx (N \mu_\atob) \left( 1 - (1 - 2 \DF) \right),
   \text{ since by assumption } \DF \ll 1, \\
-  = 2 N \DF \mu_\atob,
+  &= 2 N \DF \mu_\atob,
 \end{align}
 for $2 N \DF \gg 1$, and
 \begin{align}
@@ -967,10 +977,8 @@ vanishes for each elementary transition. That means that any distribution
 $P_o(\bb{a})$ that satisfies this condition is {\it stationary}. But not every
 such dynamics is a stationary distribution. The classic example of a
 distribution that is not stationary is when three sequences $\bb{a}$, $\bb{b}$
-and $\bb{c}$ have a steady state with a flow that does not satisfy detail
-balance.
-
-However experimental evidence shows that detail balance is a very good
+and $\bb{c}$ have a steady-state with a flow that does not satisfy detail
+balance. However experimental evidence shows that detail balance is a very good
 approximation for the genomic substitution dynamics with some exceptions at CpG
 islands in eukaryotes.
 
@@ -978,7 +986,7 @@ As before we can project this distribution into a specific quantitative trait as
 an independent variable. The obvious variable of choice to map this distribution
 is the binding energy. We map it as
 \begin{equation}
-  P_o(E) = \sum_\bb{a} \delta (E(\bb{a}) - E).
+  P_o(E) = \sum_\bb{a} P_o(\bb{a})  \delta (E(\bb{a}) - E).
 \end{equation}
 We now define the sequence entropy as the log of the neutral distribution, i.e.
 \begin{equation}
@@ -1040,7 +1048,7 @@ In the case of moderate selection there is a balance between both terms and for
 weak selection the distribution $Q(F)$ can be approximated by its neutral
 counterpart $P_o(F)$.
 
-The analogy to statistical mechanics is now very transparent. the fitness plays
+The analogy to statistical mechanics is now very transparent. The fitness plays
 the function of the energy, the sequence entropy plays the role of the entropy,
 and finally the effective population size $2N$ plays an analogous role to the
 inverse thermal energy $(k_BT)^{-1}$.
@@ -1075,6 +1083,11 @@ with the statistics of genomic frequency counts. The physical binding energy is
 an appropriate phenotypic variable on which fitness and score depend, because
 molecular function is determined by binding interactions.''}
 
-L\"{a}ssig then goes to discuss how to apply this relationship to regulatory DNA.
+L\"{a}ssig then goes to discuss how to apply this relationship to regulatory
+DNA. I wouldn't do justice to his amazing insights so I think is worth reading
+the last  part of the review for this section.
+
 This is overall a beautiful review that goes through so many amazing concepts.
 One of my all-time favorites by far!
+
+\includepdf[pages=-]{lassig_2007.pdf}
