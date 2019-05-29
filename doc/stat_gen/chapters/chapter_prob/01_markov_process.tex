@@ -1,0 +1,80 @@
+\section{Continuous-time continuous-state Markov process}
+
+The mathematical language to study diffusion theory, as with many other field of
+science is the language of probability theory. As Jaynes' famous book title
+suggested, \textit{probability theory is the logic of science}. It is through
+this formal language that we can assess how likely are specific events to
+happen. For example, later on we'll see that within the framework of diffusion
+theory is possible to ask what is the probability of an allele being fixed in
+the population given the evolutionary forces acting on it.
+
+Of particular interested for our endeavor is the specific mathematical objects
+known as Markov processes. The definition of these processes is very simple.
+First of all by a ``process'' what we mean is a series of events that evolve
+over time. For example we will be studying how the frequency of a particular
+allele $f$ changes over time as the population evolves. The Markovian property -
+named after Andrey Markov, a famous Russian mathematician from the XIX century -
+can be stated as follows:
+\begin{tcolorbox}
+  A Marvov process is a type of stochastic process for which the transition
+  states only depends on the current state.
+\end{tcolorbox}
+To gain intuition for what this means imagine we are measuring a variable $x$
+over time such that we have a bunch of pairs of the form $(x_1, t_1), (x_2,
+t_2), (x_3, t_3), \ldots (x_{n+1}, t_{n+1})$. For a Markov process, the
+probability of ending at state $x_{n+1}$ at time $t_{n+1}$ given all the
+previous visited states is of the form
+\begin{equation}
+  P(x_{n+1}, t_{n+1} \mid x_1, t_1; x_2, t_2; \ldots; x_n, t_n) =
+  P(x_{n+1}, t_{n+1} \mid x_n, t_n).
+  \label{eq_chapman_kolmogorov}
+\end{equation}
+In other words, knowing the entire history of variable $x$ as it evolves over
+time does not help us predict the next time step. All we need to know is the
+last position. Markov processes are usually called memoryless stochastic process
+because of this property that the process doesn't remember the full trajectory
+when it ``decides'' where to move in the next step. Assuming a Markovian process
+is arguably one of the most widely used assumptions in all of science. From
+chemical reactions, to brownian motion of a particle, to our particular case of
+interest of allele frequencies changing over time.
+
+In the classic formulation of diffusion theory we are concerned with a
+particular type of Markov processes. Diffusion theory works in the limit of
+large populations where we can assume that the frequency of a particular allele
+rather than being a discrete entity that increases in factors of $1 / N$ where
+$N$ is the number of organisms, is a continuous value in the range between 0
+and 1. We also assume that we can compute changes in this frequency in
+continuous time. That means that both $f$ the frequency of an allele, and $t$
+the time are continuous variables. Therefore our stochastic process are
+described with the creative name of continuous-time continuous-state Markov
+processes. We will now state a very important equation for this type of
+Markovian processes known as the Chapman-Kolmogorov equation.
+
+\subsection{Chapman-Kolmogorov equation}
+
+The Chapman-Kolmogorov equation is an important property of continuous-time
+continuous-state Markov processes that we will use for many of our derivations
+in the coming sections. The equation is stated as follows: For three time points
+$t_1 < t_2 < t_3$ for which we measured a stochastic variable $x$ we have that
+\begin{equation}
+  P(x_3, t_3 \mid x_1, t_1) = \int dx_2\; P(x_3, t_3 \mid x_2, t_2)
+                                          P(x_2, t_2 \mid x_1, t_1),
+\end{equation}
+where the integral is taken over the domain of values that the random variable
+$x$ can take. In other words, to calculate the transition probability between
+$x_1$ and $x_3$ with an intermediary step $x_2$, we must add (integrate for
+continuous variables) all possible values that $x_2$ can take. This concept is
+schematically represented in \fref{fig01_01}
+
+\begin{figure}[h!]
+	\centering \includegraphics[width=0.5\textwidth]
+  {./fig/chapter_prob/01_01.png}
+	\caption{\textbf{Schematic of the Chapman-Kolmogorov equation}. The
+  Chapman-Kolmogorov equation is a statement about the transition between two
+  points $x_1$ and $x_3$, adding all possible intermediary steps $x_2$.}
+  \label{fig01_01}
+\end{figure}
+
+In the coming section we will use the Chapman-Kolmogorov equation to derive the
+so-called continuous master equation. This will be the foundation from which we
+will get to the main results of diffusion theory.

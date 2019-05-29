@@ -1,0 +1,55 @@
+\section{The (continuous) master equation for allele frequencies}
+
+One of the most powerful tools to study stochastic process is the famous master
+equation. Originally devised to study the stochastic time evolution of chemical
+reactions - thereby christened the chemical master equation - this equation has
+found applications in many areas of chemistry, physics and biology. The equation
+is as statement about the time evolution of the transition probabilities of a
+Markov process. That is just a fancy way of saying that the master equation
+describes how the transition probabilities between states change over time.
+
+Let's derive this powerful equation starting from \eref{eq_chapman_kolmogorov}.
+For our case of study where we want to understand how the frequency of a
+particular allele $f$ evolves over time, the Chapman-Kolmogorov equation takes
+the form
+\begin{equation}
+  P(f_3, t_3 \mid f_1, t_1) = \int_0^1 df_2\; P(f_3, t_3 \mid f_2, t_2)
+                                          P(f_2, t_2 \mid f_1, t_1),
+\end{equation}
+where the integration limits $[0, 1]$ are the domain of values that an allele
+frequency can take. Now let us assume that we measure the frequency $f_1$ at
+time $t$, and then after a very short time $\Delta t$ we measure the second
+allele frequency $f_2$. Under this short time limit we can approximate the
+transition probability as
+\begin{equation}
+  P(f_2, t + \Delta t \mid f_1, t) = \delta(f_2 - f_1)
+  \underbrace{\left[ 1 - a^{(0)}(f_1, t) \Delta t \right]}_{\text{probability
+  of no transition}} +
+  \underbrace{\phi_t(f_2 \mid f_1)\Delta t}_\text{probability of transition} +
+  \mathcal{O}(\Delta t^2).
+  \label{eq_transition_short_time}
+\end{equation}
+Let's break down this equation. We have split the possible things that can
+happen on a time window $\Delta t$ into two possible cases. The first one
+represented by the first term is the possibility that on this small time window
+no transition actually takes place. The $\delta$-function that is equal to 1 if
+and only if $f_2 = f_1$ is there to make sure that this term is added only when
+there was no transition during that time and $f_2$ remains the same as $f_1$.
+Inside the square brackets we wrote $1 - a^{(0)}(f_1, t) \Delta t$, the reason
+for writing the term $a^{(0)}$ will become clear later on when we derive the
+Fokker-Planck equation. The fact that we have a term of the form 1 - something
+hints at the fact that this ``something'' must be the probability of
+transitioning somewhere else rather than staying still. For the second term
+we wrote $\phi_t(f_2 \mid f_1)\Delta t$ as the probability of transitioning
+outside of $f_1$ during this time window. our function $\phi_t(f_2 \mid f_1)$
+represents the transition rate between $f_1$ and $f_2$ at time $t$. When we
+multiply this rate in time$^{-1}$ units times a small time window, we obtain the
+probability of transitioning from $f_1$ to $f_2$.
+
+In order to understand better the term $a^{(0)}(f_1, t)$ in
+\eref{eq_transition_short_time} recall that a probability distribution must be
+normalized. That means that if we integrate both sides of
+\eref{eq_transition_short_time} it must be true that
+\begin{equation}
+  1 = \int_0^1 df_2 \; P(f_2, t + \Delta t \mid f_1, t)
+\end{equation}
