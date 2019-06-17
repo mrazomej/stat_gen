@@ -46,9 +46,9 @@ fact that this ``something'' must be the probability of transitioning somewhere
 else rather than staying at the same position. For the second term we wrote
 $\phi_t(f_2 \mid f_1)\Dt$ as the probability of transitioning outside of $f_1$
 during this time window. our function $\phi_t(f_2 \mid f_1)$ represents the
-transition rate between $f_1$ and $f_2$ at time $t$. When we multiply this rate
-in time$^{-1}$ units times a small time window, we obtain the probability of
-transitioning from $f_1$ to $f_2$.
+transition probability per unit time between $f_1$ and $f_2$ at time $t$. When
+we multiply this rate in time$^{-1}$ units times a small time window, we obtain
+the probability of transitioning from $f_1$ to $f_2$.
 
 In order to understand better the term $a^{(0)}(f_1, t)$ in
 \eref{eq_transition_short_time} recall that a probability distribution must be
@@ -65,12 +65,12 @@ therefore we obtain
   1 = \left[  1 - a^{(0)}(f_1, t) \Dt\right] +
   \int_0^1 df_2 \; \phi_t(f_2 \mid f_1)\Dt.
 \end{equation}
-Simplifying terms gives
+Solving for $a^{(0)}(f_1, t)$ results in
 \begin{equation}
   a^{(0)}(f_1, t) = \int_0^1 df_2 \; \phi_t(f_2 \mid f_1),
   \label{eq_a0}
 \end{equation}
-demonstrating our previous assertion that $a^{(0)}(f_1, t)$ must be the
+proving our previous assertion that $a^{(0)}(f_1, t)$ must be the
 probability of jumping from $f_1$ to somewhere else.
 
 Using this approximation for short time steps we will now derive the
@@ -89,7 +89,7 @@ Substituting \eref{eq_transition_short_time} results in
   + \phi_t(f \mid f')\Dt \right]
   P(f', t \mid f_o, t_o).
 \end{equation}
-Evaluating the integral for the first term on the right-hand side results in
+Evaluating the integral for the first term on the right-hand side gives
 \begin{equation}
   P(f, t + \Dt \mid f_o, t_o) = \left[\left( 1 - a^{(0)}(f, t)\Dt \right)\right]
   P(f, t \mid f_o, t_o) +
@@ -105,7 +105,7 @@ Sending the first term on the right-hand side to the left, dividing both sides
 by $\Dt$ and taking the limit $\Dt \rightarrow 0$ gives the differential
 equation we were looking for
 \begin{equation}
-  \ddt{P(f, t \mid f_o, t_o)} = \int_0^1 df' \;
+  \dt{P(f, t \mid f_o, t_o)} = \int_0^1 df' \;
   \underbrace{
   \left[ \phi_t(f \mid f') P(f', t \mid f_o, t_o) \right.}
   _{\text{gain } f' \rightarrow f}  -
@@ -121,17 +121,18 @@ probability of being at a specific state $P(f, t)$. However we can use the rules
 of probability to obtain such description by the following process: Suppose the
 stochastic process $F(t)$ describes the time evolution of the frequency.
 Assuming $F(t)$ is a stationary Markov process as described in
-\secref{sec_stationary_process} means that this process is characterized by the
-probability of having a particular value for the allele frequency $P_F(f)$ that
-does not depend on time, and a transition probability $P(f, t \mid f_o, t_o)$.
-We define a new, non-stationary process $F^*(t)$ for $t \geq t_o$ by setting
+\secref{sec_stationary_process} means that this process is completely
+characterized by two functions: the probability of having a particular value for
+the allele frequency $P_F(f)$ that does not depend on time, and a transition
+probability $P(f, t \mid f_o, t_o)$. We define a new, non-stationary process
+$F^*(t)$ for $t \geq t_o$ by setting
 \begin{equation}
   P^*(f, t) = P(f, t\mid f_o, t_o),
 \end{equation}
 i.e. forcing the initial condition to be a specific value $f_o$ at time $t_o$.
 This is a sub-ensemble of the process $F(t)$ since we demanded that $F(t = t_o)
 = f_o$. More generally if instead of setting the initial condition to be a
-single specific value $P(f, t_o) = \delta(f - f_o)$ we give a probability
+single specific value $P(f, t_o) = \delta(f - f_o)$ we define a probability
 distribution for the initial state $P(f, t_o) = \rho(f_o)$, we have a
 sub-ensemble of the form
 \begin{equation}
@@ -143,22 +144,22 @@ a non-stationary state. The initial state distribution $\rho(f_o)$ does not
 depend on time. Therefore if we take the time derivative on both sides of
 \eref{eq_subensemble} we find that
 \begin{equation}
-  \ddt{P^*(f, t)} = \int_0^1 df_o \; \ddt{P(f, t\mid f_o, t_o)}
+  \dt{P^*(f, t)} = \int_0^1 df_o \; \dt{P(f, t\mid f_o, t_o)}
                         \rho(f_o).
 \label{eq_subensemble_dt}
 \end{equation}
-We notice that the term with the time derivative on the right-hand side of
+Notice that the term with the time derivative on the right-hand side of
 \eref{eq_subensemble_dt} is the master equation that we derived in
 \eref{eq_master_eq_trans}. Substituting this results in
 \begin{equation}
-  \ddt{P^*(f, t)} = \int_0^1 df_o \; \rho(f_o)
+  \dt{P^*(f, t)} = \int_0^1 df_o \; \rho(f_o)
   \int_0^1 df' \;
   \left[ \phi_t(f \mid f') P(f', t \mid f_o, t_o) -
   \phi_t(f' \mid f) P(f, t \mid f_o, t_o) \right].
 \end{equation}
 Redistributing the integrals gives
 \begin{equation}
-  \ddt{P^*(f, t)} = \int_0^1 df' \; \phi_t(f \mid f')
+  \dt{P^*(f, t)} = \int_0^1 df' \; \phi_t(f \mid f')
   \overbrace{
   \int_0^1 df_o \; P(f', t \mid f_o, t_o) \rho(f_o)}
   ^{P^*(f', t)\text{ by definition}} -
@@ -170,19 +171,116 @@ Redistributing the integrals gives
 Using the definition of the sub-ensembles shown in \eref{eq_subensemble} we
 arrive to a result of the form
 \begin{equation}
-  \ddt{P^*(f, t)} = \int_0^1 df' \;
-  \left[
+  \dt{P^*(f, t)} = \int_0^1 df' \;
   \underbrace{
   \phi_t(f \mid f') P^*(f', t)
   }_{f' \rightarrow f \text{ gain}} -
+  \int_0^1 df' \;
   \underbrace{
   \phi_t(f' \mid f) P^*(f, t)
-  }_{f \rightarrow f' \text{ loss}}
-  \right].
+  }_{f \rightarrow f' \text{ loss}}.
+  \label{eq_master_eq_full}
 \end{equation}
 In this form we can see that the master equation is a balance between gain and
-loss of probability at each state $f$. Having said that the truth about the
+loss of probability at each state $f$. Having said that, the truth about the
 continuous master equation is that is extremely complicated to work with. In
 general integro-differential equations are challenging mathematical objects to
 deal with. That is why in the next section we'll use the powerful tool of
-Taylor expansions to simplify the equation.
+Taylor expansions to simplify the equation. But before that let's discuss some
+historic uses of the master equation that might look different to our derivation
+on \eref{eq_master_eq_full}.
+
+\subsection{Einstein-Kimura continuous master equations}
+
+In 1905 during the groundbreaking year of Einstein's scientific career he
+published a paper in which he attempted to give a molecular explanation to the
+phenomena of Brownian motion. For this he derived Fick's second law from of a
+statistical argument by Taylor expanding a master equation - more on that in
+the next section. In this classic paper Einstein had one of the very first uses
+of a continuous master equation applied to a physical problem. The difference
+from our approach is that Einstein didn't derive the master equation from the
+Chapman-Kolmogorov property of continuous-time continuous-state Markov
+processes, but simply proposed its functional form directly.
+
+While the problem Einstein was addressing in his paper had to do with a random
+walker moving in real space, the mathematical tools that he proposed can be
+directly mapped to the population genetics setup. As a matter of fact Motoo
+Kimura himself used an equivalent approach to Einstein's formulation of the
+master equation for his formulation of diffusion theory. Kimura used the same
+approach as Einstein of Taylor expanding the master equation, with the main
+difference being that for population genetics the transition probability
+$\phi_t(f \mid f')$ is a function of the current position $f'$ while in real
+space free diffusion is independent of the position. For this short section our
+objective is to show that our derivation of the master equation is equivalent to
+Einstein's and Kimura's proposed functional form. We will focus on Kimura's
+version of the master equation since population genetics is what concerns us in
+these notes.
+
+Kimura's original derivation of the classic diffusion theory begins stating that
+the process of allele frequency changes can be stated as
+\begin{equation}
+  P(f, t + \Dt) = \int d\varepsilon \;
+  P(f - \varepsilon, t) \phi_t(f \mid f - \varepsilon) \Dt,
+  \label{eq_kimura_master}
+\end{equation}
+and that is it. While it took us a while to justify \eref{eq_master_eq_full},
+Kimura (and Einstein in the context of Brownian motion) simply stated the master
+equation as the starting point. There is nothing intrinsically wrong about
+having \eref{eq_kimura_master} as the starting point, but in this set of extend
+notes I thought it would be insightful to start from a more fundamental property
+of Markov processes and have the master equation be a consequence of such
+property. Also I would like to highlight that in all of the population genetics
+literature I have come across so far there has never been an explicit account of
+the integration limits on the equations. This includes Kimura's original work as
+well as textbooks. For this particular case the integration limits should go
+from $f$ to $f - 1$ such that the values of $f - \varepsilon$ range from 0 to 1.
+So the proper form of this integral is given by
+\begin{equation}
+  P(f, t + \Dt) = \int_{-f}^{f - 1} d\varepsilon \;
+  P(f - \varepsilon, t) \phi_t(f \mid f - \varepsilon) \Dt.
+  \label{eq_kimura_master_lim}
+\end{equation}
+
+Notice that at first glance \eref{eq_master_eq_full} and
+\eref{eq_kimura_master_lim} don't seem to be equivalent.
+\eref{eq_master_eq_full} is a differential equation that describes how the
+probability distribution changes given gains and losses of probability on state
+$f$, while \eref{eq_kimura_master_lim} only makes a statement of what would the
+probability distribution look like a tiny time step into the future by adding
+all the jumps \textbf{into} state $f$, but it doesn't include a term for all the
+jumps out of state $f$. To show that these equations are equivalent we have to
+do two things:
+\begin{enumerate}
+  \item On \eref{eq_master_eq_full} we notice that the second term on the
+  right-hand side can be written as
+  \begin{equation}
+    P^*(f, t)\int_0^1 df' \; \phi_t(f' \mid f) = P^*(f, t),
+    \label{eq_integral_transition}
+  \end{equation}
+  where we took the term $P^*(f, t)$ outside of the integral and used the fact
+  that the transition probability per unit time $\phi_t(f' \mid f)$ should be
+  normalized regardless of the time window. In other words, the probability of
+  transitioning from $f$ to anywhere else (including staying at $f$) should add
+  up to one regardless of the time window we observe.
+  \mrm{Need to check this statement and that the units make sense}
+  \item Having this result we can rewrite \eref{eq_master_eq_full} as
+  \begin{equation}
+    P^*(f, t) + \dt{P^*(f, t)} = \int_0^1 df' \;
+    \phi_t(f \mid f') P^*(f', t).
+    \label{eq_master_eq_rearange}
+  \end{equation}
+  We are almost there! All is left is to notice that if we were to Taylor expand
+  the left-hand side of \eref{eq_kimura_master_lim} with respect to time up to
+  first order (as it is often done for time derivatives) we would obtain
+  \begin{equation}
+    P(f, t + \Dt) = P(f, t) + \dt{P(f, t)}\Dt + \mathcal{O}(\Dt^2).
+  \end{equation}
+  That means we can write \eref{eq_master_eq_rearange} as
+  \begin{equation}
+    {P^*(f, t + \Dt) \over \Dt} = \int_0^1 df' \;
+    \phi_t(f \mid f') P^*(f', t),
+  \end{equation}
+  which is equivalent to \eref{eq_kimura_master_lim} where instead of having
+  the integration over the jump size $\varepsilon$ the integration is done over
+  the final position $f'$.
+\end{enumerate}

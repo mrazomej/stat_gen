@@ -1,0 +1,198 @@
+\section{Kramers-Moyal expansion of the Master equation}
+
+For the most part master equations are hard to deal with beacause of their
+integro-differential nature. A way around this issue is to simplify the master
+equation using Taylor expansions. This expansion goes by name of Kramers-Moyal
+expansion, and the truncated version of the expansion is known in physics
+literature as the Fokker-Planck equation, and in the probability theory
+literature as the Kolmogorov forward equation. Regardless of the fancy names
+behind these manipulations the idea is very straight-forward and very common in
+physics in general: we take a complicated function and use its derivatives to
+come up with an approximation that is good enough at least locally.
+
+To perform the expansion we need to express the transition probabilities
+$\phi_t(f \mid f')$ in \eref{eq_master_eq_full} as a function of the jump size
+$r \equiv f - f'$ rather than as conditional probabilities. We therefore express
+the transition probabilities as
+\begin{equation}
+  \phi_t(f \mid f') = \phi_t(f'; r).
+\end{equation}
+By performing this change of variables for the integral in
+\eref{eq_master_eq_full} we need to compute the Jacobian which is of the form
+\begin{equation}
+  dr = df' {dr \over df'} = -df'.
+\end{equation}
+
+Furthermore since the integration now is done over values of $r$ rather than
+$f'$ we must update the integration limits as well. We then have for the lower
+limit $f' = 0$ that upon substitution on the definition of $r$ this gives
+\begin{equation}
+  r(f' = 0) = f - 0 = f.
+\end{equation}
+Doing the same for the upper limit of $f' = 1$ results in
+\begin{equation}
+  r(f' = 1) = f - 1.
+\end{equation}
+Using these changes results in a master equation of the form
+\begin{equation}
+  \dt{P(f, t)} = \int_f^{f - 1} \underbrace{(-1)}_{\text{Jacobian}} dr \;
+  \left[
+  \phi_t(f - r; r) P(f - r, t) -
+  \phi_t(f; -r) P(f, t)
+  \right].
+\end{equation}
+For the second term inside the square brackets we wrote $\phi_t(f; -r)$ due to
+the change of reference point. Since the original term was $\phi_t(f' \mid f)$
+that means that the jump took place from $f$ to $f'$ instead of the other way,
+therefore the jump rather than being of size $r$ it must be of size $-r$ to
+compensate for this change. Flipping the limits of integration because of the
+negative sign that the Jacobian gave results in
+\begin{equation}
+  \dt{P(f, t)} = \int^f_{f - 1} dr \;
+  \phi_t(f - r; r) P(f - r, t) -
+  \int^f_{f - 1} dr \;
+  \phi_t(f; -r) P(f, t).
+  \label{eq_master_eq_jump}
+\end{equation}
+Having showed what the integration limits \textit{should look like} we come back
+to the issue mentioned before. Nowhere in the literature I have come across
+there has been an explicit account for these limits. From Kimura to Rice to even
+Lassig, everyone seems to overlook what these integrations should be. In an
+attempt to be more explicit and thorough, while still readable and intuitive I
+wanted to show the limits for the integral in the master equation. Nevertheless
+these limits will have to be modify for our approximations as we will see in a
+bit.
+
+As mentioned before, dealing with \eref{eq_master_eq_jump} is extremely
+complicated due to its integro-differential nature. To simplify things now we
+will make use of one of the most handful techniques ever given to physics - the
+Taylor expansion. This expansion will allow us to cast the nasty
+integro-differential equation into a partial differential equation of infinite
+order. This again is difficult to deal with, but we can always compromise some
+precision for simplicity by truncating the expansion up to some arbitrary order
+that is easier to handle. In particular is common practice to truncate
+expansions up to second order, giving in this case one of Motoo Kimura's most
+fundamental results, and the basis of all of diffusion theory in population
+genetics. To perform the expansion of the master equation we have to assume the
+following:
+\begin{itemize}
+  \item Changes on $f$ occur via very small jumps; i.e. the transition
+  probability $\phi_t(f; r)$ is sharply peaked as a function of $r$, but at the
+  same time varies slowly enough with $f$. This is a reasonable assumption in
+  the limit of large population sizes since changes in the allele frequency will
+  be slow for this regime.
+  \item The probability of an allele frequency $P(f, t)$ also varies slowly with
+  $f$. This smoothness requirement for the distribution is necessary since the
+  expansion requires computing derivatives.
+\end{itemize}
+Both of these assumptions are necessary for the expansion to be valid at least
+locally around the point we expand at.
+
+\subsection{Issues with the integration limits}
+
+As mentioned before, the integration limits on \eref{eq_master_eq_jump} must be
+modified if we want to perform the Kramers-Moyal expansion. To show why this is
+the case we will first attempt the expansion keeping the limits. Given the
+assumptions we listed we can expand the first integrand in \eref{eq_master_eq_jump} in powers of $f$ obtaining
+\begin{align}
+  \ddt{P(f, t)} &= \int^f_{f - 1} dr \;
+  \left[
+  \phi_t(f; r) P(f, t) -
+  {\partial \over \partial f} \left( \phi_t(f; r) P(f, t) \right)  r \right. \\
+  &+ \left.
+  {1 \over 2} {\partial^2 \over \partial f^2}
+  \left( \phi_t(f; r) P(f, t) \right) r^2 -
+  {1 \over 3!} {\partial^3 \over \partial f^3}
+  \left( \phi_t(f; r) P(f, t) \right) r^3 + \ldots
+  \right] \\
+  &-
+  P(f, t) \int_{f - 1}^f dr \; \phi_t(f, -r).
+\end{align}
+If we now distribute the integral and write the general form of the expansion
+we obtain
+\begin{align}
+  \ddt{P(f, t)} &= P(f, t)\int^f_{f - 1} dr \; \phi_t(f; r) \\
+  &+
+  \sum_{k=1}^\infty {(-1)^k \over k!} {\partial^k \over \partial f^k}
+  \left[
+  P(f, t) \int_{f-1}^f dr \; r^k \phi_t(f; r)
+  \right] \\
+  &-
+  P(f, t) \int_{f - 1}^f dr \; \phi_t(f, -r).
+\end{align}
+The problem with this expansion is that all integrals of the form
+\begin{equation}
+  \Phi(f, k) = \int_{f-1}^f dr \; r^k \phi_t(f; r),
+  \text{ for } k \in \mathbb{N},
+\end{equation}
+have the wrong integration limits. Recall that we set these limits to cover the
+entire domain of values that the jump size could take. Before the expansion
+these limits allowed $\phi_t(f - r; r)$ to cover all jumps from any point
+between zero and one towards $f$; after the expansion this is not true anymore.
+For example if we were to substitute the lower integration limit into the
+transition probability $\phi_t(f; r = f-1)$, the resulting final position $f + f
+-1 = 2f -1$ would be outside of the range $[0, 1]$ for all $f < 1$. That is why
+the Kramers-Moyal expansion is generally done for cases in which the boundaries
+are irrelevant, for example Einstein's Brownian motion problem didn't have this
+issue since the integration was taken from $-\infty$ to $\infty$.
+
+So how do we overcome this issue? The way to overcome this difficulty is to
+set the integration limits to some irrelevant boundary. But in order to do so
+we need to define our transition probability $\phi_t(f; r)$ to be zero if the
+jump falls outside of the range $[0, 1]$. In other words, we could define the
+transition probability as a piecewise function
+\begin{equation}
+  \phi_t(f; r) =
+  \begin{cases}
+    \phi_t(f + r \mid f)& \text{for } (f + r), f \in [0, 1] \\
+    0& \text{otherwise}
+  \end{cases}.
+\end{equation}
+This definition allow us to send the integration limits of
+\eref{eq_master_eq_jump} from $-\infty$ to $\infty$ to still cover all possible
+jumps. With this definition we then have
+\begin{align}
+  \ddt{P(f, t)} &= P(f, t)\int^\infty_{- \infty} dr \; \phi_t(f; r) \\
+  &+
+  \sum_{k=1}^\infty {(-1)^k \over k!} {\partial^k \over \partial f^k}
+  \left[
+  P(f, t) \int_{-\infty}^\infty dr \; r^k \phi_t(f; r)
+  \right] \\
+  &-
+  P(f, t) \int_{-\infty}^\infty dr \; \phi_t(f, -r).
+\end{align}
+Notice that the first and third term on the right-hand side of the equation are
+integrating the transition probability over all possible jumps. Because of the
+change of integration limits we proposed, these two terms cancel each other and
+we are left with
+\begin{equation}
+  \ddt{P(f, t)} = \sum_{k=1}^\infty {(-1)^k \over k!}
+  {\partial^k \over \partial f^k}
+  \left[
+  P(f, t) \int_{-\infty}^\infty dr \; r^k \phi_t(f; r)
+  \right].
+  \label{eq_almost_km}
+\end{equation}
+Let us now define the moments of the jump size distribution $\phi_t(f; r)$ to be
+\begin{equation}
+  a^{(k)}(f, t) \equiv \int_{-\infty}^\infty dr \; r^k \phi_t(f; r),
+\end{equation}
+Then we can substitute this into \eref{eq_almost_km} to finally obtain the
+Kramers-Moyal expansion of the master equation
+\begin{equation}
+  \ddt{P(f, t)} = \sum_{k=1}^\infty {(-1)^k \over k!}
+  {\partial^k \over \partial f^k}
+  \left[
+  P(f, t) a^{(k)}(f, t)
+  \right].
+  \label{eq_km_expansion}
+\end{equation}
+Notice that on \eref{eq_transition_short_time} we used already the zero$\tth$
+moment of the distribution.
+
+So far we converted the complicated integro-differential form of the master
+equation in \eref{eq_master_eq_jump} into an equally difficult partial
+differential equation of infinite order. Therefore our ability to handle the
+equation hasn't been simplified. In the next section we will deal with how to
+actually improve our chances of making sense of this by truncating the expansion
+up to second order. 
