@@ -1,4 +1,86 @@
 \section{Fokker-Planck equation in population genetics}
 
 In the last section after we performed a Taylor expansion of the master equation
-we ended up with a complicated partial differential equation of infinite order.
+we ended up with an equally complicated partial differential equation of
+infinite order. So in order to make any progress towards simplifying the
+treatment of the equation what we will do is trade accuracy for simplicity.
+More concretely if our assumptions on the shape of the transition probability
+$\phi_t(f; r)$ being sharply peaked are to be taken seriously, we can then
+truncate the Kramers-Moyal expansion to include only up to second order
+derivatives. This truncated equation would locally approximate the time
+evolution of the probability distribution $P(f, t)$. \eref{eq_km_expansion} then
+is of the form
+\begin{equation}
+  \ddt{P(f, t)} = - {\partial \over \partial f}
+  \left[
+  a^{(1)}(f, t) P(f, t)
+  \right] +
+  {1 \over 2}{\partial^2 \over \partial f^2}
+  \left[
+  a^{(2)}(f, t) P(f, t)
+  \right].
+  \label{eq_fokker_planck}
+\end{equation}
+In the physics literature this is known as the Fokker-Planck equation, while in
+the mathematics literature is known as the Kolmogorov forward equation. One
+intriguing aspect of how to arrive to this equation is the seemingly arbitrary
+choice of truncating up to the second moment. The argument that is often thrown
+around is that the ``art'' of these truncations is to stop at the first
+non-vanishing moment. But for the specific case of the Kramers-Moyal expansion
+of the master equation there is a theorem - Pawula theorem - that shows that for
+the solutions of the Kramers-Moyal expansion to be interpreted as probability
+densities the expansion must either contain one, two or an infinite number of
+moments. So two sounds much better than infinite, doesn't it?
+\mrm{Need to include appendix with the proof of Pawula theorem.}
+
+\subsection{Determination of the Fokker-Planck coefficients}
+
+The two jump moments in \eref{eq_fokker_planck}, $a^{(1)}$ and $a^{(2)}$ defined
+by \eref{eq_jump_mom} have a specific interpretation in population genetics.
+Here is where a little bit of a terminology conflict between physics and
+evolutionary biology comes into play. The directional term, i.e. the one with
+the first order derivative in \eref{eq_fokker_planck} is known in the physics
+literature as the drift term on a diffusion-like equation. This is confusing
+because in evolutionary theory the diffusive term, i.e. the one with the second
+derivative in \eref{eq_fokker_planck} is known as the genetic drift term. I will
+try to be as consistent as possible on these notes using the terms directional
+and diffusive to avoid confusion.
+
+Coming back to the directional term, we define $M(f, t)$ to be
+\begin{equation}
+  M(f, t) \equiv \ee{r(t)} = \int_{-\infty}^{\infty} dr \; \phi_t(f; r) r,
+\end{equation}
+i.e. the mean of the jump distribution. As we will see in coming sections this
+term captures the effect of directional evolutionary forces such as selection,
+mutation and migration. For the diffusive term we define $V(f, t)$ as the second
+moment of the jump distribution
+\begin{equation}
+  V(f, t) \equiv \ee{r^2(t)} = \int_{-\infty}^{\infty} dr \; \phi_t(f; r) r^2.
+\end{equation}
+This term captures the random sampling of alleles, also known as genetic drift.
+In all of the population genetics literature I have encounter so far, this term
+$V(f, t)$ is treated as the \textbf{variance} rather than the second moment.
+This is partly because computing the specific functional form of the variance
+for different models of reproduction is much simpler. The variance
+$\sigma_r^2(t)$ is defined as
+\begin{equation}
+  \sigma_r^2(t) = \ee{\left( r - \ee{r} \right)^2} = \ee{r^2} - \ee{r}^2.
+\end{equation}
+We can therefore work with this more convenient quantity if we assume that
+$\ee{r}^2 \approx 0$. This is a reasonable assumption given that for the
+Fokker-Planck equation to be accurate we assumed a tight distribution for the
+jumpt size $\phi_t(f; r)$. The peaked nature of this distribution must imply
+that $\ee{r} \ll 1$, but more importantly, we will assume that
+$\ee{r}^2 \ll \ee{r^2}$. So upon using these two definitions we arrive to one
+of the main results in population genetics, the Kimura diffusion equation
+\begin{equation}
+  \ddt{P(f, t)} = - {\partial \over \partial f}
+  \left[
+  M(f, t) P(f, t)
+  \right] +
+  {1 \over 2}{\partial^2 \over \partial f^2}
+  \left[
+  V(f, t) P(f, t)
+  \right].
+  \label{eq_kimura_diffusion}
+\end{equation}

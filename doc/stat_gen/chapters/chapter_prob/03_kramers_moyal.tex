@@ -93,33 +93,38 @@ locally around the point we expand at.
 As mentioned before, the integration limits on \eref{eq_master_eq_jump} must be
 modified if we want to perform the Kramers-Moyal expansion. To show why this is
 the case we will first attempt the expansion keeping the limits. Given the
-assumptions we listed we can expand the first integrand in \eref{eq_master_eq_jump} in powers of $f$ obtaining
-\begin{align}
-  \ddt{P(f, t)} &= \int^f_{f - 1} dr \;
-  \left[
-  \phi_t(f; r) P(f, t) -
-  {\partial \over \partial f} \left( \phi_t(f; r) P(f, t) \right)  r \right. \\
-  &+ \left.
-  {1 \over 2} {\partial^2 \over \partial f^2}
-  \left( \phi_t(f; r) P(f, t) \right) r^2 -
-  {1 \over 3!} {\partial^3 \over \partial f^3}
-  \left( \phi_t(f; r) P(f, t) \right) r^3 + \ldots
-  \right] \\
-  &-
-  P(f, t) \int_{f - 1}^f dr \; \phi_t(f, -r).
-\end{align}
+assumptions we listed we can expand the first integrand in
+\eref{eq_master_eq_jump} in powers of $f$ obtaining
+\begin{equation}
+  \begin{split}
+    \ddt{P(f, t)} &= \int^f_{f - 1} dr \;
+    \left[
+    \phi_t(f; r) P(f, t) -
+    {\partial \over \partial f} \left( \phi_t(f; r) P(f, t) \right) r \right. \\
+    &+ \left.
+    {1 \over 2} {\partial^2 \over \partial f^2}
+    \left( \phi_t(f; r) P(f, t) \right) r^2 -
+    {1 \over 3!} {\partial^3 \over \partial f^3}
+    \left( \phi_t(f; r) P(f, t) \right) r^3 + \ldots
+    \right] \\
+    &-
+    P(f, t) \int_{f - 1}^f dr \; \phi_t(f, -r).
+  \end{split}
+\end{equation}
 If we now distribute the integral and write the general form of the expansion
 we obtain
-\begin{align}
-  \ddt{P(f, t)} &= P(f, t)\int^f_{f - 1} dr \; \phi_t(f; r) \\
-  &+
-  \sum_{k=1}^\infty {(-1)^k \over k!} {\partial^k \over \partial f^k}
-  \left[
-  P(f, t) \int_{f-1}^f dr \; r^k \phi_t(f; r)
-  \right] \\
-  &-
-  P(f, t) \int_{f - 1}^f dr \; \phi_t(f, -r).
-\end{align}
+\begin{equation}
+  \begin{split}
+    \ddt{P(f, t)} &= P(f, t)\int^f_{f - 1} dr \; \phi_t(f; r) \\
+    &+
+    \sum_{k=1}^\infty {(-1)^k \over k!} {\partial^k \over \partial f^k}
+    \left[
+    P(f, t) \int_{f-1}^f dr \; r^k \phi_t(f; r)
+    \right] \\
+    &-
+    P(f, t) \int_{f - 1}^f dr \; \phi_t(f, -r).
+  \end{split}
+\end{equation}
 The problem with this expansion is that all integrals of the form
 \begin{equation}
   \Phi(f, k) = \int_{f-1}^f dr \; r^k \phi_t(f; r),
@@ -151,16 +156,18 @@ transition probability as a piecewise function
 This definition allow us to send the integration limits of
 \eref{eq_master_eq_jump} from $-\infty$ to $\infty$ to still cover all possible
 jumps. With this definition we then have
-\begin{align}
-  \ddt{P(f, t)} &= P(f, t)\int^\infty_{- \infty} dr \; \phi_t(f; r) \\
-  &+
-  \sum_{k=1}^\infty {(-1)^k \over k!} {\partial^k \over \partial f^k}
-  \left[
-  P(f, t) \int_{-\infty}^\infty dr \; r^k \phi_t(f; r)
-  \right] \\
-  &-
-  P(f, t) \int_{-\infty}^\infty dr \; \phi_t(f, -r).
-\end{align}
+\begin{equation}
+  \begin{split}
+    \ddt{P(f, t)} &= P(f, t)\int^\infty_{- \infty} dr \; \phi_t(f; r) \\
+    &+
+    \sum_{k=1}^\infty {(-1)^k \over k!} {\partial^k \over \partial f^k}
+    \left[
+    P(f, t) \int_{-\infty}^\infty dr \; r^k \phi_t(f; r)
+    \right] \\
+    &-
+    P(f, t) \int_{-\infty}^\infty dr \; \phi_t(f, -r).
+  \end{split}
+\end{equation}
 Notice that the first and third term on the right-hand side of the equation are
 integrating the transition probability over all possible jumps. Because of the
 change of integration limits we proposed, these two terms cancel each other and
@@ -176,6 +183,7 @@ we are left with
 Let us now define the moments of the jump size distribution $\phi_t(f; r)$ to be
 \begin{equation}
   a^{(k)}(f, t) \equiv \int_{-\infty}^\infty dr \; r^k \phi_t(f; r),
+  \label{eq_jump_mom}
 \end{equation}
 Then we can substitute this into \eref{eq_almost_km} to finally obtain the
 Kramers-Moyal expansion of the master equation
@@ -188,11 +196,11 @@ Kramers-Moyal expansion of the master equation
   \label{eq_km_expansion}
 \end{equation}
 Notice that on \eref{eq_transition_short_time} we used already the zero$\tth$
-moment of the distribution.
+moment of the distribution; that's why the use of the notation $a^{(0)}(f, t)$.
 
 So far we converted the complicated integro-differential form of the master
 equation in \eref{eq_master_eq_jump} into an equally difficult partial
 differential equation of infinite order. Therefore our ability to handle the
 equation hasn't been simplified. In the next section we will deal with how to
 actually improve our chances of making sense of this by truncating the expansion
-up to second order. 
+up to second order.

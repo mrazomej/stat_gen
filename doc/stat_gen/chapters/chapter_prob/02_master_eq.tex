@@ -10,11 +10,11 @@ master equation describes how the transition probabilities between states change
 over time.
 
 Let's derive this powerful equation starting from \eref{eq_chapman_kolmogorov}.
-For our case of study where we want to understand how the frequency of a
-particular allele evolves over time, that is a stochastic process $F(t)$. Notice
-again that we distinguish between the stochastic process $F(t)$ formed by the
-ensemble of all possible realizations $f(t)$. The Chapman-Kolmogorov equation
-for this particular case with three time points $t_1 < t_2 < t_3$ takes the form
+For our case of study we want to understand how the frequency of a particular
+allele evolves over time, that is a stochastic process $F(t)$. Notice again that
+we distinguish between the stochastic process $F(t)$ formed by the ensemble of
+all possible realizations $f(t)$. The Chapman-Kolmogorov equation for this
+particular case with three time points $t_1 < t_2 < t_3$ takes the form
 \begin{equation}
   P(f_3, t_3 \mid f_1, t_1) = \int_0^1 df_2\; P(f_3, t_3 \mid f_2, t_2)
                                           P(f_2, t_2 \mid f_1, t_1),
@@ -34,30 +34,31 @@ short time limit we can approximate the transition probability as
   \label{eq_transition_short_time}
 \end{equation}
 Let's break down this equation. We have split the possible things that can
-happen on a time window $\Dt$ into two possible cases. The first one
-represented by the first term is the possibility that on this small time window
-no transition actually takes place. The $\delta$-function that is equal to 1 if
-and only if $f_2 = f_1$ is there to make sure that this term is added only when
-there was no transition during that time and $f_2$ remains the same as $f_1$.
-Inside the square brackets we wrote $1 - a^{(0)}(f_1, t) \Dt$, the reason
-for writing the term $a^{(0)}$ will become clear later on when we derive the
-Fokker-Planck equation. Having a term of the form 1 - ``something'' hints at the
-fact that this ``something'' must be the probability of transitioning somewhere
-else rather than staying at the same position. For the second term we wrote
-$\phi_t(f_2 \mid f_1)\Dt$ as the probability of transitioning outside of $f_1$
-during this time window. our function $\phi_t(f_2 \mid f_1)$ represents the
-transition probability per unit time between $f_1$ and $f_2$ at time $t$. When
-we multiply this rate in time$^{-1}$ units times a small time window, we obtain
-the probability of transitioning from $f_1$ to $f_2$.
+happen on a time window $\Dt$ into two possible cases. The first one represented
+by the first term on the right-hand side is the possibility that on this small
+time window no transition actually takes place. The $\delta$-function that is
+equal to 1 if and only if $f_2 = f_1$ is there to make sure that this term is
+added only when there was no transition during that time and $f_2$ remains the
+same as $f_1$. Inside the square brackets we wrote $1 - a^{(0)}(f_1, t) \Dt$,
+the reason for writing the term $a^{(0)}$ will become clear later on when we
+derive the so-called Fokker-Planck equation. Having a term of the form 1 -
+``something'' hints at the fact that this ``something'' must be the probability
+of transitioning somewhere else rather than staying at the same position. For
+the second term we wrote $\phi_t(f_2 \mid f_1)\Dt$ as the probability of
+transitioning outside of $f_1$ during this time window. our function $\phi_t(f_2
+\mid f_1)$ represents the transition probability per unit time between $f_1$ and
+$f_2$ at time $t$. When we multiply this rate in time$^{-1}$ units by a small
+time window, we obtain the probability of transitioning from $f_1$ to $f_2$.
 
 In order to understand better the term $a^{(0)}(f_1, t)$ in
 \eref{eq_transition_short_time} recall that a probability distribution must be
 normalized. That means that if we integrate both sides of
 \eref{eq_transition_short_time} over all values of $f_2$ it must be true that
 \begin{equation}
-  1 = \int_0^1 df_2 \; P(f_2, t + \Dt \mid f_1, t) =
+  \int_0^1 df_2 \; P(f_2, t + \Dt \mid f_1, t) =
   \int_0^1 df_2 \; \delta(f_2 - f_1) \left[ 1 - a^{(0)}(f_1, t) \Dt \right]
-  + \int_0^1 df_2 \; \phi_t(f_2 \mid f_1)\Dt.
+  + \int_0^1 df_2 \; \phi_t(f_2 \mid f_1)\Dt
+  = 1.
 \end{equation}
 Integrating over the $\delta$-function implies that we set $f_2 = f_1$,
 therefore we obtain
@@ -122,8 +123,8 @@ of probability to obtain such description by the following process: Suppose the
 stochastic process $F(t)$ describes the time evolution of the frequency.
 Assuming $F(t)$ is a stationary Markov process as described in
 \secref{sec_stationary_process} means that this process is completely
-characterized by two functions: the probability of having a particular value for
-the allele frequency $P_F(f)$ that does not depend on time, and a transition
+characterized by two functions - the probability of having a particular value
+for the allele frequency $P_F(f)$ that does not depend on time, and a transition
 probability $P(f, t \mid f_o, t_o)$. We define a new, non-stationary process
 $F^*(t)$ for $t \geq t_o$ by setting
 \begin{equation}
@@ -141,7 +142,7 @@ sub-ensemble of the form
 \end{equation}
 The interpretation of this sub ensemble is that the system was initially set on
 a non-stationary state. The initial state distribution $\rho(f_o)$ does not
-depend on time. Therefore if we take the time derivative on both sides of
+depend on time, therefore if we take the time derivative on both sides of
 \eref{eq_subensemble} we find that
 \begin{equation}
   \dt{P^*(f, t)} = \int_0^1 df_o \; \dt{P(f, t\mid f_o, t_o)}
@@ -265,8 +266,8 @@ do two things:
   \mrm{Need to check this statement and that the units make sense}
   \item Having this result we can rewrite \eref{eq_master_eq_full} as
   \begin{equation}
-    P^*(f, t) + \dt{P^*(f, t)} = \int_0^1 df' \;
-    \phi_t(f \mid f') P^*(f', t).
+    \dt{P^*(f, t)} = \int_0^1 df' \;
+    \phi_t(f \mid f') P^*(f', t) - P^*(f, t).
     \label{eq_master_eq_rearange}
   \end{equation}
   We are almost there! All is left is to notice that if we were to Taylor expand
@@ -275,7 +276,8 @@ do two things:
   \begin{equation}
     P(f, t + \Dt) = P(f, t) + \dt{P(f, t)}\Dt + \mathcal{O}(\Dt^2).
   \end{equation}
-  That means we can write \eref{eq_master_eq_rearange} as
+  That means we can send the second term on the the right-hand side of
+  \eref{eq_master_eq_rearange} to the left and rewrite the equation as
   \begin{equation}
     {P^*(f, t + \Dt) \over \Dt} = \int_0^1 df' \;
     \phi_t(f \mid f') P^*(f', t),

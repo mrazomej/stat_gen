@@ -75,10 +75,9 @@ $P_X(x)$, a moment is defined as
 \end{equation}
 where the integral is taken over all the values that $X$ can take. Notice that
 our notation for the distribution $P_X(x)$ highlights that we are only
-considering the values that $X$ can take, no time involved so far. You might be
-wondering how can we deal with the fact that now we have a process, meaning that
-our random variable changes over time. What we have to do is settle for a
-specific time point $t^*$ and compute the average at that time point
+considering the values that $X$ can take, no time involved so far. For our case
+in which the random variable can change over time what we have to do is settle
+for a specific time point $t^*$ and compute the average at that time point
 \begin{equation}
   \ee{X(t^*)^m} \equiv \int dx \; x^m P(x, t^*).
   \label{eq_process_moment}
@@ -111,6 +110,8 @@ and $t_2$ covary with each other. This quantity is defined as
   \kappa(t_1, t_2) = \ee{\left(X(t_1) - \ee{X(t_1)}\right)
                          \left(X(t_2) - \ee{X(t_2)}\right)}.
 \end{equation}
+\mrm{Not sure if I will need to include this if we don't ge to compute moments
+that refer to multiple time points.}
 
 Now that we have partially established the notation and conceptual ideas behind
 stochastic processes let's focus on a particular kind known as Markov process.
@@ -138,7 +139,7 @@ time does not help us predict the next time step. All we need to know is the
 last position. Markov processes are usually called memoryless stochastic process
 because of this property that the process doesn't remember the full trajectory
 when it ``decides'' where to move in the next step. Assuming a Markovian process
-is arguably one of the most widely used assumptions in all of science. From
+is arguably one of the most widely used assumptions in all of science; from
 chemical reactions, to brownian motion of a particle, to our particular case of
 interest of allele frequencies changing over time.
 
@@ -149,10 +150,10 @@ rather than being a discrete entity that changes in factors of $1 / N$ where
 $N$ is the number of organisms, is a continuous value in the range between 0
 and 1. We also assume that we can compute changes in this frequency in
 continuous time. That means that both $f$ the frequency of an allele, and $t$
-the time are continuous variables. Therefore our stochastic process are
-described with the creative name of continuous-time continuous-state Markov
-processes. We will now state a very important equation for this type of
-Markovian processes known as the Chapman-Kolmogorov equation.
+the time are continuous variables. Therefore we are interested in a type of
+Markov processes that go by the creative name of continuous-time
+continuous-state Markov processes. We will now state a very important equation
+for this type of Markovian processes known as the Chapman-Kolmogorov equation.
 
 \subsection{Chapman-Kolmogorov equation}
 
@@ -226,12 +227,11 @@ a value $x'$ all we need to know is how much time passed between both
 instances of the random process. On the other hand if we are only interested in
 knowing what is the probability of the random variable taking a specific value
 there is no time dependence for a stationary process since this probability will
-not change over time.
-
-For the evolution questions we will be addressing here is easy to see how this
-implies a fixed adaptive landscape. Since the environment is fixed the mapping
-between genotype all the way to fitness will be the same regardless of the time
-at which the population acquires a specific allele frequency.
+not change over time. For the evolution questions we will be addressing here is
+easy to see how this implies a fixed adaptive landscape. Since the environment
+is fixed the mapping between genotype all the way to fitness will be the same
+regardless of the time at which the population acquires a specific allele
+frequency.
 
 Now we are ready to derive the master equation that will describe the time
 evolution of the probability distribution of allele frequencies.
