@@ -179,6 +179,7 @@ equation
 	\ddt{P(f, t \mid f_o, t_o)} =
 	M(f_o) {\partial \over \partial f_o}P(f, t \mid f_o, t_o) +
 	{V(f_o) \over 2} {\partial^2 \over \partial f_o^2} P(f, t \mid f_o, t_o).
+	\label{eq_kolmogorov_backward}
 \end{equation}
 This equation differs from the forward equation in several points:
 \begin{itemize}
@@ -194,3 +195,75 @@ As we will see in the following section the forward and backward equation
 complement each other allowing us to tackle different questions. In particular
 the backward equation can address the very interesting question of what is the
 probability of an allele becoming fixed in the population.
+
+\subsection{Equlibrium distribution of the Kolmogorov backward equation}
+
+Rather than trying to solve directly this equation we can take the same approach
+as we took for the forward equation and solve for the steady-state distribution.
+For the case of the reverse equation the steady-state distribution will tell us
+about in the very long time limit what is the probability of ending at frequency
+$f$ given that the system started at a frequency $f_o$. For example we can ask
+about the probability of an allele going to fixation ($f = 1$) or extinction
+($f = 0$) given some initial frequency. To solve for the steady-state
+distribution first we set the time derivative of \eref{eq_kolmogorov_backward}
+to zero
+\begin{equation}
+	0 = M(f_o) {\partial \over \partial f_o}P(f, t \mid f_o, t_o) +
+	{V(f_o) \over 2} {\partial^2 \over \partial f_o^2} P(f, t \mid f_o, t_o).
+	\label{eq_kolmogorov_backward_rev}
+\end{equation}
+We now define
+\begin{equation}
+	G(f_o) \equiv {\partial P(f, t \mid f_o, t_o) \over \partial f_o},
+\end{equation}
+and substitute this back on \eref{eq_kolmogorov_backward_rev}. With some
+rearrangement of terms we obtain
+\begin{equation}
+	2 {M(f_o) \over V(f_o)} G(f_o) + {\partial G(f_o) \over \partial f_o} = 0.
+\end{equation}
+This is a first order linear ordinary differential equation that can be solved
+using the integrating factor method just as we did for the equilibrium
+distribution of the forward equation. For this we multiply both sides by
+\begin{equation}
+	h(f_o) = \exp \left( 2 \int_0^{f_0} df_o' {M(f_o') \over V(f_o')} \right),
+\end{equation}
+the integrating factor. This results in
+\begin{equation}
+	\exp \left( 2 \int_0^{f_0} df_o'\; {M(f_o') \over V(f_o')} \right)
+	\left[
+	2 {M(f_o) \over V(f_o)} G(f_o) + {\partial G(f_o) \over \partial f_o}
+	\right] = 0.
+\end{equation}
+The integrating factor allows us to write this as
+\begin{equation}
+	{d \over df_o} \left[
+	G(f_o) \exp \left(
+	2 \int_0^{f_o} df_o' {M(f_o') \over V(f_o')}
+	\right)
+	\right] = 0.
+\end{equation}
+We can now integrate both sides with respect to $f_o$, obtaining
+\begin{equation}
+	\int_0^{f_o} df_o' \; {d \over df_o'} \left[
+	G(f_o') \exp \left(
+	2 \int_0^{f_o'} df_o'' \; {M(f_o'') \over V(f_o'')}
+	\right)	\right] = \int_0^{f_o'} df_o' \; 0.
+\end{equation}
+Evaluating these integrals results in
+\begin{equation}
+	F(f_o) \exp \left(
+	2 \int_0^{f_o} df_o' \; {M(f_o') \over V(f_o')}
+	\right) = C,
+\end{equation}
+where $C$ is an integrating constant. If we now substitute back the definition
+of $G(f_o)$ we obtain
+\begin{equation}
+	{\partial P(f, t \mid f_o, t_o) \over \partial f_o}
+	\exp \left(
+	2 \int_0^{f_o} df_o' \; {M(f_o') \over V(f_o')}
+	\right) = C.
+\end{equation}
+We can use this equation to find the fixation probability of an allele.
+
+\mrm{This again will be followed by specific cases on how to use this equation
+to calculate fixation probabilities for different reproduction models.}
