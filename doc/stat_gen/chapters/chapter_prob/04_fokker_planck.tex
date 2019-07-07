@@ -84,3 +84,115 @@ of the main results in population genetics, the Kimura diffusion equation
   \right].
   \label{eq_kimura_diffusion}
 \end{equation}
+The power of diffusion theory is that in these two terms $M(f, t)$ and $V(f, t)$
+we can include all evolutionary forces acting simultaneously. The functional
+forms of these specific terms depend on the reproduction model used. We will
+explore that more specifically later on.
+
+\subsection{Equilibrium distribution}
+
+In the limit when $t \rightarrow \infty$ we expect the distribution of allele
+frequencies to reach a steady-state $P_{ss}(f)$. For the 1D case we have studied
+so far, i.e. two alleles with frequencies $f$ and $1 - f$ this steady state is
+equivalent to an equilibrium distribution since detailed balance has to be
+satisfied. To emphasize this point let us rewrite \eref{eq_kimura_diffusion} as
+a statement of conservation of probability. This is
+\begin{equation}
+  \ddt{P(f, t)} = - {\partial J(f, t) \over \partial f},
+\end{equation}
+where $J(f, t)$ is the probability flux at point $f$. If we set the time
+derivative to zero there are only two options (in reality there is only one
+option for 1D systems):
+\begin{enumerate}
+  \item ${\partial J \over \partial f} = 0; \; J \neq 0 \Rightarrow$ Steady
+  state on a rotating or non-conservative field.
+  \item ${\partial J \over \partial f} = 0; \; J = 0 \Rightarrow$ Equilibrium
+  distribution that satisfies detailed balance.
+\end{enumerate}
+For our one-locus two-alleles case the second of these cases must be true.
+What this implies is that at steady state the flux $J_{ss}(f)$ takes the form
+\begin{equation}
+  J_{ss}(f) = - M(f) P_{eq}(f) + {\partial \over \partial f}
+  \left[ V(f) P_{eq}(f) \right] = 0,
+  \label{eq_flux_eq}
+\end{equation}
+where we use $P_{eq}(f)$ to define that this is not only a steady-state
+distribution, but an equilibrium distribution satisfying detailed balance.
+\eref{eq_flux_eq} is a first order homogeneous ordinary differential equation.
+We can solve it using the integration factor method. For this we define
+$G(f) \equiv V(f)P_{eq}(f)$. Substituting this into \eref{eq_flux_eq} gives
+\begin{equation}
+  {- M(f) \over V(f)} G(f) + {\partial \over \partial f} G(f) = 0.
+  \label{eq_ode_ss}
+\end{equation}
+In this form we define the integration factor to be
+\begin{equation}
+  h(f) = \exp \left( \int_0^f -{M(f') \over V(f')} \; df' \right).
+\end{equation}
+Notice that we chose the limits of integration to be $[0, f]$. This is because
+the fundamental theorem of calculus states that for any function $f(x)$ defined
+in $[a, b]$, the antiderivative $F(x)$ is defined as
+\begin{equation}
+  F(x) = \int_a^x f(x') \; dx',
+\end{equation}
+regardless of the lower limit of integration. Multiplying both sides of
+\eref{eq_ode_ss} by the integration factor $h(f)$ results in
+\begin{equation}
+  {- M(f) \over V(f)} G(f)
+  \exp \left( \int_0^f -{M(f') \over V(f')} \; df' \right)
+  + {\partial \over \partial f} G(f)
+  \exp \left( \int_0^f -{M(f') \over V(f')} \; df' \right)
+  = 0.
+  \label{eq_ode_int_fact}
+\end{equation}
+The specific form of the integration factor was chosen such that we could
+rewrite \eref{eq_ode_int_fact} as
+\begin{equation}
+  {d \over df}
+  \left[
+  \exp \left(
+  - \int_0^f {M(f') \over V(f')}
+  \right)G(f) \; df'
+  \right] = 0.
+\end{equation}
+Written in this form we can simply integrate both sides with respect to $f$ as
+\begin{equation}
+  \int_0^f {d \over df''}\left[
+  \exp \left(
+  - \int_0^{f''} {M(f') \over V(f')}
+  \right) G(f'')\; df'
+  \right] =
+  \int_0^f 0 \; df''
+\end{equation}
+Evaluating these integrals results in
+\begin{equation}
+  \exp \left(
+  - \int_0^{f} {M(f') \over V(f')}
+  \right) G(f)\; df' = C,
+\end{equation}
+where $C$ is an integration constant. Notice that for a specific interval
+$[a, b] \in \mathbb{R}$ the integral of zero is
+\begin{equation}
+  \int_a^b 0 dt = 0,
+\end{equation}
+but when we set the upper integration limit as an independent variable, what we
+are asking for is the antiderivative of zero which is a constant $C$.
+Substituting the definition of $G(f) = V(f) P_{eq}(f)$ gives
+\begin{equation}
+  \exp \left(
+  - \int_0^f df' \; {M(f') \over V(f')}\right)
+  V(f) P_{eq}(f) = C.
+\end{equation}
+We can then solve for the equilibrium allele distribution $P_{eq}(f)$ obtaining
+the result we were aiming for
+\begin{equation}
+  P_{eq}(f) = {C \over V(f)} \exp \left(
+  \int_0^f df' \; {M(f) \over V(f)}
+  \right).
+\end{equation}
+This is a Boltzmann-like distribution! The analogy with statistical mechanics
+becomes even more clear when we substitute specific functional forms for the
+directional term $M(f)$ and the diffusive term $V(f)$.
+
+\mrm{This will be follow up by analysis of different cases of equilibrium
+distributions.}
