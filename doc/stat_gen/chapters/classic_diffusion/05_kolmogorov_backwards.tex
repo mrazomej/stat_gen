@@ -13,13 +13,13 @@ equation. The name comes from the fact that compared to the forward equation,
 i.e. the Fokker-Planck equation we derived in the previous section, we need to
 integrate backwards in time.
 
-The main difference between the forward and the backward equation has to do with
-the emphasis on either the initial condition or the current state. As we showed
-in \secref{sec_master_eq} the master equation is a statement about the time
-evolution of the transition probability $P(f, t \mid f', t')$ for $t' \leq t$.
-Let us set $f' \equiv f_o$, $t' \equiv t_o$ to be the initial conditions of the
-random walker in allele frequency space. We then ask about the probability of
-being at frequency $f$ at time $t$, i.e. $P(f, t + \Dt \mid f_o, t_o)$. This
+The main difference between the forward and the backward equation has to do
+with the emphasis on either the initial condition or the current state. As we
+showed in \secref{sec_master_eq} the master equation is a statement about the
+time evolution of the transition probability $P(f, t \mid f', t')$ for $t' \leq
+t$. Let us set $f' \equiv f_o$, $t' \equiv t_o$ to be the initial conditions of
+the random walker in allele frequency space. We then ask about the probability
+of being at frequency $f$ at time $t$, i.e. $P(f, t + \Dt \mid f_o, t_o)$. This
 probability is related to all of the possible paths that the variable $f$ can
 take from the initial value $f_o$ at time $t_o$ to the value $f$ as shown
 schematically in \fref{fig05_00001}.
@@ -27,11 +27,11 @@ schematically in \fref{fig05_00001}.
 \begin{figure}[h!]
 	\centering \includegraphics[width=0.5\textwidth]
   {./fig/chapter_prob/05_00001.png}
-	\caption{\textbf{Schematic depiction of paths from $f_o$ to $f$}. The diagram
-  shows schematically different paths that the allele frequency can take from
-  an initial condition $f_o$ to a final point $f$ over a time $t$. The
-  time is arbitrarily split into two intervals $[t_o, t_o + \Dt]$ shaded in blue
-	and $[t_o + \Dt, t]$ shaded in green.}
+	\caption{\textbf{Schematic depiction of paths from $f_o$ to $f$}. The
+	diagram shows schematically different paths that the allele frequency can
+	take from an initial condition $f_o$ to a final point $f$ over a time $t$.
+	The time is arbitrarily split into two intervals $[t_o, t_o + \Dt]$ shaded
+	in blue and $[t_o + \Dt, t]$ shaded in green.}
   \label{fig05_00001}
 \end{figure}
 
@@ -47,9 +47,9 @@ write down the Chapman-Kolmogorov equation that we stated in
   P(f_o + r, t_o + \Dt \mid f_o, t_o),
 \end{equation}
 where the limits of the integral on the right hand side were set such that the
-quantity $f_o + r$ could cover the entire domain $[0, 1]$. For $\Dt$ very small,
-specifically $\Dt \ll |t - t_o|$ we can write down the transition matrix as we
-did for \eref{eq_transition_short_time}, obtaining
+quantity $f_o + r$ could cover the entire domain $[0, 1]$. For $\Dt$ very
+small, specifically $\Dt \ll |t - t_o|$ we can write down the transition matrix
+as we did for \eref{eq_transition_short_time}, obtaining
 \begin{equation}
 	P(f_o + r, t_o + \Dt \mid f_o, t_o) =
 	\delta(r) \left[
@@ -143,16 +143,17 @@ this expansion. Therefore we obtain
 	{\partial^k \over \partial f_o^k} P(f, t \mid f_o, t_o) r^k
 	\phi_{t_o}(f_o; r).
 \end{equation}
-For this expansion we do not have issues with the integration limits. This again
-happens because we are not expanding the master equation as we did for the
-forward equation. The zero$\tth$ order term in the expansion cancels with the
-first term on the right-hand side, obtaining
+For this expansion we do not have issues with the integration limits. This
+again happens because we are not expanding the master equation as we did for
+the forward equation. The zero$\tth$ order term in the expansion cancels with
+the first term on the right-hand side, obtaining
 \begin{equation}
 	\ddt{P(f, t \mid f_o, t_o)} =
 	\sum_{k = 1}^{\infty} {1 \over k!} {\partial^k \over \partial f_o^k}
 	P(f, t \mid f_o, t_o) \int_{-f_o}^{1 - f_o} dr\; \phi_{t_o}(f_o; r) r^k.
 \end{equation}
-We can again define the moments of the jump distribution $\phi_{t_o}(f_o; r)$ as
+We can again define the moments of the jump distribution $\phi_{t_o}(f_o; r)$
+as
 \begin{equation}
 	a^{(k)}(f_o, t_o) \equiv \int_{-f_o}^{1 - f_o} dr \;
 	r^k \phi_{t_o}(f_o; r).
@@ -184,10 +185,10 @@ equation
 \end{equation}
 This equation differs from the forward equation in several points:
 \begin{itemize}
-	\item The backward equation uses the conditional distribution with respect to
-	the initial condition $P(f, t \mid f_o, t_o)$.
-	\item The partial derivatives with respect to frequency are taken with respect
-	to the initial condition $f_o$ as well.
+	\item The backward equation uses the conditional distribution with respect
+	to the initial condition $P(f, t \mid f_o, t_o)$.
+	\item The partial derivatives with respect to frequency are taken with
+	respect to the initial condition $f_o$ as well.
 	\item The jump moments are outside of the partial derivatives just as in a
 	regular diffusion equation.
 	\item There is no minus sign for the directional term.
@@ -199,15 +200,15 @@ probability of an allele becoming fixed in the population.
 
 \subsection{Equlibrium distribution of the Kolmogorov backward equation}
 
-Rather than trying to solve directly this equation we can take the same approach
-as we took for the forward equation and solve for the steady-state distribution.
-For the case of the reverse equation the steady-state distribution will tell us
-about in the very long time limit what is the probability of ending at frequency
-$f$ given that the system started at a frequency $f_o$. For example we can ask
-about the probability of an allele going to fixation ($f = 1$) or extinction
-($f = 0$) given some initial frequency. To solve for the steady-state
-distribution first we set the time derivative of \eref{eq_kolmogorov_backward}
-to zero
+Rather than trying to solve directly this equation we can take the same
+approach as we took for the forward equation and solve for the steady-state
+distribution. For the case of the reverse equation the steady-state
+distribution will tell us about in the very long time limit what is the
+probability of ending at frequency $f$ given that the system started at a
+frequency $f_o$. For example we can ask about the probability of an allele
+going to fixation ($f = 1$) or extinction ($f = 0$) given some initial
+frequency. To solve for the steady-state distribution first we set the time
+derivative of \eref{eq_kolmogorov_backward} to zero
 \begin{equation}
 	0 = M(f_o) {\partial \over \partial f_o}P(f, t \mid f_o, t_o) +
 	{V(f_o) \over 2} {\partial^2 \over \partial f_o^2} P(f, t \mid f_o, t_o).

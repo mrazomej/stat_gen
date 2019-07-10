@@ -1,16 +1,16 @@
 % !TEX root = ../../main.tex
 \section{Fokker-Planck equation in population genetics}
 
-In the last section after we performed a Taylor expansion of the master equation
-we ended up with an equally complicated partial differential equation of
-infinite order. So in order to make any progress towards simplifying the
+In the last section after we performed a Taylor expansion of the master
+equation we ended up with an equally complicated partial differential equation
+of infinite order. So in order to make any progress towards simplifying the
 treatment of the equation what we will do is trade accuracy for simplicity.
 More concretely if our assumptions on the shape of the transition probability
 $\phi_t(f; r)$ being sharply peaked are to be taken seriously, we can then
 truncate the Kramers-Moyal expansion to include only up to second order
 derivatives. This truncated equation would locally approximate the time
-evolution of the probability distribution $P(f, t)$. \eref{eq_km_expansion} then
-is of the form
+evolution of the probability distribution $P(f, t)$. \eref{eq_km_expansion}
+then is of the form
 \begin{equation}
   \ddt{P(f, t)} = - {\partial \over \partial f}
   \left[
@@ -28,24 +28,24 @@ intriguing aspect of how to arrive to this equation is the seemingly arbitrary
 choice of truncating up to the second moment. The argument that is often thrown
 around is that the ``art'' of these truncations is to stop at the first
 non-vanishing moment. But for the specific case of the Kramers-Moyal expansion
-of the master equation there is a theorem - Pawula theorem - that shows that for
-the solutions of the Kramers-Moyal expansion to be interpreted as probability
-densities the expansion must either contain one, two or an infinite number of
-moments. So two sounds much better than infinite, doesn't it?
+of the master equation there is a theorem - Pawula theorem - that shows that
+for the solutions of the Kramers-Moyal expansion to be interpreted as
+probability densities the expansion must either contain one, two or an infinite
+number of moments. So two sounds much better than infinite, doesn't it?
 \mrm{Need to include appendix with the proof of Pawula theorem.}
 
 \subsection{Determination of the Fokker-Planck coefficients}
 
-The two jump moments in \eref{eq_fokker_planck}, $a^{(1)}$ and $a^{(2)}$ defined
-by \eref{eq_jump_mom} have a specific interpretation in population genetics.
-Here is where a little bit of a terminology conflict between physics and
-evolutionary biology comes into play. The directional term, i.e. the one with
-the first order derivative in \eref{eq_fokker_planck} is known in the physics
-literature as the drift term on a diffusion-like equation. This is confusing
-because in evolutionary theory the diffusive term, i.e. the one with the second
-derivative in \eref{eq_fokker_planck} is known as the genetic drift term. I will
-try to be as consistent as possible on these notes using the terms directional
-and diffusive to avoid confusion.
+The two jump moments in \eref{eq_fokker_planck}, $a^{(1)}$ and $a^{(2)}$
+defined by \eref{eq_jump_mom} have a specific interpretation in population
+genetics. Here is where a little bit of a terminology conflict between physics
+and evolutionary biology comes into play. The directional term, i.e. the one
+with the first order derivative in \eref{eq_fokker_planck} is known in the
+physics literature as the drift term on a diffusion-like equation. This is
+confusing because in evolutionary theory the diffusive term, i.e. the one with
+the second derivative in \eref{eq_fokker_planck} is known as the genetic drift
+term. I will try to be as consistent as possible on these notes using the terms
+directional and diffusive to avoid confusion.
 
 Coming back to the directional term, we define $M(f, t)$ to be
 \begin{equation}
@@ -53,8 +53,8 @@ Coming back to the directional term, we define $M(f, t)$ to be
 \end{equation}
 i.e. the mean of the jump distribution. As we will see in coming sections this
 term captures the effect of directional evolutionary forces such as selection,
-mutation and migration. For the diffusive term we define $V(f, t)$ as the second
-moment of the jump distribution
+mutation and migration. For the diffusive term we define $V(f, t)$ as the
+second moment of the jump distribution
 \begin{equation}
   V(f, t) \equiv \ee{r^2(t)} = \int_{-\infty}^{\infty} dr \; \phi_t(f; r) r^2.
 \end{equation}
@@ -85,19 +85,20 @@ of the main results in population genetics, the Kimura diffusion equation
   \right].
   \label{eq_kimura_diffusion}
 \end{equation}
-The power of diffusion theory is that in these two terms $M(f, t)$ and $V(f, t)$
-we can include all evolutionary forces acting simultaneously. The functional
-forms of these specific terms depend on the reproduction model used. We will
-explore that more specifically later on.
+The power of diffusion theory is that in these two terms $M(f, t)$ and $V(f,
+t)$ we can include all evolutionary forces acting simultaneously. The
+functional forms of these specific terms depend on the reproduction model used.
+We will explore that more specifically later on.
 
 \subsection{Equilibrium distribution}
 
 In the limit when $t \rightarrow \infty$ we expect the distribution of allele
-frequencies to reach a steady-state $P_{ss}(f)$. For the 1D case we have studied
-so far, i.e. two alleles with frequencies $f$ and $1 - f$ this steady state is
-equivalent to an equilibrium distribution since detailed balance has to be
-satisfied. To emphasize this point let us rewrite \eref{eq_kimura_diffusion} as
-a statement of conservation of probability. This is
+frequencies to reach a steady-state $P_{ss}(f)$. For the 1D case we have
+studied so far, i.e. two alleles with frequencies $f$ and $1 - f$ this steady
+state is equivalent to an equilibrium distribution since detailed balance has
+to be satisfied. To emphasize this point let us rewrite
+\eref{eq_kimura_diffusion} as a statement of conservation of probability. This
+is
 \begin{equation}
   \ddt{P(f, t)} = - {\partial J(f, t) \over \partial f},
 \end{equation}

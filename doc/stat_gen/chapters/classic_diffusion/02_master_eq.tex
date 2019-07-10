@@ -4,18 +4,19 @@
 One of the most powerful tools to study stochastic process is the so-called
 master equation. Originally devised to study the stochastic time evolution of
 chemical reactions - thereby christened the chemical master equation - this
-equation has found applications in many areas of chemistry, physics and biology.
-The equation is as statement about the time evolution of the transition
-probabilities of a Markov process. That is just a fancy way of saying that the
-master equation describes how the transition probabilities between states change
-over time.
+equation has found applications in many areas of chemistry, physics and
+biology. The equation is as statement about the time evolution of the
+transition probabilities of a Markov process. That is just a fancy way of
+saying that the master equation describes how the transition probabilities
+between states change over time.
 
 Let's derive this powerful equation starting from \eref{eq_chapman_kolmogorov}.
 For our case of study we want to understand how the frequency of a particular
-allele evolves over time, that is a stochastic process $F(t)$. Notice again that
-we distinguish between the stochastic process $F(t)$ formed by the ensemble of
-all possible realizations $f(t)$. The Chapman-Kolmogorov equation for this
-particular case with three time points $t_1 < t_2 < t_3$ takes the form
+allele evolves over time, that is a stochastic process $F(t)$. Notice again
+that we distinguish between the stochastic process $F(t)$ formed by the
+ensemble of all possible realizations $f(t)$. The Chapman-Kolmogorov equation
+for this particular case with three time points $t_1 < t_2 < t_3$ takes the
+form
 \begin{equation}
   P(f_3, t_3 \mid f_1, t_1) = \int_0^1 df_2\; P(f_3, t_3 \mid f_2, t_2)
                                           P(f_2, t_2 \mid f_1, t_1),
@@ -35,21 +36,22 @@ short time limit we can approximate the transition probability as
   \label{eq_transition_short_time}
 \end{equation}
 Let's break down this equation. We have split the possible things that can
-happen on a time window $\Dt$ into two possible cases. The first one represented
-by the first term on the right-hand side is the possibility that on this small
-time window no transition actually takes place. The $\delta$-function that is
-equal to 1 if and only if $f_2 = f_1$ is there to make sure that this term is
-added only when there was no transition during that time and $f_2$ remains the
-same as $f_1$. Inside the square brackets we wrote $1 - a^{(0)}(f_1, t) \Dt$,
-the reason for writing the term $a^{(0)}$ will become clear later on when we
-derive the so-called Fokker-Planck equation. Having a term of the form 1 -
-``something'' hints at the fact that this ``something'' must be the probability
-of transitioning somewhere else rather than staying at the same position. For
-the second term we wrote $\phi_t(f_2 \mid f_1)\Dt$ as the probability of
-transitioning outside of $f_1$ during this time window. Our function $\phi_t(f_2
-\mid f_1)$ represents the transition probability per unit time between $f_1$ and
-$f_2$ at time $t$. When we multiply this rate in time$^{-1}$ units by a small
-time window, we obtain the probability of transitioning from $f_1$ to $f_2$.
+happen on a time window $\Dt$ into two possible cases. The first one
+represented by the first term on the right-hand side is the possibility that on
+this small time window no transition actually takes place. The
+$\delta$-function that is equal to 1 if and only if $f_2 = f_1$ is there to
+make sure that this term is added only when there was no transition during that
+time and $f_2$ remains the same as $f_1$. Inside the square brackets we wrote
+$1 - a^{(0)}(f_1, t) \Dt$, the reason for writing the term $a^{(0)}$ will
+become clear later on when we derive the so-called Fokker-Planck equation.
+Having a term of the form 1 - ``something'' hints at the fact that this
+``something'' must be the probability of transitioning somewhere else rather
+than staying at the same position. For the second term we wrote $\phi_t(f_2
+\mid f_1)\Dt$ as the probability of transitioning outside of $f_1$ during this
+time window. Our function $\phi_t(f_2 \mid f_1)$ represents the transition
+probability per unit time between $f_1$ and $f_2$ at time $t$. When we multiply
+this rate in time$^{-1}$ units by a small time window, we obtain the
+probability of transitioning from $f_1$ to $f_2$.
 
 In order to understand better the term $a^{(0)}(f_1, t)$ in
 \eref{eq_transition_short_time} recall that a probability distribution must be
@@ -119,15 +121,15 @@ equation we were looking for
 This is the integro-differential equation known as the master equation. This
 continuous form of the master equation describes the time evolution of the
 transition probabilities $P(f, t \mid f_o, t_o)$, not the evolution of the
-probability of being at a specific state $P(f, t)$. However we can use the rules
-of probability to obtain such description by the following process: Suppose the
-stochastic process $F(t)$ describes the time evolution of the frequency.
-Assuming $F(t)$ is a stationary Markov process as described in
+probability of being at a specific state $P(f, t)$. However we can use the
+rules of probability to obtain such description by the following process:
+Suppose the stochastic process $F(t)$ describes the time evolution of the
+frequency. Assuming $F(t)$ is a stationary Markov process as described in
 \secref{sec_stationary_process} means that this process is completely
 characterized by two functions - the probability of having a particular value
-for the allele frequency $P_F(f)$ that does not depend on time, and a transition
-probability $P(f, t \mid f_o, t_o)$. We define a new, non-stationary process
-$F^*(t)$ for $t \geq t_o$ by setting
+for the allele frequency $P_F(f)$ that does not depend on time, and a
+transition probability $P(f, t \mid f_o, t_o)$. We define a new, non-stationary
+process $F^*(t)$ for $t \geq t_o$ by setting
 \begin{equation}
   P^*(f, t) = P(f, t\mid f_o, t_o),
 \end{equation}
@@ -189,7 +191,8 @@ continuous master equation is that is extremely complicated to work with. In
 general integro-differential equations are challenging mathematical objects to
 deal with. That is why in the next section we'll use the powerful tool of
 Taylor expansions to simplify the equation. But before that let's discuss some
-historic uses of the master equation that might look different to our derivation
+historic uses of the master equation that might look different to our
+derivation
 on \eref{eq_master_eq_full}.
 
 \subsection{Einstein-Kimura continuous master equations}
@@ -213,30 +216,30 @@ approach as Einstein of Taylor expanding the master equation, with the main
 difference being that for population genetics the transition probability
 $\phi_t(f \mid f')$ is a function of the current position $f'$ while in real
 space free diffusion is independent of the position. For this short section our
-objective is to show that our derivation of the master equation is equivalent to
-Einstein's and Kimura's proposed functional form. We will focus on Kimura's
+objective is to show that our derivation of the master equation is equivalent
+to Einstein's and Kimura's proposed functional form. We will focus on Kimura's
 version of the master equation since population genetics is what concerns us in
 these notes.
 
-Kimura's original derivation of the classic diffusion theory begins stating that
-the process of allele frequency changes can be stated as
+Kimura's original derivation of the classic diffusion theory begins stating
+that the process of allele frequency changes can be stated as
 \begin{equation}
   P(f, t + \Dt) = \int d\varepsilon \;
   P(f - \varepsilon, t) \phi_t(f \mid f - \varepsilon) \Dt,
   \label{eq_kimura_master}
 \end{equation}
 and that is it. While it took us a while to justify \eref{eq_master_eq_full},
-Kimura (and Einstein in the context of Brownian motion) simply stated the master
-equation as the starting point. There is nothing intrinsically wrong about
-having \eref{eq_kimura_master} as the starting point, but in this set of extend
-notes I thought it would be insightful to start from a more fundamental property
-of Markov processes and have the master equation be a consequence of such
-property. Also I would like to highlight that in all of the population genetics
-literature I have come across so far there has never been an explicit account of
-the integration limits on the equations. This includes Kimura's original work as
-well as textbooks. For this particular case the integration limits should go
-from $f$ to $f - 1$ such that the values of $f - \varepsilon$ range from 0 to 1.
-So the proper form of this integral is given by
+Kimura (and Einstein in the context of Brownian motion) simply stated the
+master equation as the starting point. There is nothing intrinsically wrong
+about having \eref{eq_kimura_master} as the starting point, but in this set of
+extend notes I thought it would be insightful to start from a more fundamental
+property of Markov processes and have the master equation be a consequence of
+such property. Also I would like to highlight that in all of the population
+genetics literature I have come across so far there has never been an explicit
+account of the integration limits on the equations. This includes Kimura's
+original work as well as textbooks. For this particular case the integration
+limits should go from $f$ to $f - 1$ such that the values of $f - \varepsilon$
+range from 0 to 1. So the proper form of this integral is given by
 \begin{equation}
   P(f, t + \Dt) = \int_{-f}^{f - 1} d\varepsilon \;
   P(f - \varepsilon, t) \phi_t(f \mid f - \varepsilon) \Dt.
@@ -249,9 +252,9 @@ Notice that at first glance \eref{eq_master_eq_full} and
 probability distribution changes given gains and losses of probability on state
 $f$, while \eref{eq_kimura_master_lim} only makes a statement of what would the
 probability distribution look like a tiny time step into the future by adding
-all the jumps \textbf{into} state $f$, but it doesn't include a term for all the
-jumps out of state $f$. To show that these equations are equivalent we have to
-do two things:
+all the jumps \textbf{into} state $f$, but it doesn't include a term for all
+the jumps out of state $f$. To show that these equations are equivalent we have
+to do two things:
 \begin{enumerate}
   \item On \eref{eq_master_eq_full} we notice that the second term on the
   right-hand side can be written as
@@ -271,9 +274,9 @@ do two things:
     \phi_t(f \mid f') P^*(f', t) - P^*(f, t).
     \label{eq_master_eq_rearange}
   \end{equation}
-  We are almost there! All is left is to notice that if we were to Taylor expand
-  the left-hand side of \eref{eq_kimura_master_lim} with respect to time up to
-  first order (as it is often done for time derivatives) we would obtain
+  We are almost there! All is left is to notice that if we were to Taylor
+  expand the left-hand side of \eref{eq_kimura_master_lim} with respect to time
+  up to first order (as it is often done for time derivatives) we would obtain
   \begin{equation}
     P(f, t + \Dt) = P(f, t) + \dt{P(f, t)}\Dt + \mathcal{O}(\Dt^2).
   \end{equation}

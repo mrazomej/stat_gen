@@ -1,8 +1,8 @@
 % !TEX root = ../../main.tex
 \section{Continuous-time continuous-state Markov process}
 
-The mathematical language to study diffusion theory, as with many other field of
-science is the language of probability theory. As Jaynes' famous book title
+The mathematical language to study diffusion theory, as with many other field
+of science is the language of probability theory. As Jaynes' famous book title
 suggested, \textit{probability theory is the logic of science}. It is through
 this formal language that we can assess how likely are specific events to
 happen. For example, later on we'll see that within the framework of diffusion
@@ -30,10 +30,10 @@ This is what we call a stochastic process, i.e. the time evolution of a random
 variable $X$. What we are doing here is considered notation abuse by the more
 scrupulous mathematicians. Usually people prefer to define a random process as
 $Y_X(t) \equiv f(X, t)$ to specify that we are studying how a random variable
-$X$ evolves over time $t$ without compromising the use of $X$ as the sole random
-variable, but I personally find that notation too strict. Most of our efforts in
-these notes will go into describing the probability distribution of such
-processes $P(x, t)$, i.e. the probability of our particular random process
+$X$ evolves over time $t$ without compromising the use of $X$ as the sole
+random variable, but I personally find that notation too strict. Most of our
+efforts in these notes will go into describing the probability distribution of
+such processes $P(x, t)$, i.e. the probability of our particular random process
 taking the specific value $X(t) = x(t)$. More on that later.
 
 Let's clarify all these subtle but important notation differences: The random
@@ -61,16 +61,16 @@ that happened to occur for a specific realization of the process.
   \label{fig01_00001}
 \end{figure}
 
-From the intuition presented in \fref{fig01_00001} we understand that all possible
-trajectories that our stochastic process can take are contained in the function
-$X(t)$. But some particular paths $x(t)$ are more likely to happen than others.
-This is what the language of probability theory allows us to compute! In
-principle we are interested in writing how likely it is for our process to take
-a specific value $x(t)$. This is described by the probability function $P(x, t)$
-which will be at the center of our endeavors for these notes. Once we define our
-stochastic process we might want to compute a moment of the distribution. Recall
-that for a continuous random variable $X$ with probability distribution
-$P_X(x)$, a moment is defined as
+From the intuition presented in \fref{fig01_00001} we understand that all
+possible trajectories that our stochastic process can take are contained in the
+function $X(t)$. But some particular paths $x(t)$ are more likely to happen
+than others. This is what the language of probability theory allows us to
+compute! In principle we are interested in writing how likely it is for our
+process to take a specific value $x(t)$. This is described by the probability
+function $P(x, t)$ which will be at the center of our endeavors for these
+notes. Once we define our stochastic process we might want to compute a moment
+of the distribution. Recall that for a continuous random variable $X$ with
+probability distribution $P_X(x)$, a moment is defined as
 \begin{equation}
   \ee{X^m} \equiv \int dx \; x^m P_X(x),
 \end{equation}
@@ -83,14 +83,14 @@ for a specific time point $t^*$ and compute the average at that time point
   \ee{X(t^*)^m} \equiv \int dx \; x^m P(x, t^*).
   \label{eq_process_moment}
 \end{equation}
-Notice that this is still not making a statement about the time evolution of our
-variable $X$, but rather committing to a specific time point $t^*$ and then
-computing the $m\tth$ moment at that time point. An intuitive way to think about
-this is to take a frequentist approach for probability. We imagine that we get
-to observe many many individual trajectories $\{x_1(t), \ldots x_n(t)\}$, as
-schematically shown in \fref{fig01_00002} then what \eref{eq_process_moment} is
-doing is computing the moment at a specific time point $t^*$ highlighted also
-in \fref{fig01_00002}.
+Notice that this is still not making a statement about the time evolution of
+our variable $X$, but rather committing to a specific time point $t^*$ and then
+computing the $m\tth$ moment at that time point. An intuitive way to think
+about this is to take a frequentist approach for probability. We imagine that
+we get to observe many many individual trajectories $\{x_1(t), \ldots
+x_n(t)\}$, as schematically shown in \fref{fig01_00002} then what
+\eref{eq_process_moment} is doing is computing the moment at a specific time
+point $t^*$ highlighted also in \fref{fig01_00002}.
 
 \begin{figure}[h!]
 	\centering \includegraphics[width=0.5\textwidth]
@@ -119,8 +119,8 @@ stochastic processes let's focus on a particular kind known as Markov process.
 
 \subsection{Markov processes}
 Of particular interested for our endeavor is the specific mathematical objects
-known as Markov processes. The Markovian property - named after Andrey Markov, a
-famous Russian mathematician from the XIX century - can be stated as follows:
+known as Markov processes. The Markovian property - named after Andrey Markov,
+a famous Russian mathematician from the XIX century - can be stated as follows:
 \begin{tcolorbox}
   A Marvov process is a type of stochastic process for which the transition
   states only depends on the current state.
@@ -137,12 +137,12 @@ previous visited states is of the form
 \end{equation}
 In other words, knowing the entire history of variable $x$ as it evolves over
 time does not help us predict the next time step. All we need to know is the
-last position. Markov processes are usually called memoryless stochastic process
-because of this property that the process doesn't remember the full trajectory
-when it ``decides'' where to move in the next step. Assuming a Markovian process
-is arguably one of the most widely used assumptions in all of science; from
-chemical reactions, to brownian motion of a particle, to our particular case of
-interest of allele frequencies changing over time.
+last position. Markov processes are usually called memoryless stochastic
+process because of this property that the process doesn't remember the full
+trajectory when it ``decides'' where to move in the next step. Assuming a
+Markovian process is arguably one of the most widely used assumptions in all of
+science; from chemical reactions, to brownian motion of a particle, to our
+particular case of interest of allele frequencies changing over time.
 
 In the classic formulation of diffusion theory we are concerned with a
 particular type of Markov processes. Diffusion theory works in the limit of
@@ -201,14 +201,15 @@ or \textit{fitness snowscapes} when there is a direct interaction between
 organisms modifying the environment, and the environment modifying the
 organisms.
 
-For simplicity we usually work with fixed fitness landscapes. This approximation
-is valid under certain time-scale regimes. For example, if the environment does
-change over time, but it does it on a time-scale much longer than what it takes
-for organisms to adapt, then we can pretend for our calculations that the
-environment is fixed, simplifying the math enormously. For this particular case
-where the mapping all the way from genotype to fitness is not a function of time
-is described by a type of stochastic chain known as \textbf{stationary Markov
-process}. The formal definition of a stationary Markov process can be stated as
+For simplicity we usually work with fixed fitness landscapes. This
+approximation is valid under certain time-scale regimes. For example, if the
+environment does change over time, but it does it on a time-scale much longer
+than what it takes for organisms to adapt, then we can pretend for our
+calculations that the environment is fixed, simplifying the math enormously.
+For this particular case where the mapping all the way from genotype to fitness
+is not a function of time is described by a type of stochastic chain known as
+\textbf{stationary Markov process}. The formal definition of a stationary
+Markov process can be stated as
 \begin{tcolorbox}
   A stationary Markov process is a memoryless process for which when computing
   the moments of the distribution, these are not affected by a time shift
@@ -222,17 +223,17 @@ In other words, for a stationary Markov process what matters are the absolute
 time differences $|t_2 - t_1|$ rather than the absolute time points. This
 implies that the probability of our random variable having a particular value
 $x$ is governed by a probability distribution $P_X(x)$ with no time dependence.
-Notice the difference between the statements: On the one hand if we want to know
-what is the probability of the random variable transitioning from a value $x$ to
-a value $x'$ all we need to know is how much time passed between both
+Notice the difference between the statements: On the one hand if we want to
+know what is the probability of the random variable transitioning from a value
+$x$ to a value $x'$ all we need to know is how much time passed between both
 instances of the random process. On the other hand if we are only interested in
 knowing what is the probability of the random variable taking a specific value
-there is no time dependence for a stationary process since this probability will
-not change over time. For the evolution questions we will be addressing here is
-easy to see how this implies a fixed adaptive landscape. Since the environment
-is fixed the mapping between genotype all the way to fitness will be the same
-regardless of the time at which the population acquires a specific allele
-frequency.
+there is no time dependence for a stationary process since this probability
+will not change over time. For the evolution questions we will be addressing
+here is easy to see how this implies a fixed adaptive landscape. Since the
+environment is fixed the mapping between genotype all the way to fitness will
+be the same regardless of the time at which the population acquires a specific
+allele frequency.
 
 Now we are ready to derive the master equation that will describe the time
 evolution of the probability distribution of allele frequencies.

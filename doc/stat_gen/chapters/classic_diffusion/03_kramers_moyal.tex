@@ -13,8 +13,8 @@ come up with an approximation that is good enough at least locally.
 
 To perform the expansion we need to express the transition probabilities
 $\phi_t(f \mid f')$ in \eref{eq_master_eq_full} as a function of the jump size
-$r \equiv f - f'$ rather than as conditional probabilities. We therefore express
-the transition probabilities as
+$r \equiv f - f'$ rather than as conditional probabilities. We therefore
+express the transition probabilities as
 \begin{equation}
   \phi_t(f \mid f') = \phi_t(f'; r).
   \label{eq_trans_jump_size}
@@ -56,14 +56,14 @@ negative sign that the Jacobian gave results in
   \phi_t(f; -r) P(f, t).
   \label{eq_master_eq_jump}
 \end{equation}
-Having showed what the integration limits \textit{should look like} we come back
-to the issue mentioned before. Nowhere in the literature I have come across
-there has been an explicit account for these limits. From Kimura to Rice to even
-Lassig, everyone seems to overlook what these integrations should be. In an
-attempt to be more explicit and thorough, while still readable and intuitive I
-wanted to show the limits for the integral in the master equation. Nevertheless
-these limits will have to be modify for our approximations as we will see in a
-bit.
+Having showed what the integration limits \textit{should look like} we come
+back to the issue mentioned before. Nowhere in the literature I have come
+across there has been an explicit account for these limits. From Kimura to Rice
+to even Lassig, everyone seems to overlook what these integrations should be.
+In an attempt to be more explicit and thorough, while still readable and
+intuitive I wanted to show the limits for the integral in the master equation.
+Nevertheless these limits will have to be modify for our approximations as we
+will see in a bit.
 
 As mentioned before, dealing with \eref{eq_master_eq_jump} is extremely
 complicated due to its integro-differential nature. To simplify things now we
@@ -81,11 +81,11 @@ following:
   \item Changes on $f$ occur via very small jumps; i.e. the transition
   probability $\phi_t(f; r)$ is sharply peaked as a function of $r$, but at the
   same time varies slowly enough with $f$. This is a reasonable assumption in
-  the limit of large population sizes since changes in the allele frequency will
-  be slow for this regime.
-  \item The probability of an allele frequency $P(f, t)$ also varies slowly with
-  $f$. This smoothness requirement for the distribution is necessary since the
-  expansion requires computing derivatives.
+  the limit of large population sizes since changes in the allele frequency
+  will be slow for this regime.
+  \item The probability of an allele frequency $P(f, t)$ also varies slowly
+  with $f$. This smoothness requirement for the distribution is necessary since
+  the expansion requires computing derivatives.
 \end{itemize}
 Both of these assumptions are necessary for the expansion to be valid at least
 locally around the point we expand at.
@@ -137,11 +137,12 @@ entire domain of values that the jump size could take. Before the expansion
 these limits allowed $\phi_t(f - r; r)$ to cover all jumps from any point
 between zero and one towards $f$; after the expansion this is not true anymore.
 For example if we were to substitute the lower integration limit into the
-transition probability $\phi_t(f; r = f-1)$, the resulting final position $f + f
--1 = 2f -1$ would be outside of the range $[0, 1]$ for all $f < 1$. That is why
-the Kramers-Moyal expansion is generally done for cases in which the boundaries
-are irrelevant, for example Einstein's Brownian motion problem didn't have this
-issue since the integration was taken from $-\infty$ to $\infty$.
+transition probability $\phi_t(f; r = f-1)$, the resulting final position $f +
+f -1 = 2f -1$ would be outside of the range $[0, 1]$ for all $f < 1$. That is
+why the Kramers-Moyal expansion is generally done for cases in which the
+boundaries are irrelevant, for example Einstein's Brownian motion problem
+didn't have this issue since the integration was taken from $-\infty$ to
+$\infty$.
 
 So how do we overcome this issue? The way to overcome this difficulty is to
 set the integration limits to some irrelevant boundary. But in order to do so
@@ -182,7 +183,8 @@ we are left with
   \right].
   \label{eq_almost_km}
 \end{equation}
-Let us now define the moments of the jump size distribution $\phi_t(f; r)$ to be
+Let us now define the moments of the jump size distribution $\phi_t(f; r)$ to
+be
 \begin{equation}
   a^{(k)}(f, t) \equiv \int_{-\infty}^\infty dr \; r^k \phi_t(f; r),
   \label{eq_jump_mom}
@@ -204,5 +206,5 @@ So far we converted the complicated integro-differential form of the master
 equation in \eref{eq_master_eq_jump} into an equally difficult partial
 differential equation of infinite order. Therefore our ability to handle the
 equation hasn't been simplified. In the next section we will deal with how to
-actually improve our chances of making sense of this by truncating the expansion
-up to second order.
+actually improve our chances of making sense of this by truncating the
+expansion up to second order.
