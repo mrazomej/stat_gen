@@ -1,0 +1,116 @@
+% !TEX root = ../../main.tex
+\subsection{Modeling the forces of evolution}
+
+The strength of diffusion theory mainly comes from the ability of being able to
+combine all forces of evolution - mutation, migration, selection and genetic
+drift - on a single theoretical description. Now that we have derived the
+equilibrium distribution of allele frequency for our one-locus two-allele system
+let's propose models for the functional form of the directional ($M(f)$) and the
+diffusive term ($V(f)$). We will focus on three forces, leaving migration out of
+the picture for now.
+
+\subsubsection{Frequency independent selection (haploids)}
+
+Because of our personal love for bacteria and the fact that many of the most
+interesting experiments in evolution have been and are being done in haploid
+organisms, we will first focus our efforts on these single-cell organisms.
+Haploidy refers to the biological feature of having a single copy of a
+chromosome. As bacteria divide into two cells they segregate (split) one copy of
+the genome to each of the daughter cells (extrachromosomal elements such as
+plasmids behave differently). This in contrast with diploidy where organisms
+such as humans that receive one copy of each chromosome form each parent.
+
+What haploidy means for our task of modeling selection on a one-locus two-allele
+system is that we only need to focus on the fitness value of each of the alleles
+without having to worry about combination of alleles. The concept of fitness,
+despite of being in the daily jargon of many biologists, is an elusive term not
+that easy to define. Roughly speaking we can think of fitness as the ability of
+an organism, or a population of organisms to survive and reproduce in the given
+ecological niche they occupy. The term ecology has to be included because
+fitness is a result of the interplay between organisms with their environment
+including all biotic and abiotic interactions. Having said that we will first
+begin with the simplest form of fitness, i.e. frequency independent selection.
+The term frequency independence simply refers to the assumption that the fitness
+of a particular allele does not depend on the relative abundance of such allele.
+This assumption could break down for cases such as some pathogenic bacteria that
+coordinate their attack via cell-to-cell communication known as quorum sensing.
+But we need to learn how to crawl before we decide to run.
+
+Let's assume that we have two versions of an allele $A$ and $a$. We define $f$
+to be the frequency of allele $A$ in the population, leaving $1 - f$ to be the
+frequency of allele $a$. Let us now assign fitness values $\omega_A$ and
+$\omega_a$ for each of the alleles. The way to interpret this parametrization of
+fitness is as the expected number of individuals carrying an allele in the next
+time point. So if at time $t$ we have $N_A(t)$ organisms carrying allele $A$,
+for a time $t + \Dt$ we expect to have $N_A(t + \Dt) = N_A(t) \omega_A$
+organisms. In other words we assume exponential growth of the organisms of the
+form
+\begin{equation}
+  \dt{N_A} = N_A(t) \omega_A,
+\end{equation}
+with an equivalent equation for $N_a(t)$. At any point in time the average
+fitness $\bar{\omega}$ is then given by
+\begin{equation}
+  \bar{\omega}(t) = f(t) \omega_A + (1 - f(t)) \omega_a.
+\end{equation}
+
+We can compute the allele frequency $f$ at time $t + \Dt$ as
+\begin{equation}
+  f(t + \Dt) = {N_A(t) \omega_A \over N_A(t) \omega_A + N_a(t) \omega_a}.
+\end{equation}
+If we multiply and divide this by $N\tot \equiv N_A + N_a$, the total number of
+organisms we then have
+\begin{equation}
+  f(t + \Dt) = {f(t) \omega_A \over f(t) \omega_A + (1 - f(t)) \omega_a},
+  \label{eq_f_tdt}
+\end{equation}
+since $f = N_A/N\tot$ and $(1 - f) = N_a/N\tot$. Notice that the denominator in
+\eref{eq_f_tdt} is no other than the average fitness $\bar{\omega}$, so we can
+then write
+\begin{equation}
+  f(t + \Dt) = {f(t) \omega_A \over \bar{\omega}(t)}.
+\end{equation}
+The change in allele frequency $\Delta f(t, \Dt)$ is then given by
+\begin{equation}
+  \Delta f(t, \Dt) = f(t + \Dt) - f(t) = {f(t) \omega_A \over \bar{\omega}(t)}
+  - f(t) = {f(t) (\omega_A - \bar{\omega}) \over \bar{\omega}}.
+\end{equation}
+If we substitute the definition of $\bar{\omega}$ for the numerator we then have
+\begin{equation}
+  \Delta f(t, \Dt) = {f(t) (\omega_A - f(t) \omega_A -
+  (1 - f(t)) \omega_a) \over
+  \bar{\omega}}.
+\end{equation}
+This can be simplified as
+\begin{align}
+  \Delta f(t, \Dt) &= {f(t) \omega_A - f^2(t)\omega_A
+  - f(t) \omega_a + f^2(t) \omega_a \over \bar{\omega}(t)}, \\
+  &= {\omega_A f(t)(1 - f(t)) - \omega_a f(t) (1 - f(t)) \over
+  \bar{\omega}(t)}, \\
+  &= {f(t)(1 - f(t))(\omega_A - \omega_a) \over \bar{\omega}(t)}.
+\end{align}
+Let's take a look at how the mean fitness $\bar{\omega}$ changes as the
+frequency $f$ changes, i.e.
+\begin{equation}
+  {d \bar{\omega} \over df} = {d \over df }
+  \left(f \omega_A(t) + (1 - f) \omega_a(t)  \right) =
+  \omega_A - \omega_a.
+\end{equation}
+With this result we can rewrite the change in allele frequency $\Delta f$ as
+\begin{equation}
+  \Delta f = {f (1 - f) \over \bar{\omega}} {d \bar{\omega} \over df} =
+  f (1 - f) {d \ln \bar{\omega} \over df}.
+\end{equation}
+This is the functional form we will plug into our directional term $M(f)$ to
+capture the effects of selection on the allele distribution.
+
+\subsubsection{Mutation}
+
+One of the ingredients for evolution to take place is the constant appearance
+of genetic variability. The raw material for evolution to act on is the
+appearance of new mutations in the population. This is what we will model now
+for our one-locus two-allele case. Might be a little counterintuitive at first
+that the mutation term will be include as part of our directional term in the
+diffusion equation $M(f)$ since it is common to think of mutations at random
+events with no particular direction. But if we think of mutations between both
+alleles $A$ and $a$ as a simple first-order chemical reaction of the form
