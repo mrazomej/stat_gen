@@ -25,6 +25,16 @@ graphicspath.tex
 *.toc
 *blx.bib
 
+#Ignore LaTeX-to-HTML garbage.
+*.4ct
+*.4tc
+*.css
+*.html
+*.idv
+*.lg
+*.tmp
+*.xref
+
 #Ignore images
 *.jpg
 *.tif*

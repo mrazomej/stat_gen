@@ -89,13 +89,22 @@
 % Time derivative
 \newcommand{\dt}[1]{{d{#1} \over dt}}
 \newcommand{\ddt}[1]{{\partial{#1} \over \partial t}}
+% Time step
+\newcommand{\Dt}{\Delta t}
+% tot as in total number of organisms
+\newcommand{\tot}{_{\text{tot}}}
+% Euler's number e
+\newcommand{\E}{\mathrm{e}}
+
+% Specify i^th entry
+\newcommand{\tth}{^{\text{th}}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Begin document
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \title{
-\textbf{Statistical Gentics Notes}
+\textbf{Statistical Genetics Notes}
 }
 % Authors
 \author[1]{Manuel Razo-Mejia}
@@ -121,8 +130,14 @@ Pasadena, CA 91125, USA}
 %% MAIN TEXT
 \maketitle % Set title for paper
 
-% Chapter 1. Probability theory
-\input{./chapters/chapter_prob/01_markov_process}
-\input{./chapters/chapter_prob/02_master_eq}
+% Chapter 1. Deterministic evolution
+\input{./chapters/deterministic_evo/01_selection.tex}
+
+% Chapter 2. Classic diffusion theory
+\input{./chapters/classic_diffusion/01_markov_process}
+\input{./chapters/classic_diffusion/02_master_eq}
+\input{./chapters/classic_diffusion/03_kramers_moyal}
+\input{./chapters/classic_diffusion/04_fokker_planck}
+\input{./chapters/classic_diffusion/05_kolmogorov_backwards}
 
 \end{document}
