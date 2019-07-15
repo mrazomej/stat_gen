@@ -1,0 +1,22 @@
+\subsubsection{Mutation}
+
+One of the ingredients for evolution to take place is the constant appearance
+of genetic variability. After all, the raw material for evolution to act on is
+the appearance of new mutations in the population. This is what we will model
+now for our one-locus two-allele case. It might be a little counterintuitive at
+first that the mutation term must be include as part of our directional term in
+the diffusion equation $M(f)$ since it is common to think of mutations at
+random events with no particular direction. But if we think of mutations
+between both alleles $A$ and $a$ as a simple first-order chemical reaction of
+the form
+\begin{equation}
+  A \xrightleftharpoons[\mu_{A\rightarrow a}]
+  {\,\mu_{a\rightarrow A}\,} a,
+\end{equation}
+where $\mu_{A\rightarrow a}$ is the mutation rate from $A$ to $a$ and 
+$\mu_{a\rightarrow A}$ is the mutation rate from $a$ to $A$, we can see that 
+mutation must be a directional term. For example if the forward rate 
+$\mu_{A\rightarrow a}$ was much larger than the reverse rate 
+$\mu_{a\rightarrow A}$, then this would push the population towards high $A$
+frequency. Even if the mutation rates were equal, this would still direct the
+population towards an interemediate allele frequency.
