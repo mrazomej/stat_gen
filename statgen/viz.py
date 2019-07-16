@@ -90,4 +90,4 @@ def pboc_style_bokeh():
                 'offset': 2,
             }}}
 
-            return theme_json
+    return theme_json
