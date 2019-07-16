@@ -4,7 +4,7 @@
 insights contained in his book \textit{On the origin of Species}. The complete 
 title of the book \textit{On the Origin of Species by Means of Natural
 Selection, or the Preservation of Favoured Races in the Struggle for Life}
-pretty well captures Darwin's proposed mechanism for how evolution takes place.
+captures perfectly Darwin's proposed mechanism for how evolution takes place.
 Nowadays with the so-called modern-synthesis of evolution we know that natural
 selection is not the only evolutionary force that shapes living organisms. In
 the coming sections we will mathematically explore mechanisms such as mutation
@@ -13,7 +13,7 @@ most beautiful} that live in our planet. But we will begin with the first
 evolutionary force discovered by Darwin and Alfred Russel Wallace.
 
 Natural selection is intrinsically associated with the concept of fitness. The
-frase "survival of the fittest" first used by Darwin guided and still guides
+frase ``survival of the fittest'' first used by Darwin guided and still guides
 the way that biologists think about the evolution of many organisms. But
 despite the fact that fitness is part of the daily jargon of many biologists,
 it is a subtle and highly debated concept. After all what defines the ability
@@ -26,7 +26,7 @@ including all biotic and abiotic interactions.
 
 It is common both in theory and in experiments to use the relative growth rates
 of organisms, i.e. the speed at which they can reproduce and generate
-offspring, as a proxy for scientists. This is a convenient approximation both
+offspring, as a proxy for fitness. This is a convenient approximation both
 for experiments and for theory, but one should not lose track of the imperant
 context dependence on the fitness. Just because redwoods have an average life
 span of 500-700 years and a very low growth rate that doesn't mean they are not
@@ -78,8 +78,8 @@ The time dynamics for $N\tot(t)$ are of the form
   \dt{N\tot(t)} = \bar{f}(t) N\tot(t),
 \end{equation}
 where $\bar{f}(t)$ is the average fitness of the population at time $t$. We can
-deduce its value if we notice that the dynamics of the total population is just
-the sum of the individual alleles dynamics, i.e.
+deduce the value of $\bar{f}(t)$ if we notice that the dynamics of the total
+population is just the sum of the individual alleles dynamics, i.e.
 \begin{equation}
   \dt{N\tot(t)} = \dt{N_A(t)} + \dt{N_a(t)} = f_a N_A(t) + f_a N_a(t).
 \end{equation}
@@ -88,7 +88,7 @@ each allele to obtain
 \begin{equation}
   \dt{N\tot(t)} = N\tot(t) \left[ f_a x(t) + f_a (1 - x(t)) \right].
 \end{equation}
-This shows us that the average fitness $\bar{f}$ is of the form
+This shows us that the average fitness $\bar{f}(t)$ is of the form
 \begin{equation}
   \bar{f}(t) = f_a x(t) + f_a (1 - x(t)).
 \end{equation}
@@ -205,7 +205,10 @@ Finally we can solve for the allele frequency
   x = {x_o \E^{st} \over 1 + x_o \left( \E^{st} - 1 \right)}.
 \end{equation}
 This is the solution of the logistic equation. \fref{fig01_01} shows this
-solution for different selection coefficients.
+solution for different selection coefficients. We can se that in this
+deterministic regime as long as there is a fitness difference, i.e. as long as
+$s \neq 0$, the fate of the population is set. If $s > 0$ allele $A$ will go
+into fixation. Otherwise if $s < 0$ the allele will go extinct.
 
 \begin{figure}[h!]
 	\centering \includegraphics
