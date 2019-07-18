@@ -1,22 +1,76 @@
-\subsubsection{Mutation}
+% !TEX root = ../../main.tex
+\section{Mutation}
 
 One of the ingredients for evolution to take place is the constant appearance
 of genetic variability. After all, the raw material for evolution to act on is
 the appearance of new mutations in the population. This is what we will model
-now for our one-locus two-allele case. It might be a little counterintuitive at
-first that the mutation term must be include as part of our directional term in
-the diffusion equation $M(f)$ since it is common to think of mutations at
-random events with no particular direction. But if we think of mutations
-between both alleles $A$ and $a$ as a simple first-order chemical reaction of
-the form
+now for our one-locus two-allele case. We will think of mutations between both
+alleles $A$ and $a$ as a simple first-order chemical reaction of the form
 \begin{equation}
-  A \xrightleftharpoons[\mu_{A\rightarrow a}]
-  {\,\mu_{a\rightarrow A}\,} a,
+  A \xrightleftharpoons[\mu_{a\rightarrow A}]
+  {\,\mu_{A\rightarrow a}\,} a,
 \end{equation}
 where $\mu_{A\rightarrow a}$ is the mutation rate from $A$ to $a$ and 
-$\mu_{a\rightarrow A}$ is the mutation rate from $a$ to $A$, we can see that 
-mutation must be a directional term. For example if the forward rate 
-$\mu_{A\rightarrow a}$ was much larger than the reverse rate 
-$\mu_{a\rightarrow A}$, then this would push the population towards high $A$
-frequency. Even if the mutation rates were equal, this would still direct the
-population towards an interemediate allele frequency.
+$\mu_{a\rightarrow A}$ is the mutation rate from $a$ to $A$. A useful way to
+interpret the mutation rate is as the probability of switching allele per unit
+time. That means that on a small time window $\Dt$ a single organism has a
+probability of switching from $A$ to $a$ of
+\begin{equation}
+  P(A \rightarrow a \mid \Dt) = \mu_{a\rightarrow A} \Dt.
+\end{equation}
+What this implies is that for this small time window every organism carrying
+allele $A$ flips a coin with probability $\mu_{A\rightarrow a} \Dt$ of getting
+heads. If the outcome of the coin is indeed heads, the allele is mutated,
+otherwise it remains the same. So when writing a differential equation to model
+this phenomena we must multiply the number of organisms by the mutation rate.
+This results in a differential equation for the change in number of organisms
+carrying $A$ of the form
+\begin{equation}
+  \dt{N_A} = 
+  \underbrace{- \mu_{A\rightarrow a} N_A(t)}_{\text{loss } A \rightarrow a}
+  \underbrace{- \mu_{a\rightarrow A} N_a(t)}_{\text{gain } a \rightarrow A},
+\end{equation}
+where, as indicated, we must account for number of organisms that ``exit'' the
+$A$ allele state by mutating to $a$, and the number of organisms that ``enter''
+the state by mutating from $a$ to $A$. We can write an equivalent equation for
+$N_a$ where the signs would be simply flipped since every time an organism is
+lost from allele $A$ it must be gained in allele $a$, and vice versa. This
+implies that for this case where there is only mutation $N\tot$ does not change
+over time since the number of organisms is assumed to be conserved.
+
+Let us now write the dynamics that we actually care about, that is the allele
+frequency $x(t)$. This takes the form
+\begin{equation}
+  \dt{x} = \dt{}\left( {N_A \over N\tot} \right) = {1 \over N\tot} \dt{N_A},
+\end{equation}
+where we took $N\tot$ out of the derivative since for this case we said it
+doesn't change over time. Substituting the dynamics of $N_A$ and using the
+definition of the allele frequency we obtain
+\begin{equation}
+  \dt{x} = - \mu_{A\rightarrow a} x + \mu_{a\rightarrow A} (1 - x),
+\end{equation}
+where we again suppressed the time dependence for notation simplicity. This
+equation can also be solved analytically, but before getting to that solution
+let's take a look at the steady state value. After all we know that these are
+deterministic dynamics so the allele fraction will reach a unique point. The
+steady state results in
+\begin{equation}
+  \mu_{A\rightarrow a} x = \mu_{a\rightarrow A} (1 - x).
+\end{equation}
+If we now solve for $x$ this results in
+\begin{equation}
+  x = {\mu_{a\rightarrow A} \over \mu_{a\rightarrow A} + \mu_{A\rightarrow a}}.
+\end{equation}
+So the equilibrium allele frequency for this case is given by the rate of how
+often strains mutate from $a$ to $A$ divided by the sum of those rates. That
+means that in the limit where it is much more likely to mutate from $a$ to $A$,
+i.e. $\mu_{a\rightarrow A} \gg \mu_{A\rightarrow a}$ the allele frequency goes
+to one, i.e. allele $A$ will go into fixation. The opposite would be true for a
+much larger mutation rate from $A$ to $a$.
+
+\subsection{Mutation-Selection Balance}
+
+Now that we have modeled two of the three forces we will be using throughout
+the notes let us try to put them together. Since both selection and mutation
+are directional deterministic forces we can easily add them together for our
+allele frequency dynamics and still obtain a deterministic answer
