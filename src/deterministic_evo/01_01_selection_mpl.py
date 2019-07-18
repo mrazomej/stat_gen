@@ -43,7 +43,7 @@ def x_select(t, x_init, s_select):
 time = np.linspace(0, 1000, 500)
 
 # Define ranges of selection to chose
-s_select = [-0.01, 0.005, 0, 0.005, 0.01]
+s_select = [-0.01, -0.005, 0, 0.005, 0.01]
 
 # Define initial frequency
 x_init = 0.1
@@ -67,7 +67,8 @@ plt.xlabel('time (a.u.)')
 plt.ylabel('allele frequency')
 
  # Add legend
-plt.legend(title='$s$')
+plt.legend(title='$s$', fontsize=6)
 
 # Save figure
-plt.savefig(figdir + '01_01_deterministic_select.png', bbox_inches='tight')
+plt.savefig(figdir + '01_01_deterministic_select.png', bbox_inches='tight',
+            dpi=300)
