@@ -37,7 +37,9 @@ def pboc_style_mpl():
           'grid.linestyle': '-',
           'grid.linewidth': 0.5,
           'grid.color': '#ffffff',
-          'legend.fontsize': 8}
+          'legend.fontsize': 8,
+          'figure.dpi': 300,
+          'savefig.dpi': 300}
     plt.rc('text.latex', preamble=r'\usepackage{sfmath}')
     plt.rc('xtick.major', pad=-1)
     plt.rc('ytick.major', pad=-1)
