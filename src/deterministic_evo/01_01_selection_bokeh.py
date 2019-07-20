@@ -153,7 +153,8 @@ f_tag.write(tag)
 f_tag.close()
 
 # Define output file
-bokeh.plotting.output_file(figdir + filename + '.html')
+bokeh.plotting.output_file(figdir + filename + '.html',
+                           title='deterministic selection')
 
 # Save stand-alone HTML figure
 bokeh.io.save(fig)
