@@ -48,6 +48,7 @@ doesn't change over time. Substituting the dynamics of $N_A$ and using the
 definition of the allele frequency we obtain
 \begin{equation}
   \dt{x} = - \mu_{A\rightarrow a} x + \mu_{a\rightarrow A} (1 - x),
+  \label{eq_mutation_ode}
 \end{equation}
 where we again suppressed the time dependence for notation simplicity. This
 equation can also be solved analytically, but before getting to that solution
@@ -68,9 +69,86 @@ i.e. $\mu_{a\rightarrow A} \gg \mu_{A\rightarrow a}$ the allele frequency goes
 to one, i.e. allele $A$ will go into fixation. The opposite would be true for a
 much larger mutation rate from $A$ to $a$.
 
+Now let's go ahead and solve the actual dynamics. \eref{eq_mutation_ode} is an
+ordinary differential equation that can again be solved by separation of
+variables. This is
+\begin{equation}
+  \int {dx \over - \mu_{A\rightarrow a} x + \mu_{a\rightarrow A} (1 - x)} = 
+  \int dt.
+\end{equation}
+Evaluating the integrals results in
+\begin{equation}
+  -{1 \over \mu_{a\rightarrow A} + \mu_{A\rightarrow a}}
+  \ln \left( \mu_{A\rightarrow a} x - \mu_{a\rightarrow A} (1 - x) \right) =
+  t + C,
+  \label{eq_mutation_int}
+\end{equation}
+where $C$ is an integration constant. Using again the initial condition where
+$x(t=0) = x_o$ we have that
+\begin{equation}
+  C =  -{1 \over \mu_{a\rightarrow A} + \mu_{A\rightarrow a}}
+  \ln \left( \mu_{A\rightarrow a} x_o - \mu_{a\rightarrow A} (1 - x_o) \right).
+\end{equation}
+Using this result we can rewrite \eref{eq_mutation_int} as
+\begin{equation}
+  -{1 \over \mu_{a\rightarrow A} + \mu_{A\rightarrow a}}
+  \ln \left( { \mu_{A\rightarrow a} x - \mu_{a\rightarrow A} (1 - x)
+    \over
+  \mu_{A\rightarrow a} x_o - \mu_{a\rightarrow A} (1 - x_o)} \right) = t.
+\end{equation}
+Exponentiating both sides gives
+\begin{equation}
+  \left( { \mu_{A\rightarrow a} x - \mu_{a\rightarrow A} (1 - x)
+    \over
+  \mu_{A\rightarrow a} x_o - \mu_{a\rightarrow A} (1 - x_o)} \right)^{
+    -{1 \over \mu_{a\rightarrow A} + \mu_{A\rightarrow a}}} = \E^t
+\end{equation}
+If we now elevate both sides to the $\mu_{a\rightarrow A} + \mu_{A\rightarrow
+a}$ power we obtain
+\begin{equation}
+  \left( { \mu_{A\rightarrow a} x - \mu_{a\rightarrow A} (1 - x)
+    \over
+  \mu_{A\rightarrow a} x_o - \mu_{a\rightarrow A} (1 - x_o)} \right) =
+  \E^{- (\mu_{a\rightarrow A} + \mu_{A\rightarrow a}) t}.
+\end{equation}
+We can now solve for $x$ and after a little bit of algebra we find that
+\begin{equation}
+  x(t) = {\mu_{a \rightarrow A} 
+  \over 
+  \mu_{a\rightarrow A} + \mu_{A\rightarrow a}} -
+  {\left[  
+  \mu_{a\rightarrow A} -
+  (\mu_{a\rightarrow A} + \mu_{A\rightarrow a}) x_o
+  \right] 
+  \E^{- (\mu_{a\rightarrow A} + \mu_{A\rightarrow a}) t}.
+  \over
+  \mu_{a\rightarrow A} + \mu_{A\rightarrow a}}.
+\end{equation}
+A little tricky solution, but we can easily see that in the limit when $t
+\rightarrow \infty$ the second term on the right hand side goes to zero,
+leaving behind the steady state solution we found before. \fref{fig_01_02}
+shows the dynamics for different ratios of the mutation rates. We can see that
+as expected the allele frequency converges to the steady state value we
+derived.
+
+\begin{figure}[h!]
+	\centering \includegraphics
+  {../fig/deterministic_evo/01_02_deterministic_mut.png}
+	\caption{\textbf{Allele frequency for mutation only}. The different curves
+	show allele frequency dynamics for a one-locus two-allele system mutating
+	between both alleles. The steady state allele frequency is set by the ratio
+	of the mutation rates.}
+  \label{fig_01_02}
+\end{figure}
+
 \subsection{Mutation-Selection Balance}
 
 Now that we have modeled two of the three forces we will be using throughout
 the notes let us try to put them together. Since both selection and mutation
 are directional deterministic forces we can easily add them together for our
-allele frequency dynamics and still obtain a deterministic answer
+allele frequency dynamics and still obtain a deterministic answer. The dynamics
+for our single-locus two-allele system subject to both selection and mutation
+are given by the sum of the dynamics for each case. This is
+\begin{equation}
+  \dt{x} = s x (1 - x) - 
+\end{equation}

@@ -13,12 +13,12 @@ most beautiful} that live in our planet. But we will begin with the first
 evolutionary force discovered by Darwin and Alfred Russel Wallace.
 
 Natural selection is intrinsically associated with the concept of fitness. The
-frase ``survival of the fittest'' first used by Darwin guided and still guides
+phrase ``survival of the fittest'' first used by Darwin guided and still guides
 the way that biologists think about the evolution of many organisms. But
 despite the fact that fitness is part of the daily jargon of many biologists,
 it is a subtle and highly debated concept. After all what defines the ability
-of an organism to survive the challenges that suround them are completely
-context depdendet. Roughly speaking we can think of fitness as the ability of
+of an organism to survive the challenges that surround them are completely
+context dependent. Roughly speaking we can think of fitness as the ability of
 an organism, or a population of organisms to survive and reproduce in the given
 ecological niche they occupy. The term ecology has to be included because
 fitness is a result of the interplay between organisms with their environment
@@ -27,7 +27,7 @@ including all biotic and abiotic interactions.
 It is common both in theory and in experiments to use the relative growth rates
 of organisms, i.e. the speed at which they can reproduce and generate
 offspring, as a proxy for fitness. This is a convenient approximation both
-for experiments and for theory, but one should not lose track of the imperant
+for experiments and for theory, but one should not lose track of the relevant
 context dependence on the fitness. Just because redwoods have an average life
 span of 500-700 years and a very low growth rate that doesn't mean they are not
 fit. Having said that we will first begin with the simplest form of fitness,
@@ -64,7 +64,7 @@ where $f_a$ is the growth rate of organisms carrying this allele on a
 particular fixed environment. As discussed before we will use this growing rate
 as a proxy for fitness; this is sometimes called Malthusian fitness after
 Thomas Robert Malthus, a famous scholar whose assay on population growth
-inspired boyh Darwin and Wallace. We can define an equivalent equation for
+inspired both Darwin and Wallace. We can define an equivalent equation for
 allele $a$ with fitness $f_a$.
 
 We are not particularly interested in tracking the absolute number of organisms
@@ -109,7 +109,7 @@ where $\dot{N}_x = dN_x / dt$. Substituting the time derivatives gives
   \dt{x} = {[f_a N_A(t)] N\tot(t) \over N\tot(t)^2} -
            {N_A(t)[\bar{f}(t) N\tot(t)] \over N\tot(t)^2}.
 \end{equation}
-We now substitute the defintion of the average fitness to obtain
+We now substitute the definition of the average fitness to obtain
 \begin{equation}
   \dt{x} = {f_a N_A(t) - 
            N_A(t) [f_a x(t) + f_a (1 - x(t))]
@@ -146,7 +146,7 @@ method to compute
   \int {dx \over x(1 - x)} = \int dt \;s,
   \label{eq_sep_var}
 \end{equation}
-where we drop thte time dependence for notation convenience. For the left-hand
+where we drop the time dependence for notation convenience. For the left-hand
 side of the equation we can use partial fractions and write
 \begin{equation}
   {1 \over x(1 - x)} = {A \over x} + {B \over (1 - x)}
@@ -186,7 +186,7 @@ side
 \begin{equation}
   x + x {x_o \over 1 - x_o}\E^{st} = {x_o \over 1 - x_o}\E^{st}.
 \end{equation}
-Factorizing $x$ resutls in
+Factorizing $x$ results in
 \begin{equation}
   x \left( 1 + {x_o \over 1 - x_o}\E^{st} \right) = {x_o \over 1 - x_o}\E^{st}.
 \end{equation}
@@ -204,7 +204,7 @@ Finally we can solve for the allele frequency
 \begin{equation}
   x = {x_o \E^{st} \over 1 + x_o \left( \E^{st} - 1 \right)}.
 \end{equation}
-This is the solution of the logistic equation. \fref{fig01_01} shows this
+This is the solution of the logistic equation. \fref{fig_01_01} shows this
 solution for different selection coefficients. We can se that in this
 deterministic regime as long as there is a fitness difference, i.e. as long as
 $s \neq 0$, the fate of the population is set. If $s > 0$ allele $A$ will go
@@ -214,9 +214,9 @@ into fixation. Otherwise if $s < 0$ the allele will go extinct.
 	\centering \includegraphics
   {../fig/deterministic_evo/01_01_deterministic_select.png}
   \caption{\textbf{Allele frequency for deterministic selection}. The 
-	different cuves show allele frequency dynamics for a one-locus two-allele
+	different curves show allele frequency dynamics for a one-locus two-allele
 	system. The fate of the allele is determined by the value of the selection
 	coefficient, but the speed to fixation depends both on the initial allele
 	frequency and on the magnitude of the selection coefficient.}
-  \label{fig01_01}
+  \label{fig_01_01}
 \end{figure}
