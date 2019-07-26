@@ -81,9 +81,9 @@ organisms carrying each allele at time $t$. For the frequency-independent
 selection we have that the change in number of organisms with allele $A$ is of
 the form
 \begin{equation}
-  \dt{N_A} = f_a N_A(t),
+  \dt{N_A} = f_A N_A(t),
 \end{equation}
-where $f_a$ is the growth rate of organisms carrying this allele on a
+where $f_A$ is the growth rate of organisms carrying this allele on a
 particular fixed environment. As discussed before we will use this growing rate
 as a proxy for fitness; this is sometimes called Malthusian fitness after
 Thomas Robert Malthus, a famous scholar whose assay on population growth
@@ -104,16 +104,16 @@ where $\bar{f}(t)$ is the average fitness of the population at time $t$. We can
 deduce the value of $\bar{f}(t)$ if we notice that the dynamics of the total
 population is just the sum of the individual alleles dynamics, i.e.
 \begin{equation}
-  \dt{N\tot(t)} = \dt{N_A(t)} + \dt{N_a(t)} = f_a N_A(t) + f_a N_a(t).
+  \dt{N\tot(t)} = \dt{N_A(t)} + \dt{N_a(t)} = f_A N_A(t) + f_a N_a(t).
 \end{equation}
 We can factorize an $N\tot(t)$ out of the equation and use the frequencies of
 each allele to obtain
 \begin{equation}
-  \dt{N\tot(t)} = N\tot(t) \left[ f_a x(t) + f_a (1 - x(t)) \right].
+  \dt{N\tot(t)} = N\tot(t) \left[ f_A x(t) + f_a (1 - x(t)) \right].
 \end{equation}
 This shows us that the average fitness $\bar{f}(t)$ is of the form
 \begin{equation}
-  \bar{f}(t) = f_a x(t) + f_a (1 - x(t)).
+  \bar{f}(t) = f_A x(t) + f_a (1 - x(t)).
 \end{equation}
 
 The dynamics that interest us are the dynamics of the allele frequency. We only
@@ -129,27 +129,27 @@ Using the chain rule this gives
 \end{equation}
 where $\dot{N}_x = dN_x / dt$. Substituting the time derivatives gives
 \begin{equation}
-  \dt{x} = {[f_a N_A(t)] N\tot(t) \over N\tot(t)^2} -
+  \dt{x} = {[f_A N_A(t)] N\tot(t) \over N\tot(t)^2} -
            {N_A(t)[\bar{f}(t) N\tot(t)] \over N\tot(t)^2}.
 \end{equation}
 We now substitute the definition of the average fitness to obtain
 \begin{equation}
-  \dt{x} = {f_a N_A(t) - 
+  \dt{x} = {f_A N_A(t) - 
            N_A(t) [f_a x(t) + f_a (1 - x(t))]
           \over N\tot(t)},
 \end{equation}
 This can be further simplify by using the definition of the allele frequency to
 obtain
 \begin{equation}
-  \dt{x} f_a x(t) - x(t)[f_a x(t) + f_a (1 - x(t))].
+  \dt{x} = f_A x(t) - x(t)[f_A x(t) + f_a (1 - x(t))].
 \end{equation}
 Grouping terms by the fitness values results in
 \begin{equation}
-  \dt{x} = f_a x(t)(1 - x(t)) - f_a x(t)(1 - x(t))
+  \dt{x} = f_A x(t)(1 - x(t)) - f_a x(t)(1 - x(t))
   = s x(t)(1 - x(t)),
   \label{eq_freq_dynamics_selection}
 \end{equation}
-where we defined $s = f_a - f_a$, the fitness difference between both alleles,
+where we defined $s = f_A - f_a$, the fitness difference between both alleles,
 also known as the selection coefficient. This differential equation is very
 revealing; what it is telling us is that for there to be changes in the
 population structure, i.e. for the population to evolve there needs to be a
