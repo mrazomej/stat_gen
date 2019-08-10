@@ -55,13 +55,13 @@ process to take a specific value $x(t)$. This is described by the probability
 function $P(x, t)$ which will be at the center of our endeavors for these
 notes. Once we define our stochastic process we might want to compute a moment
 of the distribution. Recall that for a continuous random variable $X$ with
-probability distribution $P_X(x)$, a moment is defined as
+probability density function $P_X(x)$, a moment is defined as
 \begin{equation}
   \ee{X^m} \equiv \int dx \; x^m P_X(x),
 \end{equation}
 where the integral is taken over all the values that $X$ can take. Notice that
 our notation for the distribution $P_X(x)$ highlights that we are only
-considering the values that $X$ can take, no time involved so far. For our case
+considering values that $X$ can take, no time involved so far. For our case
 in which the random variable can change over time what we have to do is settle
 for a specific time point $t^*$ and compute the average at that time point
 \begin{equation}
@@ -99,7 +99,7 @@ and $t_2$ covary with each other. This quantity is defined as
 \mrm{Not sure if I will need to include this if we don't ge to compute moments
 that refer to multiple time points.}
 
-Having understand conceptually what stochastic process are and what they allow
+Having understood conceptually what stochastic process are and what they allow
 us to do we are ready to see their practical implementation. The stochastic
 process literature is rich and very formal, but it can be daunting to grasp the
 basics of it. For our purposes we will take a more pragmatic approach rather
@@ -109,7 +109,7 @@ model stochastic processes will be the Langevin equation.
 \subsection{The Langevin equation}
 
 Since Robert Brown systematically described the jiggling of particles of
-organic and inorganic origin under the microscope, physicists of the scale of
+organic and inorganic origin under the microscope, physicists of the caliber of
 Einstein and Smoluchowski tried to describe the phenomena. The first success
 came from Einstein himself who in 1905 published a microscopic description of
 Brownian motion at the time where the atomic structure of matter was still up
@@ -152,8 +152,8 @@ the true innovative feature of \eref{eq_langevin} is $\xi(t)$, sometimes called
 white noise. This term is itself a random variable, meaning that it is defined
 by a probability distribution $P(\xi, t)$. The reason this term is called white
 noise is because the noise is assumed to have mean zero, i.e. fluctuations that
-randomly increase the value of $x(t)$ cancel on average with fluctuations that
-tend to decrease $x(t)$. This is mathematically expressed as
+randomly increase the value of $x(t)$ cancel with fluctuations that tend to
+decrease $x(t)$ on average. This is mathematically expressed as
 \begin{equation}
   \ee{\xi(t)} = 0.
 \end{equation}
@@ -234,18 +234,19 @@ The integration factor allows us to rewrite the left-hand side as
 \end{equation}
 We can now integrate both sides of the equation from 0 to $t$ to obtain
 \begin{equation}
-  \int_0^t {d \over ds}\left[ x(s) \E^{\gamma s} \right] =
-  \int_0^t {d \over ds} \E^{\gamma s} \xi(s).
+  \int_0^t ds\; {d \over ds}\left[ x(s) \E^{\gamma s} \right] =
+  \int_0^t ds \; \E^{\gamma s} \xi(s).
 \end{equation}
 For the left-hand side we can use the fundamental theorem of calculus to cancel
 the integral with the derivative, obtaining
 \begin{equation}
   \left. x(s)\E^{\gamma s} \right\vert_{0}^{t} =
-  \int_0^t \E^{\gamma s} \xi(s).
+  \int_0^t ds \; \E^{\gamma s} \xi(s).
 \end{equation}
 Substituting the integration limits and solving for $x(t)$ results in
 \begin{equation}
-  x(t) = x_o \E^{-\gamma t} + \int_0^t ds e^{-\gamma (t - s)} \xi(s).
+  x(t) = x_o \E^{-\gamma t} + 
+  \int_0^t ds \; \E^{-\gamma (t - s)} \xi(s).
   \label{eq_random_walk_sol}
 \end{equation}
 For the second term on the right-hand side we cannot give a close-form
@@ -253,11 +254,13 @@ analytical solution given the probabilistic nature of $\xi(t)$. But what we can
 do is describe the statistical properties of the trajectories. For example
 let's compute the average position of the random walker $\ee{x(t)}$
 \begin{equation}
-  \ee{x(t)} = \ee{x_o \E^{-\gamma t} + \int_0^t ds e^{-\gamma (t - s)} \xi(s)}.
+  \ee{x(t)} = \ee{x_o \E^{-\gamma t} + 
+  \int_0^t ds \; \E^{-\gamma (t - s)} \xi(s)}.
 \end{equation}
 Using the linearity of expected values this gives
 \begin{equation}
-  \ee{x(t)} = x_o \E^{-\gamma t} +\int_0^t ds e^{-\gamma (t - s)} \ee{\xi(s)}.
+  \ee{x(t)} = x_o \E^{-\gamma t} +
+  \int_0^t ds \; \E^{-\gamma (t - s)} \ee{\xi(s)}.
 \end{equation}
 Since we defined the mean noise $\ee{\xi(t)} = 0$ this results in
 \begin{equation}
@@ -265,3 +268,89 @@ Since we defined the mean noise $\ee{\xi(t)} = 0$ this results in
 \end{equation}
 From this result we can see that the memory of the initial position decays
 exponentially with a typical time-scale of $\tau = {1 \over \gamma}$.
+
+To compute the second moment $\ee{x(t)^2}$ we need to square 
+\eref{eq_random_walk_sol}. This results in
+\begin{equation}
+  x(t)^2 =
+  \left( x_o \E^{-\gamma t} + 
+  \int_0^t ds \; \E^{-\gamma (t - s)} \xi(s) \right)^2.
+\end{equation}
+Expanding the binomial on the right-hand side gives
+\begin{equation}
+   x(t)^2 = x_o^2 \E^{-2\gamma t} +
+   2 x_o \E^{-\gamma t} 
+   \left( \int_0^t ds\; \E^{-\gamma (t - s)} \xi(s) \right) +
+   \left( \int_0^t ds \; \E^{-\gamma(t - s)} \xi(s) \right)^2.
+\end{equation}
+We can rewrite the squared integral term as a double integral of the form
+\begin{equation}
+   \left( \int_0^t ds \; \E^{-\gamma(t - s)} \xi(s) \right)^2 =
+   \int_0^t ds \; \int_0^t dz\; \E^{-\gamma (t - s)} \E^{-\gamma (t - z)}
+   \xi(s) \xi(z).
+\end{equation}
+Using this result and taking the expected value results in
+\begin{equation}
+  \ee{x(t)^2} = \ee{
+   x_o^2 \E^{-2\gamma t} +
+   2 x_o \E^{-\gamma t} 
+   \left( \int_0^t ds\; \E^{-\gamma (t - s)} \xi(s) \right) +
+   \int_0^t ds \; \int_0^t dz\; \E^{-\gamma (t - s)} \E^{-\gamma (t - z)}
+   \xi(s) \xi(z)
+  }.
+\end{equation}
+We can again use the linearity of expected value. The first term on the
+right-hand side involves no random variable $\xi(t)$, so it comes out of the
+expected value operator. The second term involves a term $\ee{\xi(s)}$ which we
+defined to be zero, so this term will cancel. For the last term we have a term
+of the form $\ee{\xi(s)\xi(z)}$ - we defined this to be $2D \delta (s - z)$.
+Let's substitute these results
+\begin{equation}
+  \ee{x(t)^2} = 
+   x_o^2 \E^{-2\gamma t} +
+   \int_0^t ds\; \int_0^t dz\; \E^{-\gamma (t-s)} \E^{-\gamma (t-z)}
+   (2D \delta(s - t)).
+\end{equation}
+Now that we have this $\delta$-function in place we can evaluate the integral
+over the values of $z$. The $\delta$-function means that only when $z = s$ this
+term contributes; in practice this means that the result from the integral over
+$z$ is to substitute all values of $z$ for $s$. This looks like
+\begin{equation}
+  \ee{x(t)^2} = 
+   x_o^2 \E^{-2\gamma t} +
+   2D \int_0^t ds \; \E^{-\gamma (t-s)} \E^{-\gamma (t-s)}.
+\end{equation}
+Factorizing the terms with exponent $t$ and taking them out of the integral
+results in
+\begin{equation}
+   \ee{x(t)^2} = 
+   x_o^2 \E^{-2\gamma t} +
+   2D \E^{-2 \gamma t} \int_0^t ds\; \E^{2 \gamma s}.
+\end{equation}
+Evaluating the integral results in
+\begin{equation}
+   \ee{x(t)^2} = 
+   x_o^2 \E^{-2\gamma t} +
+   {2D \E^{-2\gamma t} \over 2 \gamma}\left( \E^{2 \gamma t} - 1 \right).
+\end{equation}
+This can be simplified to
+\begin{equation}
+   \ee{x(t)^2} = 
+   x_o^2 \E^{-2\gamma t} +
+   {D \over \gamma} \left( 1 - \E^{-2 \gamma t} \right).
+\end{equation}
+
+Now that we have the first and the second moment we can compute the variance of
+our random walk. Recall that the variance is given by
+\begin{equation}
+  \sigma^2(x(t)) = \ee{x(t)^2} - \ee{x(t)}^2.
+\end{equation}
+Using the results we derived results in
+\begin{equation}
+  \sigma^2(x(t)) = x_o^2 \E^{-2\gamma t} +
+   {D \over \gamma} \left( 1 - \E^{-2 \gamma t} \right) -
+   x_o^2 \E^{-2\gamma t} = 
+   {D \over \gamma} \left( 1 - \E^{-2 \gamma t} \right).
+\end{equation}
+In the limit where $t \rightarrow \infty$ we the find that the variance
+converges to $\sigma^2(x) = {D \over \gamma}$.
