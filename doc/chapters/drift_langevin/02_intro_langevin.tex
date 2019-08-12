@@ -31,22 +31,22 @@ describes the values that our random variable $X$ can take over time. Following
 up with the die example this could be rolling a die every so often and keeping
 track of the numbers that we obtain. This process $X(t)$ represents the
 \textbf{ensemble} of possible realizations $x(t)$. In other words, as shown
-schematically in \fref{fig01_00001} $X(t)$ describes all possible values that
+schematically in \fref{fig02_02_01} $X(t)$ describes all possible values that
 the quantity $X$ can take over time, and $x(t)$ describes a specific trajectory
 that happened to occur for a specific realization of the process.
 
 \begin{figure}[h!]
 	\centering \includegraphics[width=0.5\textwidth]
-  {../fig/drift_langevin/01_00001.jpeg}
+  {../fig/drift_langevin/02_02_01_ensemble_realization.jpeg}
 	\caption{\textbf{Schematic description of a stochastic process}. The shaded
 	region describes the stochastic process $X(t)$, i.e. all the possible values
 	that the random variable $X$ can take over time. The particular realization
 	$x(t)$ describes a specific trajectory that the random variable $X$ took in
 	one particular case.}
-  \label{fig01_00001}
+  \label{fig02_02_01}
 \end{figure}
 
-From the intuition presented in \fref{fig01_00001} we understand that all
+From the intuition presented in \fref{fig02_02_01} we understand that all
 possible trajectories that our stochastic process can take are contained in the
 function $X(t)$. But some particular paths $x(t)$ are more likely to happen
 than others. This is what the language of probability theory allows us to
@@ -73,19 +73,19 @@ our variable $X$, but rather committing to a specific time point $t^*$ and then
 computing the $m\tth$ moment at that time point. An intuitive way to think
 about this is to take a frequentist approach for probability. We imagine that
 we get to observe many many individual trajectories $\{x_1(t), \ldots
-x_n(t)\}$, as schematically shown in \fref{fig01_00002} then what
+x_n(t)\}$, as schematically shown in \fref{fig02_02_02} then what
 \eref{eq_process_moment} is doing is computing the moment at a specific time
-point $t^*$ highlighted also in \fref{fig01_00002}.
+point $t^*$ highlighted also in \fref{fig02_02_02}.
 
 \begin{figure}[h!]
 	\centering \includegraphics[width=0.5\textwidth]
-  {../fig/drift_langevin/01_00002.jpeg}
+  {../fig/drift_langevin/02_02_02_average_langevin.jpeg}
 	\caption{\textbf{Computing a moment of a distribution $\ee{X(t)}$}. Multiple
   realizations of the stochastic process $\{x_1(t), \ldots x_n(t)\}$ are
   highlighted. In the limit where we have many many of these trajectories we
   can then compute a moment of the distribution $P(x, t^*)$ for a specific time
   point $t^*$. \mrm{need better caption}}
-  \label{fig01_00002}
+  \label{fig02_02_02}
 \end{figure}
 
 There is no reason why we have to limit ourselves to a single time point $t^*$.
@@ -187,6 +187,11 @@ To get a better feeling for how this equation works let's work through a very
 simple example.
 
 \subsubsection{Biased random walk}
+\mrm{For now I took a ``synthetic'' example not directly connected to what we
+will do in population genetics. The nice thing about this example is that can
+be analitically solved very easily, so it illustrates how one works with
+Langevin equations. But I might consider using a more relevant example in
+further iterations if this feels too out of place.}
 
 In order to see what we can do with this type of mathematical object let's
 define the a very simple Langevin equation that includes both a directional
@@ -265,6 +270,7 @@ Using the linearity of expected values this gives
 Since we defined the mean noise $\ee{\xi(t)} = 0$ this results in
 \begin{equation}
   \ee{x(t)} = x_o \E^{-\gamma t}.
+  \label{eq_walker_mean}
 \end{equation}
 From this result we can see that the memory of the initial position decays
 exponentially with a typical time-scale of $\tau = {1 \over \gamma}$.
@@ -344,6 +350,7 @@ Now that we have the first and the second moment we can compute the variance of
 our random walk. Recall that the variance is given by
 \begin{equation}
   \sigma^2(x(t)) = \ee{x(t)^2} - \ee{x(t)}^2.
+  \label{eq_walker_var}
 \end{equation}
 Using the results we derived results in
 \begin{equation}
@@ -353,4 +360,51 @@ Using the results we derived results in
    {D \over \gamma} \left( 1 - \E^{-2 \gamma t} \right).
 \end{equation}
 In the limit where $t \rightarrow \infty$ we the find that the variance
-converges to $\sigma^2(x) = {D \over \gamma}$.
+converges to $\sigma^2(x) = {D \over \gamma}$. Let's now test these results
+with numerical integration of the Langevin equation.
+
+\subsubsection{Numerical integration of Langevin equations}
+
+In order to test the validity of our analytical results we can generate several
+realizations of the trajectories, i.e. a list of $\{x_1(t), x_2(t), \ldots \}$
+that follow the dynamics defined by \eref{eq_random_walk_langevin} to then
+compute from such realizations the mean and variance. The simplest method to
+numerically integrate the Langevin equation is to write it as a discrete
+difference equation. This means we rewrite \eref{eq_random_walk_langevin} as
+\begin{equation}
+  {x(t + \Dt) + x(t) \over \Dt} = -\gamma x(t) + \xi(t).
+\end{equation}
+Then if we solve for $x(t + \Dt)$ we find our recipe to numerically integrate
+the equation. This is
+\begin{equation}
+  x(t + \Dt) = x(t) - \gamma x(t) \Dt + \xi(t) \Dt.
+  \label{eq_discrete_walker}
+\end{equation}
+So for a given small time interval $\Dt$ that is significantly smaller compared
+to the relevant time scale set by $\gamma$ and $D$ we can use Euler's method to
+integrate the dynamics. The difference is that at each time step we can
+generate a pseudo-random number that follows the statistical properties that we
+defined for $\xi(t)$.
+
+\fref{fig02_02_03} shows the result of this numerical procedure. The light gray
+lines show different realizations of the dynamics generated with
+\eref{eq_discrete_walker}, the black lines are the resulting mean $\pm$
+standard deviation of the trajectories, while the shaded blue are shows the
+same mean $\pm$ standard deviation as computed from our analytical results in
+\eref{eq_walker_mean} and \eref{eq_walker_var}. The agreement is strikingly
+good, and the more realizations of the dynamics we were to include in our
+computation, the better the agreement would be.
+
+\begin{figure}[h!]
+	\centering \includegraphics[width=0.5\textwidth]
+  {../fig/drift_langevin/02_02_03_langevin_euler.png}
+	\caption{\textbf{Numerical integration of the Langevin equation}. Comparison of simulation-based results with analytical results. Random trajectories that evolve according to \eref{eq_random_walk_langevin} were generated. From these the mean and standard deviation of the trajectories were computed (black lines). Analytical results for the mean $\pm$ standard deviation are shown as shaded blue area. For these simulations $x_o= 2$, $\gamma = 1$, $D = 1.5$, and $\Dt = 0.001$}
+  \label{fig02_02_03}
+\end{figure}
+
+Having introduced the concept of random processes and the simple but yet
+powerful Langevin equation our goal will now be to work out the mathematical
+description of the full time evolution of the probability distribution of
+possible realizations of the random process $P(x, t)$. Our goal will be to
+derive the famous partial differential equation known as the Fokker-Plank
+equation that exactly describes this time evolution.
