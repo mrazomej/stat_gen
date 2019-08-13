@@ -1,0 +1,70 @@
+\subsection{From Langevin dynamics to Fokker-Planck equation}
+
+Now that we built a description for the probability distribution over the
+ensemble of trajectories that a Markovian stochastic process can follow we are
+left with the task of how to define the Fokker-Plank equation coefficients from
+the stochastic dynamics defined by the Langevin equation. Specifically in its
+more general form we derived \eref{eq_fokker_planck} to depend on three things:
+the probability distribution of allele frequencies $P(f, t)$, and the two jump
+moments $a^{(1)}(f, t)$ and $a^{(2)}(f, t)$, where these moments are given by
+\eref{eq_jump_mom}. A lot of the population genetics literature use a
+non-mathematical argument to directly assign the values of these coefficients
+given the either deterministic or stochastic nature of the terms. For example,
+given the dynamics that we defined in \secref{seq_determ_mut} for the
+deterministic form of mutation and selection (\eref{eq_sel_mut}) most texts
+would directly assign these dynamics to be the first jump moment
+$a^{(1)}(f,t)$. There is nothing intrinsically wrong with this approach, since
+this is actually the correct answer, but it is not necessarily obvious that
+this should be the case especially since \eref{eq_fokker_planck} requires us to
+take a derivative with respect to $x$ of this coefficient multiplied by the
+allele frequency distribution.
+
+We will take a more formal approach and find how the terms in the Langevin
+dynamics that we defined in \secref{sec_langevin_intro} connect to the
+coefficients of the Fokker-Planck equation. To do so first we introduce a
+quantity defined as
+\begin{equation}
+    \mathcal{A}(x; \tau, t) \equiv \int_{-\infty}^\infty dx\;
+    (x - x')^m P(x, t + \tau \mid x', t), \; \text{for } m \geq 1.
+    \label{eq_compute_jump_mom}
+\end{equation}
+This is nothing else than the average of $[X(t + \tau) - X(t)]^m$ with a sharp
+initial condition $X(t) = x'$. So this is the average difference between two
+time points $t$ and $t + \tau$ of the dynamics defined by our Langevin
+dynamics. In other words $\mathcal{A}(y; \tau, t)$ can be expressed as
+\begin{equation}
+    \mathcal{A}(x; \tau, t) \equiv 
+    \ee{\left[X(t + \tau) - X(t)\right]^m \mid X(t) = x'}.
+\end{equation}
+For small $\tau$ we can rewrite the conditional distribution $P(x, t + \tau
+\mid x', t)$ using \eref{eq_transition_short_time}. Using this we can rewrite
+\eref{eq_compute_jump_mom} as
+\begin{equation}
+    \mathcal{A}(x; \tau, t) = \int_{-\infty}^\infty dx\; (x - x')^m
+    \underbrace{
+    \left[ \delta(x - x') \left( 1 - a^{(0)}(x', t) \tau \right) +
+    \phi_t(x \mid x')\tau \right]
+    }_{P(x, t + \tau \mid x', t)}.
+\end{equation}
+Distributing the integrals results in
+\begin{align}
+    \mathcal{A}(x; \tau, t) &= 
+    \int_{-\infty}^\infty dx\; (x - x')^m \delta(x - x') \\
+    &- \int_{-\infty}^\infty dx\; (x - x')^m \delta(x - x') a^{(0)}(x', t) 
+    \tau \\ 
+    &+ \int_{-\infty}^\infty dx\; (x - x')^m \phi_t(x \mid x') \tau.
+\end{align}
+For the first two terms we have that the $\delta$-function is one only when $x
+= x'$ while the term $(x - x')^m$ is zero for this particular case. Therefore
+both of these terms cancel and we are only left with
+\begin{equation}
+    \mathcal{A}(x; \tau, t) = \int_{-\infty}^\infty dx\; (x - x')^m 
+    \phi_t(x \mid x') \tau.
+\end{equation}
+This is non other than the definition of the jump moments times $\tau$ given by
+\eref{eq_jump_mom} since we defined $r \equiv x - x'$ and $\phi_t(x'; r) \equiv
+\phi_t(x \mid x')$. Now we can see the connection; we started defining
+$\mathcal{A}(x; \tau, t)$ to be the average displacement defined by our
+Langevin dynamics over a small time interval $\tau$, and we found that this is
+connected to the jump moments that define the coefficients of the Fokker-Planck
+equation.
