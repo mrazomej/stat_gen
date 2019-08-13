@@ -1,5 +1,5 @@
 % !TEX root = ../../main.tex
-\section{Kolmogorov backward equation}
+\subsection{Kolmogorov backward equation}
 
 So far with the Fokker-Planck equation we have been able to ask questions about
 the entire distribution of allele frequencies accounting for the interplay of
@@ -22,20 +22,20 @@ the random walker in allele frequency space. We then ask about the probability
 of being at frequency $f$ at time $t$, i.e. $P(f, t + \Dt \mid f_o, t_o)$. This
 probability is related to all of the possible paths that the variable $f$ can
 take from the initial value $f_o$ at time $t_o$ to the value $f$ as shown
-schematically in \fref{fig05_00001}.
+schematically in \fref{fig_03_05_01_reverse_kolmogorov}.
 
 \begin{figure}[h!]
 	\centering \includegraphics[width=0.5\textwidth]
-  {./fig/chapter_prob/05_00001.png}
+  {../fig/classic_diffusion/03_05_01_schematic_reverse.png}
 	\caption{\textbf{Schematic depiction of paths from $f_o$ to $f$}. The
 	diagram shows schematically different paths that the allele frequency can
 	take from an initial condition $f_o$ to a final point $f$ over a time $t$.
 	The time is arbitrarily split into two intervals $[t_o, t_o + \Dt]$ shaded
 	in blue and $[t_o + \Dt, t]$ shaded in green.}
-  \label{fig05_00001}
+  \label{fig_03_05_01_reverse_kolmogorov}
 \end{figure}
 
-\subsection{Derivation of the Kolmogorov backward equation}
+\subsubsection{Derivation of the Kolmogorov backward equation}
 
 To derive the backward equation we can arbitrarily split the time interval in
 two intervals $[t_o, t_o + \Dt]$ and $[t_o + \Dt, t]$. With this we can then
@@ -198,7 +198,7 @@ complement each other allowing us to tackle different questions. In particular
 the backward equation can address the very interesting question of what is the
 probability of an allele becoming fixed in the population.
 
-\subsection{Equlibrium distribution of the Kolmogorov backward equation}
+\subsubsection{Equilibrium distribution of the Kolmogorov backward equation}
 
 Rather than trying to solve directly this equation we can take the same
 approach as we took for the forward equation and solve for the steady-state
