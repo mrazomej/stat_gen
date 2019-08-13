@@ -1,5 +1,36 @@
 % !TEX root = ../../main.tex
-\section{Continuous-time continuous-state Markov process}
+\section{Classic diffusion theory in population genetics}
+
+The pioneers of the modern-synthesis of evolution established solid foundations
+for how to understand the different forces at play that shape the structure of
+evolving populations. But combining all of these forces into a single
+description remained challenging. In other words, describing the outcome of an
+evolutionary process that combined deterministic processes such as selection
+and mutation with the stochasticity of evolution presented a challenging
+mathematical puzzle. The first attempt to put everything together came from
+Sewall Wright himself, but the achievement of formalizing the theory is often
+associated with a remarkable Japanese population genetics by the name of Motoo
+Kimura.
+
+Kimura jump to fame when in 1968 he presented his \textit{Neutral theory of
+molecular evolution}. In here Kimura argued that associating every biological
+aspect to the outcome of a selection-driven process was too much of a naive
+picture. We previously mentioned that Wright thought about genetic drift as an
+important component of the evolutionary process, but in this 1968 paper Kimura
+argued that it was \textit{the} dominant force in evolution.
+
+But what really brings us here to study part of Kimura's scientific legacy is
+his use of diffusion equations in the context of population genetics. What we
+know now as Kimura's diffusion theory is nothing else than the application of
+the mathematical tools developed for the study of physical diffusion of
+particles to evolving populations. Diffusion is one of several transcendent
+concepts in physics that demonstrate the power of universal concepts. The same
+equation that describes how the concentration of a chemical species changes as
+a function of space and time is used to describe how the temperature profile of
+an object changes as a function of space and time as well. Furthermore, as we
+will study in this section, the same mathematical language can describe
+diffusion on an abstract space of allele frequency. So as Joe Blitzstein likes
+to say: ``nouns change, but the verbs remain the same.''
 
 The mathematical language to study diffusion theory, as with many other field
 of science is the language of probability theory. As Jaynes' famous book title
@@ -7,124 +38,17 @@ suggested, \textit{probability theory is the logic of science}. It is through
 this formal language that we can assess how likely are specific events to
 happen. For example, later on we'll see that within the framework of diffusion
 theory is possible to ask what is the probability of an allele being fixed in
-the population given the evolutionary forces acting on it. But before jumping
-into the main topic of this section we need to build up our mathematical
-toolkit. In particular we need a way to describe how a quantity of interest -
-allele frequency in our case - evolves over time. This is where the language of
-stochastic processes becomes very handy to have.
-
-\subsection{Stochastic process}
-
-When describing how a quantity evolves over time with a non-deterministic
-trajectory we often use what is commonly known as stochastic processes. For
-example imagine we are keeping track of a random variable $X$ that changes over
-time. This stochastic variable $X$ could describe things such as count of a
-specific chemical species, average price of an asset over a period of time,
-frequency of a particular allele on a population, etc. To describe how this
-variable $X$ changes over time we could in principle list an infinite number of
-functions
-\begin{equation}
-  X(t) = f(X, t).
-\end{equation}
-This is what we call a stochastic process, i.e. the time evolution of a random
-variable $X$. What we are doing here is considered notation abuse by the more
-scrupulous mathematicians. Usually people prefer to define a random process as
-$Y_X(t) \equiv f(X, t)$ to specify that we are studying how a random variable
-$X$ evolves over time $t$ without compromising the use of $X$ as the sole
-random variable, but I personally find that notation too strict. Most of our
-efforts in these notes will go into describing the probability distribution of
-such processes $P(x, t)$, i.e. the probability of our particular random process
-taking the specific value $X(t) = x(t)$. More on that later.
-
-Let's clarify all these subtle but important notation differences: The random
-variable $X$ is a mapping from a random event to the real line; in other words,
-for a particular quantity that we want to describe we assign a number to
-represent the event that happened. A useful example is to think about it as
-getting to observe a specific face once we roll a die, and assigning a number
-from 1 to 6 to represent the face we observed. The stochastic process $X(t)$
-describes the values that our random variable $X$ can take over time. Following
-up with the die example this could be rolling a die every so often and keeping
-track of the numbers that we obtain. This process $X(t)$ represents the
-\textbf{ensemble} of possible realizations $x(t)$. In other words, as shown
-schematically in \fref{fig01_00001} $X(t)$ describes all possible values that
-the quantity $X$ can take over time, and $x(t)$ describes a specific trajectory
-that happened to occur for a specific realization of the process.
-
-\begin{figure}[h!]
-	\centering \includegraphics[width=0.5\textwidth]
-  {./fig/chapter_prob/01_00001.jpeg}
-	\caption{\textbf{Schematic description of a stochastic process}. The shaded
-	region describes the stochastic process $X(t)$, i.e. all the possible values
-	that the random variable $X$ can take over time. The particular realization
-	$x(t)$ describes a specific trajectory that the random variable $X$ took in
-	one particular case.}
-  \label{fig01_00001}
-\end{figure}
-
-From the intuition presented in \fref{fig01_00001} we understand that all
-possible trajectories that our stochastic process can take are contained in the
-function $X(t)$. But some particular paths $x(t)$ are more likely to happen
-than others. This is what the language of probability theory allows us to
-compute! In principle we are interested in writing how likely it is for our
-process to take a specific value $x(t)$. This is described by the probability
-function $P(x, t)$ which will be at the center of our endeavors for these
-notes. Once we define our stochastic process we might want to compute a moment
-of the distribution. Recall that for a continuous random variable $X$ with
-probability distribution $P_X(x)$, a moment is defined as
-\begin{equation}
-  \ee{X^m} \equiv \int dx \; x^m P_X(x),
-\end{equation}
-where the integral is taken over all the values that $X$ can take. Notice that
-our notation for the distribution $P_X(x)$ highlights that we are only
-considering the values that $X$ can take, no time involved so far. For our case
-in which the random variable can change over time what we have to do is settle
-for a specific time point $t^*$ and compute the average at that time point
-\begin{equation}
-  \ee{X(t^*)^m} \equiv \int dx \; x^m P(x, t^*).
-  \label{eq_process_moment}
-\end{equation}
-Notice that this is still not making a statement about the time evolution of
-our variable $X$, but rather committing to a specific time point $t^*$ and then
-computing the $m\tth$ moment at that time point. An intuitive way to think
-about this is to take a frequentist approach for probability. We imagine that
-we get to observe many many individual trajectories $\{x_1(t), \ldots
-x_n(t)\}$, as schematically shown in \fref{fig01_00002} then what
-\eref{eq_process_moment} is doing is computing the moment at a specific time
-point $t^*$ highlighted also in \fref{fig01_00002}.
-
-\begin{figure}[h!]
-	\centering \includegraphics[width=0.5\textwidth]
-  {./fig/chapter_prob/01_00002.jpeg}
-	\caption{\textbf{Computing a moment of a distribution $\ee{X(t)}$}. Multiple
-  realizations of the stochastic process $\{x_1(t), \ldots x_n(t)\}$ are
-  highlighted. In the limit where we have many many of these trajectories we
-  can then compute a moment of the distribution $P(x, t^*)$ for a specific time
-  point $t^*$. \mrm{need better caption}}
-  \label{fig01_00002}
-\end{figure}
-
-There is no reason why we have to limit ourselves to a single time point $t^*$.
-In particular there are interesting quantities such as the autocorrelation
-function $\kappa(t_1, t_2)$ that analyze how two different time points $t_1$
-and $t_2$ covary with each other. This quantity is defined as
-\begin{equation}
-  \kappa(t_1, t_2) = \ee{\left(X(t_1) - \ee{X(t_1)}\right)
-                         \left(X(t_2) - \ee{X(t_2)}\right)}.
-\end{equation}
-\mrm{Not sure if I will need to include this if we don't ge to compute moments
-that refer to multiple time points.}
-
-Now that we have partially established the notation and conceptual ideas behind
-stochastic processes let's focus on a particular kind known as Markov process.
+the population given the evolutionary forces acting on it. In particular we are
+interested in a type of probability object known as a Markov process that we
+will now define.
 
 \subsection{Markov processes}
-Of particular interested for our endeavor is the specific mathematical objects
+Of particular interested for our endeavor are the specific mathematical objects
 known as Markov processes. The Markovian property - named after Andrey Markov,
 a famous Russian mathematician from the XIX century - can be stated as follows:
-\begin{tcolorbox}
-  A Marvov process is a type of stochastic process for which the transition
-  states only depends on the current state.
-\end{tcolorbox}
+A Markov process is a type of stochastic process for which the transition
+states only depends on the current state.
+
 To gain intuition for what this means imagine we are measuring a variable $x$
 over time such that we have a bunch of pairs of the form $(x_1, t_1), (x_2,
 t_2), (x_3, t_3), \ldots (x_{n+1}, t_{n+1})$. For a Markov process, the
@@ -156,7 +80,7 @@ Markov processes that go by the creative name of continuous-time
 continuous-state Markov processes. We will now state a very important equation
 for this type of Markovian processes known as the Chapman-Kolmogorov equation.
 
-\subsection{Chapman-Kolmogorov equation} \label{sec_chapman_kolmogorov}
+\subsubsection{Chapman-Kolmogorov equation} \label{sec_chapman_kolmogorov}
 
 The Chapman-Kolmogorov equation is an important property of continuous-time
 continuous-state Markov processes that we will use for many of our derivations
@@ -170,15 +94,15 @@ where the integral is taken over the domain of values that the random variable
 $x$ can take. In other words, to calculate the transition probability between
 $x_1$ and $x_3$ with an intermediary step $x_2$, we must add (integrate for
 continuous variables) all possible values that $x_2$ can take. This concept is
-schematically represented in \fref{fig01_00001}
+schematically represented in \fref{fig_03_02_01_chap_kol}
 
 \begin{figure}[h!]
 	\centering \includegraphics[width=0.5\textwidth]
-  {./fig/chapter_prob/01_00003.png}
+  {../fig/classic_diffusion/03_02_01_chapman_kolmogorov.png}
 	\caption{\textbf{Schematic of the Chapman-Kolmogorov equation}. The
   Chapman-Kolmogorov equation is a statement about the transition between two
   points $x_1$ and $x_3$, adding all possible intermediary steps $x_2$.}
-  \label{fig01_00003}
+  \label{fig_03_02_01_chap_kol}
 \end{figure}
 
 In the coming section we will use the Chapman-Kolmogorov equation to derive the
@@ -186,7 +110,7 @@ so-called continuous master equation. This will be the foundation from which we
 will get to the main results of diffusion theory. But before jumping into such
 matter we need to introduce a specific subtype of Markov processes.
 
-\subsection{Stationary Markov Process}\label{sec_stationary_process}
+\subsubsection{Stationary Markov Process}\label{sec_stationary_process}
 
 When thinking about evolution we often summon the concept of a mapping between
 genotype (sequence level description) to phenotype (observable characteristic)
@@ -209,16 +133,13 @@ calculations that the environment is fixed, simplifying the math enormously.
 For this particular case where the mapping all the way from genotype to fitness
 is not a function of time is described by a type of stochastic chain known as
 \textbf{stationary Markov process}. The formal definition of a stationary
-Markov process can be stated as
-\begin{tcolorbox}
-  A stationary Markov process is a memoryless process for which when computing
-  the moments of the distribution, these are not affected by a time shift
-  $\tau$, i.e.
-  \begin{equation}
-    \ee{X(t_1 + \tau) X(t_2 + \tau) \cdots X(t_n + \tau)} =
-    \ee{X(t_1) X(t_2) \cdots X(t_n)}.
-  \end{equation}
-\end{tcolorbox}
+Markov process can be stated as: A stationary Markov process is a memoryless
+process for which when computing the moments of the distribution, these are not
+affected by a time shift $\tau$, i.e.
+\begin{equation}
+  \ee{X(t_1 + \tau) X(t_2 + \tau) \cdots X(t_n + \tau)} =
+  \ee{X(t_1) X(t_2) \cdots X(t_n)}.
+\end{equation}
 In other words, for a stationary Markov process what matters are the absolute
 time differences $|t_2 - t_1|$ rather than the absolute time points. This
 implies that the probability of our random variable having a particular value
