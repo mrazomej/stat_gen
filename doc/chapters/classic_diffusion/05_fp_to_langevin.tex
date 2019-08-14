@@ -24,47 +24,208 @@ dynamics that we defined in \secref{sec_langevin_intro} connect to the
 coefficients of the Fokker-Planck equation. To do so first we introduce a
 quantity defined as
 \begin{equation}
-    \mathcal{A}(x; \tau, t) \equiv \int_{-\infty}^\infty dx\;
+    \mathcal{A}^{(m)}(x; \tau, t) \equiv \int_{-\infty}^\infty dx\;
     (x - x')^m P(x, t + \tau \mid x', t), \; \text{for } m \geq 1.
     \label{eq_compute_jump_mom}
 \end{equation}
-This is nothing else than the average of $[X(t + \tau) - X(t)]^m$ with a sharp
-initial condition $X(t) = x'$. So this is the average difference between two
-time points $t$ and $t + \tau$ of the dynamics defined by our Langevin
-dynamics. In other words $\mathcal{A}(y; \tau, t)$ can be expressed as
+This is nothing else than the average of $[x(t + \tau) - x(t)]^m$ with a sharp
+initial condition $x(t) = x'$ for a Markov process that obeys the transition
+probability distribution $P(x, t + \tau \mid x', t)$. Given that our Langevin
+dynamics are Markov processes, the ensemble of trajectories must obey a
+continuous master equation with such transition probability. Therefore
+\eref{eq_compute_jump_mom} can be thought as the average displacement between
+two time points $t$ and $t + \tau$ for our Langevin dynamics. In other words
+$\mathcal{A}^{(m)}(x; \tau, t)$ can be expressed as
 \begin{equation}
-    \mathcal{A}(x; \tau, t) \equiv 
-    \ee{\left[X(t + \tau) - X(t)\right]^m \mid X(t) = x'}.
+    \mathcal{A}^{(m)}(x; \tau, t) \equiv 
+    \ee{\left[x(t + \tau) - x(t)\right]^m \mid x(t) = x'}.
+    \label{eq_average_A}
 \end{equation}
-For small $\tau$ we can rewrite the conditional distribution $P(x, t + \tau
-\mid x', t)$ using \eref{eq_transition_short_time}. Using this we can rewrite
+Just as we did to derive the master equation, for small $\tau$ we can rewrite
+the conditional distribution $P(x, t + \tau \mid x', t)$ using
+\eref{eq_transition_short_time}. Using this we can rewrite
 \eref{eq_compute_jump_mom} as
 \begin{equation}
-    \mathcal{A}(x; \tau, t) = \int_{-\infty}^\infty dx\; (x - x')^m
+    \mathcal{A}^{(m)}(x; \tau, t) = \int_{-\infty}^\infty dx\; (x - x')^m
     \underbrace{
     \left[ \delta(x - x') \left( 1 - a^{(0)}(x', t) \tau \right) +
     \phi_t(x \mid x')\tau \right]
     }_{P(x, t + \tau \mid x', t)}.
 \end{equation}
 Distributing the integrals results in
-\begin{align}
-    \mathcal{A}(x; \tau, t) &= 
+\begin{equation}
+    \begin{aligned}
+    \mathcal{A}^{(m)}(x; \tau, t) &= 
     \int_{-\infty}^\infty dx\; (x - x')^m \delta(x - x') \\
     &- \int_{-\infty}^\infty dx\; (x - x')^m \delta(x - x') a^{(0)}(x', t) 
     \tau \\ 
     &+ \int_{-\infty}^\infty dx\; (x - x')^m \phi_t(x \mid x') \tau.
-\end{align}
+    \end{aligned}
+\end{equation}
 For the first two terms we have that the $\delta$-function is one only when $x
 = x'$ while the term $(x - x')^m$ is zero for this particular case. Therefore
 both of these terms cancel and we are only left with
 \begin{equation}
-    \mathcal{A}(x; \tau, t) = \int_{-\infty}^\infty dx\; (x - x')^m 
+    \mathcal{A}^{(m)}(x; \tau, t) = \int_{-\infty}^\infty dx\; (x - x')^m 
     \phi_t(x \mid x') \tau.
 \end{equation}
 This is non other than the definition of the jump moments times $\tau$ given by
 \eref{eq_jump_mom} since we defined $r \equiv x - x'$ and $\phi_t(x'; r) \equiv
 \phi_t(x \mid x')$. Now we can see the connection; we started defining
-$\mathcal{A}(x; \tau, t)$ to be the average displacement defined by our
+$\mathcal{A}^{(m)}(x; \tau, t)$ to be the average displacement defined by our
 Langevin dynamics over a small time interval $\tau$, and we found that this is
 connected to the jump moments that define the coefficients of the Fokker-Planck
-equation.
+equation. So we have that
+\begin{equation}
+    \mathcal{A}^{(m)}(x; \tau, t) = \tau \cdot a^{(m)}(x, t).
+\end{equation}
+Given this result we can compute the jump moment by taking the derivative of
+$\mathcal{A}^{(m)}$ with respect to $\tau$ and evaluating this derivative at
+$\tau = 0$. This is
+\begin{equation}
+    a^{(m)}(x, t) = \left. {\partial \over \partial \tau} 
+    \mathcal{A}^{(m)}(x; \tau, t) \right\vert_{\tau = 0}.
+    \label{eq_A_tau_deriv}
+\end{equation}
+The reason we evaluate $\tau = 0$ is for convenience. In principle we could
+evaluate the derivative for any value of $\tau$ since $a^{(m)}$ does not depend
+on $\tau$, but zero is the one that simplifies things the most. Using the
+definition of derivatives we then write \eref{eq_A_tau_deriv} as
+\begin{equation}
+    a^{(m)}(x, t) = \lim_{\Dt \rightarrow 0}
+    \left.{\mathcal{A}^{(m)}(x, \tau + \Dt, t) - 
+    \mathcal{A}^{(m)}(x, \tau, t) \over \Dt} \right\vert_{\tau = 0}.
+\end{equation}
+If we now substitute the equivalence of $\mathcal{A}^{(m)}$ with the average
+displacement on our Langevin dynamics, i.e. \eref{eq_average_A} we obtain
+\footnotesize
+\begin{equation}
+    a^{(m)}(x, t) = \lim_{\Dt \rightarrow 0} {1 \over \Dt}
+    \left[
+    \ee{\left[x(t + \tau + \Dt) - x(t)\right]^m \mid x(t) = x'} -
+    \ee{\left[x(t + \tau) - x(t)\right]^m \mid x(t) = x'}
+    \right]_{\tau = 0}.
+    \label{eq_deriv_average}
+\end{equation}
+\normalsize
+Now we use the condition $\tau = 0$ that we chose for simplification since the
+second term in \eref{eq_deriv_average} cancels. We are then left with a simple
+expression of the form
+\begin{equation}
+    a^{(m)}(x, t) = \lim_{\Dt \rightarrow 0}
+    {\ee{\left[x(t + \Dt) - x(t)\right]^m \mid x(t) = x'} \over \Dt}.
+\end{equation}
+This result shows that given that our Langevin dynamics are a continuous Markov
+process, we can compute the displacement dynamics for a small time interval,
+elevate it to the $m\tth$ power, and then average it, to then compute the $m$
+coefficient for the Fokker-Planck equation. Let's do this first for the first
+coefficient $a^{(m)}(x, t)$.
+
+\subsubsection{Directional coefficient of the Fokker-Planck equation}
+
+For the first coefficient of the Fokker-Planck equation that defines the
+directional terms of the dynamics we have
+\begin{equation}
+    a^{(1)}(x, t) = \lim_{\Dt \rightarrow 0}
+    {\ee{x(t + \Dt) - x(t) \mid x(t) = x'} \over \Dt}.
+\end{equation}
+Recall that we defined the Langevin equations as a stochastic differential
+equation given in \eref{eq_langevin}. Since $x(t)$ is the solution to this
+differential equation we can use the fundamental theorem of calculus to rewrite
+the average displacement as
+\begin{equation}
+    \ee{x(t + \Dt) - x(t) \mid x(t) = x'} =
+    \ee{\left. \int_t^{t + \Dt} dt'\; {dx \over dt'} \right\vert x(t) = x'}.
+\end{equation}
+We then substitute \eref{eq_langevin} on the right-hand side to obtain
+\begin{equation}
+    \ee{x(t + \Dt) - x(t) \mid x(t) = x'} =
+    \ee{\left.\int_t^{t + \Dt} dt'\; A(x, t') + B(x, t') \xi(t')\right\vert 
+    x(t) = x'}.
+\end{equation}
+If we distribute the integral and use the linearity of expected values this
+results in
+\begin{equation}
+    \ee{x(t + \Dt) - x(t) \mid x(t) = x'} =
+    \int_t^{t + \Dt} dt\; A(x, t') + 
+    \int_t^{t + \Dt} dt\; B(x, t') \ee{ \left.\xi(t') \right\vert x(t) = x'},
+\end{equation}
+where the only thing we needed to average over was the noise term $\xi(t)$. For
+the Langevin equation we defined the average of this noise term to be zero
+regardless of the initial position; that implies that the average displacement
+is then simply given by
+\begin{equation}
+    \ee{x(t + \Dt) - x(t) \mid x(t) = x'} =
+    \int_t^{t + \Dt} A(x, t').
+\end{equation}
+As a consequence the directional coefficient of the Langevin equation is then
+of the form
+\begin{equation}
+    a^{(1)}(x, t) = \lim_{\Dt \rightarrow 0} {1 \over \Dt}
+    \int_t^{t + \Dt} A(x, t').
+\end{equation}
+Since we are taking the limit when $\Dt \rightarrow 0$ we can approximate the
+integral simply as
+\begin{equation}
+    a^{(1)}(x, t) \approx \lim_{\Dt \rightarrow 0}{1 \over \Dt} [A(x, t) \Dt] =
+    A(x, t).
+\end{equation}
+We therefore mathematically justify the empirical argument commonly found in
+the literature that the directional term associated with the Langevin equation
+can be directly associated with the directional term of the Fokker-Planck
+equation. In other words we showed that
+\begin{equation}
+    a^{(1)}(x, t) = A(x, t).
+\end{equation}
+
+\subsubsection{Diffusive coefficient of the Fokker-Planck equation}
+
+To compute the second coefficient of the Fokker-Planck equation associated with
+the diffusive random displacements we can follow the exact same recipe. First
+we know that this coefficient is given by
+\begin{equation}
+    a^{(2)}(x, t) = \lim_{\Dt \rightarrow 0}
+    {\ee{\left[x(t + \Dt) - x(t)\right]^2 \mid x(t) = x'} \over \Dt}.
+\end{equation}
+Again using the fundamental theorem of calculus gives us
+\begin{equation}
+    a^{(2)}(x, t) = \lim_{\Dt \rightarrow 0}
+    {\ee{ \left. \left[ 
+    \int_t^{t + \Dt} dt'\; {dx \over dt'}
+    \right]^2 \right\vert x(t) = x'} \over \Dt}.
+\end{equation}
+Substituting \eref{eq_langevin} on the expected value on right-hand side gives
+\begin{equation}
+    \ee{ \left. \left[ 
+    \int_t^{t + \Dt} dt'\; {dx \over dt'}
+    \right]^2 \right\vert x(t) = x'} =
+    \ee{ \left. \left[ 
+    \int_t^{t + \Dt} dt'\; A(x, t') + 
+    \int_t^{t + \Dt} dt'\; B(x, t') \xi(t').
+    \right]^2 \right\vert x(t) = x'},
+\end{equation}
+where we already distributed the integral. We now expand the binomial on the
+right-hand side and use the linearity of expected values to obtain
+\begin{equation}
+    \begin{aligned}
+    \ee{ \left. \left[ 
+    \int_t^{t + \Dt} dt'\; A(x, t') + 
+    \int_t^{t + \Dt} dt'\; B(x, t') \xi(t')
+    \right]^2 \right\vert x(t) = x'} =
+    \left(  
+    \int_t^{t + \Dt} dt'\; A(x, t')
+    \right)^2\\
+    + 2 
+    \int_t^{t + \Dt} dt'\; A(x, t')
+    \int_t^{t + \Dt} dt'\; B(x, t') \ee{ \left.\xi(t')
+    \right\vert x(t) = x'}\\
+    \left(
+    \int_t^{t + \Dt} dt'\; B(x, t') \ee{\left.\xi(t')
+    \right\vert x(t) = x'}
+    \right)^2,
+    \end{aligned}
+\end{equation}
+where again we used the fact that the only variable we can average over is the
+white noise term $\xi(t)$.
+
+    % \ee{\left.  \right\vert x(t) = x'}
