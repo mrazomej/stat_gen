@@ -169,6 +169,7 @@ integral simply as
 \begin{equation}
     a^{(1)}(x, t) \approx \lim_{\Dt \rightarrow 0}{1 \over \Dt} [A(x, t) \Dt] =
     A(x, t).
+    \label{eq_approx_int_directional}
 \end{equation}
 We therefore mathematically justify the empirical argument commonly found in
 the literature that the directional term associated with the Langevin equation
@@ -193,6 +194,7 @@ Again using the fundamental theorem of calculus gives us
     {\ee{ \left. \left[ 
     \int_t^{t + \Dt} dt'\; {dx \over dt'}
     \right]^2 \right\vert x(t) = x'} \over \Dt}.
+    \label{eq_diffusive_fp_lim}
 \end{equation}
 Substituting \eref{eq_langevin} on the expected value on right-hand side gives
 \begin{equation}
@@ -224,8 +226,62 @@ right-hand side and use the linearity of expected values to obtain
     \right\vert x(t) = x'}
     \right)^2,
     \end{aligned}
+    \label{eq_int_binom}
 \end{equation}
 where again we used the fact that the only variable we can average over is the
-white noise term $\xi(t)$.
-
-    % \ee{\left.  \right\vert x(t) = x'}
+white noise term $\xi(t)$. We can see that the second term on the right-hand
+side cancels since the average of our stochastic variable is equal to zero. For
+the two terms left we can rewrite the squared integrals as double integrals.
+Let's take a look at each of these terms one at the time. First the integral 
+involving the directional term takes the form
+\begin{equation}
+    \left(  
+        \int_t^{t + \Dt} dt'\; A(x, t')
+    \right)^2 =
+    \int_t^{t + \Dt} dt'\; \int_t^{t + \Dt} dt''\;
+    A(x, t') A(x, t'').
+\end{equation}
+Just as we did for \eref{eq_approx_int_directional} we can use the fact that we
+are working at the limit where $\Dt \rightarrow 0$ to approximate the integral
+as 
+\begin{equation}
+    \int_t^{t + \Dt} dt'\; \int_t^{t + \Dt} dt''\;
+    A(x, t') A(x, t'') \approx \left[ A(x, t)  \Dt\right]^2.
+    \label{eq_directional_int_approx}
+\end{equation}
+For the integral on \eref{eq_int_binom} involving the diffusive term we again
+rewrite it as a double integral of the form
+\begin{equation}
+    \left(
+    \int_t^{t + \Dt} dt'\; B(x, t') \ee{\left.\xi(t')
+    \right\vert x(t) = x'}
+    \right)^2 =
+    \int_t^{t + \Dt} dt'\; \int_t^{t + \Dt} dt''\;
+    B(x, t') B(x, t'') \ee{\left. \xi(t') \xi(t'') \right\vert x(t) = x}.
+\end{equation}
+In \secref{sec_langevin_intro} where we introduced the Langevin equation we
+defined the second moment of our noise term as given in \eref{eq_noise_delta}.
+Using this we evaluate one of the integrals first obtaining
+\begin{equation}
+    \int_t^{t + \Dt} dt'\; \int_t^{t + \Dt} dt''\;
+    B(x, t') B(x, t'') \ee{\left. \xi(t') \xi(t'') \right\vert x(t) = x} =
+    2D \int_t^{t + \Dt} dt'\; B(x, t')^2.
+\end{equation}
+Finally we can again approximate the integral as
+\begin{equation}
+    2D \int_t^{t + \Dt} dt'\; B(x, t')^2 \approx 2D B(x, t)^2 \Dt.
+    \label{eq_diffusive_int_approx}
+\end{equation}
+Putting back \eref{eq_directional_int_approx} and
+\eref{eq_diffusive_int_approx} into our computation of the second coefficient
+of the Fokker-Planck equation in \eref{eq_diffusive_fp_lim} results in
+\begin{equation}
+    a^{(2)}(x, t) \approx \lim_{\Dt \rightarrow 0} {1 \over \Dt}
+    \left[ A(x, t)^2\Dt^2 + B(x, t)^2\Dt \right].
+\end{equation}
+Once we simplify the corresponding $\Dt$ terms and take the limit, the
+directional term goes to zero and we are left with a Fokker-Planck diffusive
+coefficient of the form
+\begin{equation}
+    a^{(2)}(x, t) = B(x, t)^2.
+\end{equation}
