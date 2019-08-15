@@ -12,26 +12,26 @@ between states change over time.
 
 Let's derive this powerful equation starting from \eref{eq_chapman_kolmogorov}.
 For our case of study we want to understand how the frequency of a particular
-allele evolves over time, that is a stochastic process $F(t)$. Notice again
-that we distinguish between the stochastic process $F(t)$ formed by the
-ensemble of all possible realizations $f(t)$. The Chapman-Kolmogorov equation
+allele evolves over time, that is a stochastic process $X(t)$. Notice again
+that we distinguish between the stochastic process $X(t)$ formed by the
+ensemble of all possible realizations $x(t)$. The Chapman-Kolmogorov equation
 for this particular case with three time points $t_1 < t_2 < t_3$ takes the
 form
 \begin{equation}
-  P(f_3, t_3 \mid f_1, t_1) = \int_0^1 df_2\; P(f_3, t_3 \mid f_2, t_2)
-                                          P(f_2, t_2 \mid f_1, t_1),
+  P(x_3, t_3 \mid x_1, t_1) = \int_0^1 dx_2\; P(x_3, t_3 \mid x_2, t_2)
+                                          P(x_2, t_2 \mid x_1, t_1),
   \label{eq_chapman_freq}
 \end{equation}
 where the integration limits $[0, 1]$ are the domain of values that an allele
 frequency can take. Now let us assume that we observe the frequency at time $t$
-and it happens to be at a value $f_1$. Then after a very short time $\Dt$ we
-observe again the allele frequency which is now at a value $f_2$. Under this
+and it happens to be at a value $x_1$. Then after a very short time $\Dt$ we
+observe again the allele frequency which is now at a value $x_2$. Under this
 short time limit we can approximate the transition probability as
 \begin{equation}
-  P(f_2, t + \Dt \mid f_1, t) = \delta(f_2 - f_1)
-  \underbrace{\left[ 1 - a^{(0)}(f_1, t) \Dt \right]}_{\text{probability
+  P(x_2, t + \Dt \mid x_1, t) = \delta(x_2 - x_1)
+  \underbrace{\left[ 1 - a^{(0)}(x_1, t) \Dt \right]}_{\text{probability
   of no transition}} +
-  \underbrace{\phi_t(f_2 \mid f_1)\Dt}_\text{probability of transition} +
+  \underbrace{\phi_t(x_2 \mid x_1)\Dt}_\text{probability of transition} +
   \mathcal{O}(\Dt^2).
   \label{eq_transition_short_time}
 \end{equation}
@@ -39,150 +39,150 @@ Let's break down this equation. We have split the possible things that can
 happen on a time window $\Dt$ into two possible cases. The first one
 represented by the first term on the right-hand side is the possibility that on
 this small time window no transition actually takes place. The
-$\delta$-function that is equal to 1 if and only if $f_2 = f_1$ is there to
+$\delta$-function that is equal to 1 if and only if $x_2 = x_1$ is there to
 make sure that this term is added only when there was no transition during that
-time and $f_2$ remains the same as $f_1$. Inside the square brackets we wrote
-$1 - a^{(0)}(f_1, t) \Dt$, the reason for writing the term $a^{(0)}$ will
+time and $x_2$ remains the same as $x_1$. Inside the square brackets we wrote
+$1 - a^{(0)}(x_1, t) \Dt$, the reason for writing the term $a^{(0)}$ will
 become clear later on when we derive the so-called Fokker-Planck equation.
 Having a term of the form 1 - ``something'' hints at the fact that this
 ``something'' must be the probability of transitioning somewhere else rather
-than staying at the same position. For the second term we wrote $\phi_t(f_2
-\mid f_1)\Dt$ as the probability of transitioning outside of $f_1$ during this
-time window. Our function $\phi_t(f_2 \mid f_1)$ represents the transition
-probability per unit time between $f_1$ and $f_2$ at time $t$. When we multiply
+than staying at the same position. For the second term we wrote $\phi_t(x_2
+\mid x_1)\Dt$ as the probability of transitioning outside of $x_1$ during this
+time window. Our function $\phi_t(x_2 \mid x_1)$ represents the transition
+probability per unit time between $x_1$ and $x_2$ at time $t$. When we multiply
 this rate in time$^{-1}$ units by a small time window, we obtain the
-probability of transitioning from $f_1$ to $f_2$.
+probability of transitioning from $x_1$ to $x_2$.
 
-In order to understand better the term $a^{(0)}(f_1, t)$ in
+In order to understand better the term $a^{(0)}(x_1, t)$ in
 \eref{eq_transition_short_time} recall that a probability distribution must be
 normalized. That means that if we integrate both sides of
-\eref{eq_transition_short_time} over all values of $f_2$ it must be true that
+\eref{eq_transition_short_time} over all values of $x_2$ it must be true that
 \begin{equation}
-  \int_0^1 df_2 \; P(f_2, t + \Dt \mid f_1, t) =
-  \int_0^1 df_2 \; \delta(f_2 - f_1) \left[ 1 - a^{(0)}(f_1, t) \Dt \right]
-  + \int_0^1 df_2 \; \phi_t(f_2 \mid f_1)\Dt
+  \int_0^1 dx_2 \; P(x_2, t + \Dt \mid x_1, t) =
+  \int_0^1 dx_2 \; \delta(x_2 - x_1) \left[ 1 - a^{(0)}(x_1, t) \Dt \right]
+  + \int_0^1 dx_2 \; \phi_t(x_2 \mid x_1)\Dt
   = 1.
 \end{equation}
-Integrating over the $\delta$-function implies that we set $f_2 = f_1$,
+Integrating over the $\delta$-function implies that we set $x_2 = x_1$,
 therefore we obtain
 \begin{equation}
-  1 = \left[  1 - a^{(0)}(f_1, t) \Dt\right] +
-  \int_0^1 df_2 \; \phi_t(f_2 \mid f_1)\Dt.
+  1 = \left[  1 - a^{(0)}(x_1, t) \Dt\right] +
+  \int_0^1 dx_2 \; \phi_t(x_2 \mid x_1)\Dt.
 \end{equation}
-Solving for $a^{(0)}(f_1, t)$ results in
+Solving for $a^{(0)}(x_1, t)$ results in
 \begin{equation}
-  a^{(0)}(f_1, t) = \int_0^1 df_2 \; \phi_t(f_2 \mid f_1),
+  a^{(0)}(x_1, t) = \int_0^1 dx_2 \; \phi_t(x_2 \mid x_1),
   \label{eq_a0}
 \end{equation}
-proving our previous assertion that $a^{(0)}(f_1, t)$ must be the
-probability of jumping from $f_1$ to somewhere else.
+proving our previous assertion that $a^{(0)}(x_1, t)$ must be the
+probability of jumping from $x_1$ to somewhere else.
 
 Using this approximation for short time steps we will now derive the
 differential equation that the transition probability between frequencies must
 obey. Specifically for three time points $t_o < t < t + \Dt$ with corresponding
-allele frequencies $f_o, f', f$ we have that \eref{eq_chapman_freq} takes the
+allele frequencies $x_o, x', f$ we have that \eref{eq_chapman_freq} takes the
 form
 \begin{equation}
-  P(f, t + \Dt \mid f_o, t_o) = \int_0^1 df' \; P(f, t + \Dt \mid f', t)
-  P(f', t \mid f_o, t_o).
+  P(x, t + \Dt \mid x_o, t_o) = \int_0^1 dx' \; P(x, t + \Dt \mid x', t)
+  P(x', t \mid x_o, t_o).
 \end{equation}
 Substituting \eref{eq_transition_short_time} results in
 \begin{equation}
-  P(f, t + \Dt \mid f_o, t_o) = \int_0^1 df' \;
-  \left[ \delta(f - f') \left( 1 - a^{(0)}(f', t)\Dt \right)
-  + \phi_t(f \mid f')\Dt \right]
-  P(f', t \mid f_o, t_o).
+  P(x, t + \Dt \mid x_o, t_o) = \int_0^1 dx' \;
+  \left[ \delta(x - x') \left( 1 - a^{(0)}(x', t)\Dt \right)
+  + \phi_t(x \mid x')\Dt \right]
+  P(x', t \mid x_o, t_o).
 \end{equation}
 Evaluating the integral for the first term on the right-hand side gives
 \begin{equation}
-  P(f, t + \Dt \mid f_o, t_o) = \left[\left( 1 - a^{(0)}(f, t)\Dt \right)\right]
-  P(f, t \mid f_o, t_o) +
-  \Dt \int_0^1 df' \; \phi_t(f \mid f') P(f', t \mid f_o, t_o).
+  P(x, t + \Dt \mid x_o, t_o) = \left[\left( 1 - a^{(0)}(x, t)\Dt \right)\right]
+  P(x, t \mid x_o, t_o) +
+  \Dt \int_0^1 dx' \; \phi_t(x \mid x') P(x', t \mid x_o, t_o).
 \end{equation}
 We can then substitute \eref{eq_a0} and rearrange terms to obtain
 \begin{equation}
-  P(f, t + \Dt \mid f_o, t_o) = P(f, t \mid f_o, t_o)
-  + \int_0^1 df' \left[ \phi_t(f \mid f') P(f', t \mid f_o, t_o) -
-  \phi_t(f' \mid f) P(f, t \mid f_o, t_o) \right]\Dt.
+  P(x, t + \Dt \mid x_o, t_o) = P(x, t \mid x_o, t_o)
+  + \int_0^1 dx' \left[ \phi_t(x \mid x') P(x', t \mid x_o, t_o) -
+  \phi_t(x' \mid x) P(x, t \mid x_o, t_o) \right]\Dt.
 \end{equation}
 Sending the first term on the right-hand side to the left, dividing both sides
 by $\Dt$ and taking the limit $\Dt \rightarrow 0$ gives the differential
 equation we were looking for
 \begin{equation}
-  \dt{P(f, t \mid f_o, t_o)} = \int_0^1 df' \;
+  \dt{P(x, t \mid x_o, t_o)} = \int_0^1 dx' \;
   \underbrace{
-  \left[ \phi_t(f \mid f') P(f', t \mid f_o, t_o) \right.}
-  _{\text{gain } f' \rightarrow f}  -
+  \left[ \phi_t(x \mid x') P(x', t \mid x_o, t_o) \right.}
+  _{\text{gain } x' \rightarrow f}  -
   \underbrace{
-  \left. \phi_t(f' \mid f) P(f, t \mid f_o, t_o) \right]}
-  _{\text{loss } f \rightarrow f'}.
+  \left. \phi_t(x' \mid x) P(x, t \mid x_o, t_o) \right]}
+  _{\text{loss } x \rightarrow x'}.
   \label{eq_master_eq_trans}
 \end{equation}
 This is the integro-differential equation known as the master equation. This
 continuous form of the master equation describes the time evolution of the
-transition probabilities $P(f, t \mid f_o, t_o)$, not the evolution of the
-probability of being at a specific state $P(f, t)$. However we can use the
+transition probabilities $P(x, t \mid x_o, t_o)$, not the evolution of the
+probability of being at a specific state $P(x, t)$. However we can use the
 rules of probability to obtain such description by the following process:
-Suppose the stochastic process $F(t)$ describes the time evolution of the
-frequency. Assuming $F(t)$ is a stationary Markov process as described in
+Suppose the stochastic process $X(t)$ describes the time evolution of the
+frequency. Assuming $X(t)$ is a stationary Markov process as described in
 \secref{sec_stationary_process} means that this process is completely
 characterized by two functions - the probability of having a particular value
-for the allele frequency $P_F(f)$ that does not depend on time, and a
-transition probability $P(f, t \mid f_o, t_o)$. We define a new, non-stationary
+for the allele frequency $P_X(x)$ that does not depend on time, and a
+transition probability $P(x, t \mid x_o, t_o)$. We define a new, non-stationary
 process $F^*(t)$ for $t \geq t_o$ by setting
 \begin{equation}
-  P^*(f, t) = P(f, t\mid f_o, t_o),
+  P^*(x, t) = P(x, t\mid x_o, t_o),
 \end{equation}
-i.e. forcing the initial condition to be a specific value $f_o$ at time $t_o$.
-This is a sub-ensemble of the process $F(t)$ since we demanded that $F(t = t_o)
-= f_o$. More generally if instead of setting the initial condition to be a
-single specific value $P(f, t_o) = \delta(f - f_o)$ we define a probability
-distribution for the initial state $P(f, t_o) = \rho(f_o)$, we have a
+i.e. forcing the initial condition to be a specific value $x_o$ at time $t_o$.
+This is a sub-ensemble of the process $X(t)$ since we demanded that $X(t = t_o)
+= x_o$. More generally if instead of setting the initial condition to be a
+single specific value $P(x, t_o) = \delta(x - x_o)$ we define a probability
+distribution for the initial state $P(x, t_o) = \rho(x_o)$, we have a
 sub-ensemble of the form
 \begin{equation}
-  P^*(f, t) = \int_0^1 df_o \; P(f, t\mid f_o, t_o) \rho(f_o).
+  P^*(x, t) = \int_0^1 dx_o \; P(x, t\mid x_o, t_o) \rho(x_o).
   \label{eq_subensemble}
 \end{equation}
 The interpretation of this sub ensemble is that the system was initially set on
-a non-stationary state. The initial state distribution $\rho(f_o)$ does not
+a non-stationary state. The initial state distribution $\rho(x_o)$ does not
 depend on time, therefore if we take the time derivative on both sides of
 \eref{eq_subensemble} we find that
 \begin{equation}
-  \dt{P^*(f, t)} = \int_0^1 df_o \; \dt{P(f, t\mid f_o, t_o)}
-                        \rho(f_o).
+  \dt{P^*(x, t)} = \int_0^1 dx_o \; \dt{P(x, t\mid x_o, t_o)}
+                        \rho(x_o).
 \label{eq_subensemble_dt}
 \end{equation}
 Notice that the term with the time derivative on the right-hand side of
 \eref{eq_subensemble_dt} is the master equation that we derived in
 \eref{eq_master_eq_trans}. Substituting this results in
 \begin{equation}
-  \dt{P^*(f, t)} = \int_0^1 df_o \; \rho(f_o)
-  \int_0^1 df' \;
-  \left[ \phi_t(f \mid f') P(f', t \mid f_o, t_o) -
-  \phi_t(f' \mid f) P(f, t \mid f_o, t_o) \right].
+  \dt{P^*(x, t)} = \int_0^1 dx_o \; \rho(x_o)
+  \int_0^1 dx' \;
+  \left[ \phi_t(x \mid x') P(x', t \mid x_o, t_o) -
+  \phi_t(x' \mid x) P(x, t \mid x_o, t_o) \right].
 \end{equation}
 Redistributing the integrals gives
 \begin{equation}
-  \dt{P^*(f, t)} = \int_0^1 df' \; \phi_t(f \mid f')
+  \dt{P^*(x, t)} = \int_0^1 dx' \; \phi_t(x \mid x')
   \overbrace{
-  \int_0^1 df_o \; P(f', t \mid f_o, t_o) \rho(f_o)}
-  ^{P^*(f', t)\text{ by definition}} -
-  \int_0^1 df' \; \phi_t(f' \mid f)
+  \int_0^1 dx_o \; P(x', t \mid x_o, t_o) \rho(x_o)}
+  ^{P^*(x', t)\text{ by definition}} -
+  \int_0^1 dx' \; \phi_t(x' \mid x)
   \overbrace{
-  \int_0^1 df_o \; P(f, t \mid f_o, t_o) \rho(f_o)}
-  ^{P^*(f, t)\text{ by definition}}.
+  \int_0^1 dx_o \; P(x, t \mid x_o, t_o) \rho(x_o)}
+  ^{P^*(x, t)\text{ by definition}}.
 \end{equation}
 Using the definition of the sub-ensembles shown in \eref{eq_subensemble} we
 arrive to a result of the form
 \begin{equation}
-  \dt{P^*(f, t)} = \int_0^1 df' \;
+  \dt{P^*(x, t)} = \int_0^1 dx' \;
   \underbrace{
-  \phi_t(f \mid f') P^*(f', t)
-  }_{f' \rightarrow f \text{ gain}} -
-  \int_0^1 df' \;
+  \phi_t(x \mid x') P^*(x', t)
+  }_{x' \rightarrow x \text{ gain}} -
+  \int_0^1 dx' \;
   \underbrace{
-  \phi_t(f' \mid f) P^*(f, t)
-  }_{f \rightarrow f' \text{ loss}}.
+  \phi_t(x' \mid x) P^*(x, t)
+  }_{f \rightarrow x' \text{ loss}}.
   \label{eq_master_eq_full}
 \end{equation}
 In this form we can see that the master equation is a balance between gain and
@@ -214,7 +214,7 @@ Kimura himself used an equivalent approach to Einstein's formulation of the
 master equation for his formulation of diffusion theory. Kimura used the same
 approach as Einstein of Taylor expanding the master equation, with the main
 difference being that for population genetics the transition probability
-$\phi_t(f \mid f')$ is a function of the current position $f'$ while in real
+$\phi_t(x \mid x')$ is a function of the current position $x'$ while in real
 space free diffusion is independent of the position. For this short section our
 objective is to show that our derivation of the master equation is equivalent
 to Einstein's and Kimura's proposed functional form. We will focus on Kimura's
@@ -224,8 +224,8 @@ these notes.
 Kimura's original derivation of the classic diffusion theory begins stating
 that the process of allele frequency changes can be stated as
 \begin{equation}
-  P(f, t + \Dt) = \int d\varepsilon \;
-  P(f - \varepsilon, t) \phi_t(f \mid f - \varepsilon) \Dt,
+  P(x, t + \Dt) = \int d\varepsilon \;
+  P(x - \varepsilon, t) \phi_t(x \mid x - \varepsilon) \Dt,
   \label{eq_kimura_master}
 \end{equation}
 and that is it. While it took us a while to justify \eref{eq_master_eq_full},
@@ -241,8 +241,8 @@ original work as well as textbooks. For this particular case the integration
 limits should go from $f$ to $f - 1$ such that the values of $f - \varepsilon$
 range from 0 to 1. So the proper form of this integral is given by
 \begin{equation}
-  P(f, t + \Dt) = \int_{-f}^{f - 1} d\varepsilon \;
-  P(f - \varepsilon, t) \phi_t(f \mid f - \varepsilon) \Dt.
+  P(x, t + \Dt) = \int_{-f}^{f - 1} d\varepsilon \;
+  P(x - \varepsilon, t) \phi_t(x \mid x - \varepsilon) \Dt.
   \label{eq_kimura_master_lim}
 \end{equation}
 
@@ -259,34 +259,34 @@ to do two things:
   \item On \eref{eq_master_eq_full} we notice that the second term on the
   right-hand side can be written as
   \begin{equation}
-    P^*(f, t)\int_0^1 df' \; \phi_t(f' \mid f) = P^*(f, t),
+    P^*(x, t)\int_0^1 dx' \; \phi_t(x' \mid x) = P^*(x, t),
     \label{eq_integral_transition}
   \end{equation}
-  where we took the term $P^*(f, t)$ outside of the integral and used the fact
-  that the transition probability per unit time $\phi_t(f' \mid f)$ should be
+  where we took the term $P^*(x, t)$ outside of the integral and used the fact
+  that the transition probability per unit time $\phi_t(x' \mid x)$ should be
   normalized regardless of the time window. In other words, the probability of
   transitioning from $f$ to anywhere else (including staying at $f$) should add
   up to one regardless of the time window we observe.
   \mrm{Need to check this statement and that the units make sense}
   \item Having this result we can rewrite \eref{eq_master_eq_full} as
   \begin{equation}
-    \dt{P^*(f, t)} = \int_0^1 df' \;
-    \phi_t(f \mid f') P^*(f', t) - P^*(f, t).
+    \dt{P^*(x, t)} = \int_0^1 dx' \;
+    \phi_t(x \mid x') P^*(x', t) - P^*(x, t).
     \label{eq_master_eq_rearange}
   \end{equation}
   We are almost there! All is left is to notice that if we were to Taylor
   expand the left-hand side of \eref{eq_kimura_master_lim} with respect to time
   up to first order (as it is often done for time derivatives) we would obtain
   \begin{equation}
-    P(f, t + \Dt) = P(f, t) + \dt{P(f, t)}\Dt + \mathcal{O}(\Dt^2).
+    P(x, t + \Dt) = P(x, t) + \dt{P(x, t)}\Dt + \mathcal{O}(\Dt^2).
   \end{equation}
   That means we can send the second term on the the right-hand side of
   \eref{eq_master_eq_rearange} to the left and rewrite the equation as
   \begin{equation}
-    {P^*(f, t + \Dt) \over \Dt} = \int_0^1 df' \;
-    \phi_t(f \mid f') P^*(f', t),
+    {P^*(x, t + \Dt) \over \Dt} = \int_0^1 dx' \;
+    \phi_t(x \mid x') P^*(x', t),
   \end{equation}
   which is equivalent to \eref{eq_kimura_master_lim} where instead of having
   the integration over the jump size $\varepsilon$ the integration is done over
-  the final position $f'$.
+  the final position $x'$.
 \end{enumerate}
