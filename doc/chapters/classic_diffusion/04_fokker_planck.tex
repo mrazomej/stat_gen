@@ -1,24 +1,24 @@
 % !TEX root = ../../main.tex
-\subsection{Fokker-Planck equation in population genetics}
+\subsection{xokker-Planck equation in population genetics}
 
 In the last section after we performed a Taylor expansion of the master
 equation we ended up with an equally complicated partial differential equation
 of infinite order. So in order to make any progress towards simplifying the
 treatment of the equation what we will do is trade accuracy for simplicity.
 More concretely if our assumptions on the shape of the transition probability
-$\phi_t(f; r)$ being sharply peaked are to be taken seriously, we can then
+$\phi_t(x; r)$ being sharply peaked are to be taken seriously, we can then
 truncate the Kramers-Moyal expansion to include only up to second order
 derivatives. This truncated equation would locally approximate the time
-evolution of the probability distribution $P(f, t)$. \eref{eq_km_expansion}
+evolution of the probability distribution $P(x, t)$. \eref{eq_km_expansion}
 then is of the form
 \begin{equation}
-  \ddt{P(f, t)} = - {\partial \over \partial f}
+  \ddt{P(x, t)} = - {\partial \over \partial x}
   \left[
-  a^{(1)}(f, t) P(f, t)
+  a^{(1)}(x, t) P(x, t)
   \right] +
   {1 \over 2}{\partial^2 \over \partial f^2}
   \left[
-  a^{(2)}(f, t) P(f, t)
+  a^{(2)}(x, t) P(x, t)
   \right].
   \label{eq_fokker_planck}
 \end{equation}
@@ -47,20 +47,20 @@ the second derivative in \eref{eq_fokker_planck} is known as the genetic drift
 term. I will try to be as consistent as possible on these notes using the terms
 directional and diffusive to avoid confusion.
 
-Coming back to the directional term, we define $M(f, t)$ to be
+Coming back to the directional term, we define $M(x, t)$ to be
 \begin{equation}
-  M(f, t) \equiv \ee{r(t)} = \int_{-\infty}^{\infty} dr \; \phi_t(f; r) r,
+  M(x, t) \equiv \ee{r(t)} = \int_{-\infty}^{\infty} dr \; \phi_t(x; r) r,
 \end{equation}
 i.e. the mean of the jump distribution. As we will see in coming sections this
 term captures the effect of directional evolutionary forces such as selection,
-mutation and migration. For the diffusive term we define $V(f, t)$ as the
+mutation and migration. For the diffusive term we define $V(x, t)$ as the
 second moment of the jump distribution
 \begin{equation}
-  V(f, t) \equiv \ee{r^2(t)} = \int_{-\infty}^{\infty} dr \; \phi_t(f; r) r^2.
+  V(x, t) \equiv \ee{r^2(t)} = \int_{-\infty}^{\infty} dr \; \phi_t(x; r) r^2.
 \end{equation}
 This term captures the random sampling of alleles, also known as genetic drift.
 In all of the population genetics literature I have encounter so far, this term
-$V(f, t)$ is treated as the \textbf{variance} rather than the second moment.
+$V(x, t)$ is treated as the \textbf{variance} rather than the second moment.
 This is partly because computing the specific functional form of the variance
 for different models of reproduction is much simpler. The variance
 $\sigma_r^2(t)$ is defined as
@@ -70,22 +70,22 @@ $\sigma_r^2(t)$ is defined as
 We can therefore work with this more convenient quantity if we assume that
 $\ee{r}^2 \approx 0$. This is a reasonable assumption given that for the
 Fokker-Planck equation to be accurate we assumed a tight distribution for the
-jumpt size $\phi_t(f; r)$. The peaked nature of this distribution must imply
+jumpt size $\phi_t(x; r)$. The peaked nature of this distribution must imply
 that $\ee{r} \ll 1$, but more importantly, we will assume that
 $\ee{r}^2 \ll \ee{r^2}$. So upon using these two definitions we arrive to one
 of the main results in population genetics, the Kimura diffusion equation
 \begin{equation}
-  \ddt{P(f, t)} = - {\partial \over \partial f}
+  \ddt{P(x, t)} = - {\partial \over \partial x}
   \left[
-  M(f, t) P(f, t)
+  M(x, t) P(x, t)
   \right] +
   {1 \over 2}{\partial^2 \over \partial f^2}
   \left[
-  V(f, t) P(f, t)
+  V(x, t) P(x, t)
   \right].
   \label{eq_kimura_diffusion}
 \end{equation}
-The power of diffusion theory is that in these two terms $M(f, t)$ and $V(f,
+The power of diffusion theory is that in these two terms $M(x, t)$ and $V(x,
 t)$ we can include all evolutionary forces acting simultaneously. The
 functional forms of these specific terms depend on the reproduction model used.
 We will explore that more specifically later on.
@@ -93,84 +93,84 @@ We will explore that more specifically later on.
 \subsubsection{Equilibrium distribution}
 
 In the limit when $t \rightarrow \infty$ we expect the distribution of allele
-frequencies to reach a steady-state $P_{ss}(f)$. For the 1D case we have
-studied so far, i.e. two alleles with frequencies $f$ and $1 - f$ this steady
+frequencies to reach a steady-state $P_{ss}(x)$. For the 1D case we have
+studied so far, i.e. two alleles with frequencies $x$ and $1 - x$ this steady
 state is equivalent to an equilibrium distribution since detailed balance has
 to be satisfied. To emphasize this point let us rewrite
 \eref{eq_kimura_diffusion} as a statement of conservation of probability. This
 is
 \begin{equation}
-  \ddt{P(f, t)} = - {\partial J(f, t) \over \partial f},
+  \ddt{P(x, t)} = - {\partial J(x, t) \over \partial x},
 \end{equation}
-where $J(f, t)$ is the probability flux at point $f$. If we set the time
+where $J(x, t)$ is the probability flux at point $x$. If we set the time
 derivative to zero there are only two options (in reality there is only one
 option for 1D systems):
 \begin{enumerate}
-  \item ${\partial J \over \partial f} = 0; \; J \neq 0 \Rightarrow$ Steady
+  \item ${\partial J \over \partial x} = 0; \; J \neq 0 \Rightarrow$ Steady
   state on a rotating or non-conservative field.
-  \item ${\partial J \over \partial f} = 0; \; J = 0 \Rightarrow$ Equilibrium
+  \item ${\partial J \over \partial x} = 0; \; J = 0 \Rightarrow$ Equilibrium
   distribution that satisfies detailed balance.
 \end{enumerate}
 For our one-locus two-alleles case the second of these cases must be true.
-What this implies is that at steady state the flux $J_{ss}(f)$ takes the form
+What this implies is that at steady state the flux $J_{ss}(x)$ takes the form
 \begin{equation}
-  J_{ss}(f) = - M(f) P_{eq}(f) + {\partial \over \partial f}
-  \left[ V(f) P_{eq}(f) \right] = 0,
+  J_{ss}(x) = - M(x) P_{eq}(x) + {\partial \over \partial x}
+  \left[ V(x) P_{eq}(x) \right] = 0,
   \label{eq_flux_eq}
 \end{equation}
-where we use $P_{eq}(f)$ to define that this is not only a steady-state
+where we use $P_{eq}(x)$ to define that this is not only a steady-state
 distribution, but an equilibrium distribution satisfying detailed balance.
 \eref{eq_flux_eq} is a first order homogeneous ordinary differential equation.
 We can solve it using the integration factor method. For this we define
-$G(f) \equiv V(f)P_{eq}(f)$. Substituting this into \eref{eq_flux_eq} gives
+$G(x) \equiv V(x)P_{eq}(x)$. Substituting this into \eref{eq_flux_eq} gives
 \begin{equation}
-  {- M(f) \over V(f)} G(f) + {\partial \over \partial f} G(f) = 0.
+  {- M(x) \over V(x)} G(x) + {\partial \over \partial x} G(x) = 0.
   \label{eq_ode_ss}
 \end{equation}
 In this form we define the integration factor to be
 \begin{equation}
-  h(f) = \exp \left( \int_0^f -{M(f') \over V(f')} \; df' \right).
+  h(x) = \exp \left( \int_0^x -{M(x') \over V(x')} \; dx' \right).
 \end{equation}
-Notice that we chose the limits of integration to be $[0, f]$. This is because
+Notice that we chose the limits of integration to be $[0, x]$. This is because
 the fundamental theorem of calculus states that for any function $f(x)$ defined
 in $[a, b]$, the antiderivative $F(x)$ is defined as
 \begin{equation}
   F(x) = \int_a^x f(x') \; dx',
 \end{equation}
 regardless of the lower limit of integration. Multiplying both sides of
-\eref{eq_ode_ss} by the integration factor $h(f)$ results in
+\eref{eq_ode_ss} by the integration factor $h(x)$ results in
 \begin{equation}
-  {- M(f) \over V(f)} G(f)
-  \exp \left( \int_0^f -{M(f') \over V(f')} \; df' \right)
-  + {\partial \over \partial f} G(f)
-  \exp \left( \int_0^f -{M(f') \over V(f')} \; df' \right)
+  {- M(x) \over V(x)} G(x)
+  \exp \left( \int_0^x -{M(x') \over V(x')} \; dx' \right)
+  + {\partial \over \partial x} G(x)
+  \exp \left( \int_0^x -{M(x') \over V(x')} \; dx' \right)
   = 0.
   \label{eq_ode_int_fact}
 \end{equation}
 The specific form of the integration factor was chosen such that we could
 rewrite \eref{eq_ode_int_fact} as
 \begin{equation}
-  {d \over df}
+  {d \over dx}
   \left[
   \exp \left(
-  - \int_0^f {M(f') \over V(f')}
-  \right)G(f) \; df'
+  - \int_0^x {M(x') \over V(x')}
+  \right)G(x) \; dx'
   \right] = 0.
 \end{equation}
-Written in this form we can simply integrate both sides with respect to $f$ as
+Written in this form we can simply integrate both sides with respect to $x$ as
 \begin{equation}
-  \int_0^f {d \over df''}\left[
+  \int_0^x {d \over dx''}\left[
   \exp \left(
-  - \int_0^{f''} {M(f') \over V(f')}
-  \right) G(f'')\; df'
+  - \int_0^{x''} {M(x') \over V(x')}
+  \right) G(x'')\; dx'
   \right] =
-  \int_0^f 0 \; df''
+  \int_0^x 0 \; dx''
 \end{equation}
 Evaluating these integrals results in
 \begin{equation}
   \exp \left(
-  - \int_0^{f} {M(f') \over V(f')}
-  \right) G(f)\; df' = C,
+  - \int_0^{x} {M(x') \over V(x')}
+  \right) G(x)\; dx' = C,
 \end{equation}
 where $C$ is an integration constant. Notice that for a specific interval
 $[a, b] \in \mathbb{R}$ the integral of zero is
@@ -179,22 +179,23 @@ $[a, b] \in \mathbb{R}$ the integral of zero is
 \end{equation}
 but when we set the upper integration limit as an independent variable, what we
 are asking for is the antiderivative of zero which is a constant $C$.
-Substituting the definition of $G(f) = V(f) P_{eq}(f)$ gives
+Substituting the definition of $G(x) = V(x) P_{eq}(x)$ gives
 \begin{equation}
   \exp \left(
-  - \int_0^f df' \; {M(f') \over V(f')}\right)
-  V(f) P_{eq}(f) = C.
+  - \int_0^x dx' \; {M(x') \over V(x')}\right)
+  V(x) P_{eq}(x) = C.
 \end{equation}
-We can then solve for the equilibrium allele distribution $P_{eq}(f)$ obtaining
+We can then solve for the equilibrium allele distribution $P_{eq}(x)$ obtaining
 the result we were aiming for
 \begin{equation}
-  P_{eq}(f) = {C \over V(f)} \exp \left(
-  \int_0^f df' \; {M(f) \over V(f)}
+  P_{eq}(x) = {C \over V(x)} \exp \left(
+  \int_0^x dx' \; {M(x) \over V(x)}
   \right).
 \end{equation}
 This is a Boltzmann-like distribution! The analogy with statistical mechanics
 becomes even more clear when we substitute specific functional forms for the
-directional term $M(f)$ and the diffusive term $V(f)$.
+directional term $M(x)$ and the diffusive term $V(x)$.
 
-\mrm{This will be follow up by analysis of different cases of equilibrium
-distributions.}
+In the next section we will explore how to obtain the coefficients for our
+Fokker-Planck equation given the Langevin dynamics that we defined in
+\secref{sec_langevin_intro}.
