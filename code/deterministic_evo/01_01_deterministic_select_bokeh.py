@@ -8,8 +8,9 @@
 # All code contained herein is licensed under an [MIT
 # license](https://opensource.org/licenses/MIT)
 
-# Import our numerical workhorse
+#%%
 import numpy as np
+import pandas as pd
 
 # Our main plotting package (must have explicit import of submodules)
 import bokeh.io
@@ -20,18 +21,28 @@ from bokeh.models import CustomJS, WidgetBox, ColumnDataSource
 from bokeh.models.widgets import Slider, RadioButtonGroup
 from bokeh.resources import CDN
 from bokeh.embed import autoload_static
-
-# Import the project utils
-import sys
-sys.path.insert(0, '../../')
 import statgen
 
-# Define output fig folder
-figdir = '../../fig/deterministic_evo/'
+#%%
+# Define chapter name
+CHAPTER = 'deterministic_evo'
+# Define file description (will be attached to file name)
+DESCRIPTION = 'deterministic_select'
 
+# Read list of figures for this chapter
+figs = pd.read_excel('../../fig/fig_names.xlsx',
+                     sheet_name=CHAPTER)
+
+# Compose figure name given current numbering of files
+chapter = int(figs[figs.fig_name == DESCRIPTION].chapter)
+number = int(figs[figs.fig_name == DESCRIPTION].number)
 # Define plot file name
-filename = '01_01_deterministic_select'
+filename = f'{chapter:02d}_{chapter:02d}_{DESCRIPTION}'
 
+# Define output fig folder
+figdir = f'../../fig/{CHAPTER}/'
+
+#%%
 # The first thing we need to define for the plot are the sliders that we will
 # be able to manipulate. We will need two:
 # 1. $s$ for the selection coefficient

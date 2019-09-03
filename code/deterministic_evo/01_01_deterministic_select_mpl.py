@@ -8,28 +8,43 @@
 # All code contained herein is licensed under an [MIT
 # license](https://opensource.org/licenses/MIT)
 
+#%%
 # Import our numerical workhorse
 import numpy as np
+import pandas as pd
 
 # Import matplotlib stuff for plotting
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm
 import matplotlib as mpl
-
-# Seaborn, useful for graphics
 import seaborn as sns
-
-# Import the project utils
-import sys
-sys.path.insert(0, '../../')
 import statgen
 
+#%%
 # Set plotting style
 statgen.viz.pboc_style_mpl()
 
-# Define output fig folder
-figdir = '../../fig/deterministic_evo/'
+# Define chapter name
+CHAPTER = 'deterministic_evo'
+# Define file description (will be attached to file name)
+DESCRIPTION = 'deterministic_select'
+# Define format for figure
+FORMAT = 'png'
 
+# Read list of figures for this chapter
+figs = pd.read_excel('../../fig/fig_names.xlsx',
+                     sheet_name=CHAPTER)
+
+# Compose figure name given current numbering of files
+chapter = int(figs[figs.fig_name == DESCRIPTION].chapter)
+number = int(figs[figs.fig_name == DESCRIPTION].number)
+# Define plot file name
+filename = f'{chapter:02d}_{chapter:02d}_{DESCRIPTION}'
+
+# Define output fig folder
+figdir = f'../../fig/{CHAPTER}/'
+
+#%%
 # Define function to compute allele frequency
 def x_select(t, x_init, s_select):
     '''
@@ -70,5 +85,5 @@ plt.ylabel('allele frequency')
 plt.legend(title='$s$', fontsize=6)
 
 # Save figure
-plt.savefig(figdir + '01_01_deterministic_select.png', bbox_inches='tight',
+plt.savefig(figdir + f'{filename}.{FORMAT}', bbox_inches='tight',
             dpi=300)
