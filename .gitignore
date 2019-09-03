@@ -59,6 +59,7 @@ graphicspath.tex
 *.pages
 *.key
 *.pdf
+*~$*
 
 #Ignore LaTeX helper files
 *.blg
@@ -74,4 +75,4 @@ graphicspath.tex
 
 # Local directories to ignore
 doc/stat_gen/fig/
-
+statgen.egg-info/
