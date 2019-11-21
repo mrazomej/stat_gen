@@ -8,27 +8,44 @@
 # All code contained herein is licensed under an [MIT
 # license](https://opensource.org/licenses/MIT)
 
+#%%
 # Import our numerical workhorse
 import numpy as np
+import pandas as pd
 
 # Import matplotlib stuff for plotting
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm
 import matplotlib as mpl
-
-# Seaborn, useful for graphics
 import seaborn as sns
-
-# Import the project utils
-import sys
-sys.path.insert(0, '../../')
 import statgen
 
+#%%
 # Set plotting style
 statgen.viz.pboc_style_mpl()
 
+# Define chapter name
+CHAPTER = 'deterministic_evo'
+# Define file description (will be attached to file name)
+DESCRIPTION = 'deterministic_mut'
+# Define format for figure
+FORMAT = 'png'
+
+# Read list of figures for this chapter
+figs = pd.read_excel('../../fig/fig_names.xlsx',
+                     sheet_name=CHAPTER)
+
+# Compose figure name given current numbering of files
+chapter = int(figs[figs.fig_name == DESCRIPTION].chapter)
+section = int(figs[figs.fig_name == DESCRIPTION].section)
+number = int(figs[figs.fig_name == DESCRIPTION].number)
+# Define plot file name
+filename = f'{chapter:02d}_{section:02d}_{number:02d}_{DESCRIPTION}'
+
 # Define output fig folder
-figdir = '../../fig/deterministic_evo/'
+figdir = f'../../fig/{CHAPTER}/'
+
+#%%
 
 ## Define time array
 time = np.linspace(0, 200)
@@ -76,5 +93,5 @@ plt.ylim([0, 1.15])
 plt.legend(title=r'$\frac{\mu_{aA}}{\mu_{Aa} + \mu_{aA}}$', fontsize=6)
 
 # Save figure
-plt.savefig(figdir + '01_02_deterministic_mut.png', bbox_inches='tight',
+plt.savefig(figdir + f'{filename}.{FORMAT}', bbox_inches='tight',
             dpi=300)

@@ -37,9 +37,10 @@ figs = pd.read_excel('../../fig/fig_names.xlsx',
 
 # Compose figure name given current numbering of files
 chapter = int(figs[figs.fig_name == DESCRIPTION].chapter)
+section = int(figs[figs.fig_name == DESCRIPTION].section)
 number = int(figs[figs.fig_name == DESCRIPTION].number)
 # Define plot file name
-filename = f'{chapter:02d}_{chapter:02d}_{DESCRIPTION}'
+filename = f'{chapter:02d}_{section:02d}_{number:02d}_{DESCRIPTION}'
 
 # Define output fig folder
 figdir = f'../../fig/{CHAPTER}/'
