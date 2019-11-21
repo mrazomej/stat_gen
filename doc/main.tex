@@ -130,14 +130,25 @@ Pasadena, CA 91125, USA}
 %% MAIN TEXT
 \maketitle % Set title for paper
 
+\tableofcontents
+
 % Chapter 1. Deterministic evolution
 \input{./chapters/deterministic_evo/01_selection.tex}
+\input{./chapters/deterministic_evo/02_mutation.tex}
 
-% Chapter 2. Classic diffusion theory
-% \input{./chapters/classic_diffusion/01_markov_process}
-% \input{./chapters/classic_diffusion/02_master_eq}
-% \input{./chapters/classic_diffusion/03_kramers_moyal}
-% \input{./chapters/classic_diffusion/04_fokker_planck}
-% \input{./chapters/classic_diffusion/05_kolmogorov_backwards}
+% Chapter 2. Introduction to Langevin equation
+\input{./chapters/drift_langevin/01_buri_drift.tex}
+\input{./chapters/drift_langevin/02_intro_langevin.tex}
+\input{./chapters/drift_langevin/03_stochastic_growth.tex}
+
+% Chapter 3. Classic diffusion theory
+\input{./chapters/classic_diffusion/01_markov_process.tex}
+\input{./chapters/classic_diffusion/02_master_eq.tex}
+\input{./chapters/classic_diffusion/03_kramers_moyal.tex}
+\input{./chapters/classic_diffusion/04_fokker_planck.tex}
+\input{./chapters/classic_diffusion/05_fp_to_langevin.tex}
+\input{./chapters/classic_diffusion/06_kolmogorov_backwards.tex}
+
+
 
 \end{document}
