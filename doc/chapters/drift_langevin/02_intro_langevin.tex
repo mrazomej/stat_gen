@@ -43,10 +43,10 @@ that happened to occur for a specific realization of the process.
 	that the random variable $X$ can take over time. The particular realization
 	$x(t)$ describes a specific trajectory that the random variable $X$ took in
 	one particular case.}
-  \label{fig02_02_01}
+  \label{fig_02_02_01}
 \end{figure}
 
-From the intuition presented in \fref{fig02_02_01} we understand that all
+From the intuition presented in \fref{fig_02_02_01} we understand that all
 possible trajectories that our stochastic process can take are contained in the
 function $X(t)$. But some particular paths $x(t)$ are more likely to happen
 than others. This is what the language of probability theory allows us to
@@ -73,7 +73,7 @@ our variable $X$, but rather committing to a specific time point $t^*$ and then
 computing the $m\tth$ moment at that time point. An intuitive way to think
 about this is to take a frequentist approach for probability. We imagine that
 we get to observe many many individual trajectories $\{x_1(t), \ldots
-x_n(t)\}$, as schematically shown in \fref{fig02_02_02} then what
+x_n(t)\}$, as schematically shown in \fref{fig_02_02_02} then what
 \eref{eq_process_moment} is doing is computing the moment at a specific time
 point $t^*$ highlighted also in \fref{fig02_02_02}.
 
@@ -85,7 +85,7 @@ point $t^*$ highlighted also in \fref{fig02_02_02}.
   highlighted. In the limit where we have many many of these trajectories we
   can then compute a moment of the distribution $P(x, t^*)$ for a specific time
   point $t^*$. \mrm{need better caption}}
-  \label{fig02_02_02}
+  \label{fig_02_02_02}
 \end{figure}
 
 There is no reason why we have to limit ourselves to a single time point $t^*$.
@@ -386,8 +386,8 @@ integrate the dynamics. The difference is that at each time step we can
 generate a pseudo-random number that follows the statistical properties that we
 defined for $\xi(t)$.
 
-\fref{fig02_02_03} shows the result of this numerical procedure. The light gray
-lines show different realizations of the dynamics generated with
+\fref{fig_02_02_03} shows the result of this numerical procedure. The light
+gray lines show different realizations of the dynamics generated with
 \eref{eq_discrete_walker}, the black lines are the resulting mean $\pm$
 standard deviation of the trajectories, while the shaded blue are shows the
 same mean $\pm$ standard deviation as computed from our analytical results in
@@ -399,7 +399,7 @@ computation, the better the agreement would be.
 	\centering \includegraphics[width=0.5\textwidth]
   {../fig/drift_langevin/02_02_03_langevin_euler.png}
 	\caption{\textbf{Numerical integration of the Langevin equation}. Comparison of simulation-based results with analytical results. Random trajectories that evolve according to \eref{eq_random_walk_langevin} were generated. From these the mean and standard deviation of the trajectories were computed (black lines). Analytical results for the mean $\pm$ standard deviation are shown as shaded blue area. For these simulations $x_o= 2$, $\gamma = 1$, $D = 1.5$, and $\Dt = 0.001$}
-  \label{fig02_02_03}
+  \label{fig_02_02_03}
 \end{figure}
 
 Having introduced the concept of random processes and the simple but yet
