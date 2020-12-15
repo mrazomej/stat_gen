@@ -1,0 +1,267 @@
+% !TEX root = ./main.tex
+\section{General diffusion equation}
+
+Our introduction to diffusion theory begins with the derivation of the partial
+differential equation that defines the time evolution of the allele frequency
+probability distribution $P(x, t)$. The approach we will consider here is a
+discretization of the otherwise continuous probability density function.
+Figure~\ref{fig01:diffusion_basics}(B) depicts the idea behind this
+discretization where we divide the distributions into bins of some width $\Delta
+x$. Since $P(x, t)$ is a \textit{probability density function}, i.e., a
+probability function for continuous random variables, evaluating this density
+for any particular value of the allele frequency returns zero. Only intervals of
+the form $P(x - \delta x \leq x \leq x + \delta x)$ have meaningful
+probabilities. This is because $P(x, t)$ has units of inverse $x$ (in our case,
+inverse allele frequency), but probability has no dimensions. So by computing
+the interval via an integration of the form
+\begin{equation}
+    P(x - \delta x \leq x \leq x + \delta x) =
+    \int_{x - \delta x}^{x + \delta x} dx \; P(x, t),
+\end{equation}
+we multiply the density $P(x, t)$ (units of inverse allele frequency) with the
+infinitesimal width $dx$ (units of allele frequency), recovering a dimensionless
+quantity. Our discretization of this distribution then takes the form
+\begin{equation}
+    p(x, t) \equiv P(x - \frac{\Delta x}{2} \leq x \leq x + \frac{\Delta x}{2}) 
+    \approx \overbrace{P(x, t)}^{\text{height}} 
+    \overbrace{\Delta x}^{\text{width}},
+\label{eq:mass_vs_density}
+\end{equation}
+where we define $p(x, t)$ to be a \textit{probability mass function}, i.e., a
+probability function for discrete random variables. What we are doing is
+approximating the integral as a rectangle of height $P(x, t)$ and a width $dx$.
+The smaller $dx$ the more accurate our approximation gets.
+
+Before jumping into the modeling of each of the individual evolutionary forces,
+we will begin our analysis with an abstract transition probability that captures
+the effect of all forces all together. This will allow us to gain intuition on
+how to implement each of the particular forces in the following section. Let us
+define a probability transition rate $\phi(x \mid x')$. The way to think about
+this function is that, by taking into account all evolutionary forces involved,
+$\phi(x \mid x')$ tells us what is the probability of transition from an allele
+frequency $x'$ to a frequency $x$ per unit time. Given that $\phi(x \mid x')$ is
+a rate (units of inverse time), we need to multiply is by a small window of time
+$\Delta t$ in order to obtain a transition probability. For example, if we want
+to compute what is the probability of transitioning from an allele frequency $x$
+to an allele frequency $x + \Delta x$ in a small time window $\Delta t$, we must
+compute
+\begin{equation}
+    P_{\text{transition}}(x \rightarrow x + \Delta x; \Delta t) = 
+    \phi(x + \Delta x \mid x) \Delta t.
+\end{equation}
+With this in hand let's focus our attention to a particular frequency value $x$.
+Figure~\ref{fig01:diffusion_basics}(C) shows the checks and balances we need to
+consider for this allele frequency. What the schematic shows is that in a small
+time window $\Delta t$ the ``amount of probability'' at $x$ can change due to
+the outflow of probability mass from $x$ to the two contiguous bins $x + \Delta
+x$ and $x - \Delta x$, and due to the inflow from those same two bins. We are
+assuming that $\Delta t$ is sufficiently small such that we only need to
+consider transitions from the nearest neighbors. Writing down this check and
+balance equation we obtain
+\begin{equation}
+\begin{split}
+    p(x, t + \Delta t) &= p(x, t)
+    + \overbrace{p(x - \Delta x, t) \phi(x \mid x - \Delta x)\Delta t}
+    ^{\text{inflow from the left}}
+    + \overbrace{p(x + \Delta x, t) \phi(x \mid x + \Delta x)\Delta t}
+    ^{\text{inflow from the right}}\\
+    &- \overbrace{p(x, t) \phi(x - \Delta x \mid x) \Delta t}
+    ^{\text{outflow to the left}}
+    - \overbrace{p(x, t) \phi(x + \Delta x \mid x) \Delta t}
+    ^{\text{outflow to the right}}.
+\end{split}
+\label{eq:inflow_outflow_diffusion}
+\end{equation}
+To make further progress, we need to rewrite the transition probability in terms
+of the jump size $r \equiv x - x'$. In other words, instead of defining the
+funciton with the initial and final position, we define the function with the
+initial position and the size of the displacement. This is
+\begin{equation}
+    \phi(x \mid x') = \phi(x'; r).
+\end{equation}
+Using this allows us to rewrite \ref{eq:inflow_outflow_diffusion} as
+\begin{equation}
+\begin{split}
+    p(x, t + \Delta t) = &p(x, t)
+    + p(x - \Delta x, t) \phi(x - \Delta x; \Delta x)\Delta t
+    + p(x + \Delta x, t) \phi(x + \Delta x; -\Delta x)\Delta t\\
+    &- p(x, t) \phi(x; -\Delta x) \Delta t
+    - p(x, t) \phi(x; \Delta x) \Delta t.
+\end{split}
+\label{eq:jump_diffusion}
+\end{equation}
+This equation needs a few rearrangements. First we send the first term on the
+right hand side to the left, and divide both sides by $\Delta t$. This results
+in
+\begin{equation}
+\begin{split}
+    \frac{p(x, t + \Delta t) - p(x, t)}{\Delta t} &=
+    p(x - \Delta x, t) \phi(x - \Delta x; -\Delta x)
+    + p(x + \Delta x, t) \phi(x + \Delta x; \Delta x)\\
+    &- p(x, t) \phi(x; -\Delta x) 
+    - p(x, t) \phi(x; \Delta x).
+\end{split}
+\end{equation}
+Taking the limit $\Delta t \rightarrow 0$ allows us to rewrite
+\begin{equation}
+\begin{split}
+    \frac{d p(x, t)}{dt} &=
+    p(x - \Delta x, t) \phi(x - \Delta x; -\Delta x)
+    + p(x + \Delta x, t) \phi(x + \Delta x; \Delta x)\\
+    &- p(x, t) \phi(x; -\Delta x) 
+    - p(x, t) \phi(x; \Delta x).
+\end{split}
+\label{eq:master_eq_jump}
+\end{equation}
+This equation that describes the time evolution of the probability mass function
+is usually called a master equation. As written right now,
+Eq.~\ref{eq:master_eq_jump} depends on the unknown function $\phi(x; r)$ that
+involves the influence of all evolutionary forces. The next manipulation of the
+equation involves a Taylor expansion of the terms in Eq.~\ref{eq:master_eq_jump}
+involving $x \pm \Delta x$ around $x$. As written right now we cannot Taylor
+expand $p(x, t)$ since a probability mass function can only evaluated for the
+\textit{discrete} values the random variable can take. It is at this point that
+we use Eq.~\ref{eq:mass_vs_density} to convert back to the probability density
+function. Substituting this in Eq.~\ref{eq:master_eq_jump} doesn't have any
+effect given that the extra $\Delta x$ term that comes along with converting
+from a mass to a density cancels from both sides, resulting in
+\begin{equation}
+\begin{split}
+    \frac{d P(x, t)}{dt} &=
+    P(x - \Delta x, t) \phi(x - \Delta x; -\Delta x)
+    + P(x + \Delta x, t) \phi(x + \Delta x; \Delta x)\\
+    &- P(x, t) \phi(x; -\Delta x) 
+    - P(x, t) \phi(x; \Delta x).
+\end{split}
+\label{eq:master_eq_density}
+\end{equation}
+Now we can properly Taylor expand the terms involving $x \pm \Delta x$. This 
+expansion takes the form
+\begin{equation}
+\begin{split}
+    P(x \pm \Delta x, t) \phi(x \pm \Delta x; \mp \Delta x) &\approx
+    P(x, t)\phi(x; \mp \Delta x)\\
+    &+ \frac{d}{dx}
+    \left[ P(x, t) \phi(x; \mp \Delta x)  \right] (\pm \Delta x)\\
+    &+ \frac{1}{2} \frac{d^2}{d x^2}
+    \left[ P(x, t) \phi(x; \mp \Delta x)  \right] (\pm \Delta x)^2.\\
+\end{split}
+\label{eq:taylor_expand_jump}
+\end{equation}
+Substituting Eq.~\ref{eq:taylor_expand_jump} into Eq.~\ref{eq:master_eq_density}
+results in
+\begin{equation}
+\begin{split}
+    \frac{\partial P(x, t)}{\partial t} &=
+    P(x, t)\phi(x; - \Delta x)\\
+    &+ \frac{\partial}{\partial x}
+    \left[ P(x, t) \phi(x; - \Delta x)  \right] (\Delta x)\\
+    &+ \frac{1}{2} \frac{\partial^2}{\partial x^2}
+    \left[ P(x, t) \phi(x; - \Delta x) \right]   (\Delta x)^2\\
+    &+ P(x, t) \phi(x; \Delta x)\\
+    &+ \frac{\partial}{\partial x}
+    \left[ P(x, t) \phi(x; \Delta x)  \right] (- \Delta x)\\
+    &+ \frac{1}{2} \frac{\partial ^2}{\partial x^2}
+    \left[ P(x, t) \phi(x; \Delta x)  \right] (- \Delta x)^2\\
+    &- P(x, t) \phi(x; -\Delta x) 
+    - P(x, t) \phi(x; \Delta x).
+\end{split}
+\end{equation}
+This equation might look quite messy, but it can be enormously simplified by
+cancelling terms and using the fact that derivatives are linear operators. Doing
+so results in
+\begin{equation}
+    \frac{\partial P(x, t)}{\partial t} =
+    \frac{\partial}{\partial x}
+    \left[ P(x, t) 
+    \left(\phi(x; - \Delta x) - \phi(x; \Delta x) \right) (\Delta x) 
+    \right]
+    + \frac{1}{2} \frac{\partial^2}{\partial x^2}
+    \left[ P(x, t)
+    \left(\phi(x; - \Delta x) - \phi(x; \Delta x)\right) (\Delta x)^2 \right].
+\label{eq:PDE_diffusion}
+\end{equation}
+
+Let's look at the terms involving the transition probability. The first term on
+the right hand side of the equation involves a term $\left(\phi(x; - \Delta x) -
+\phi(x; \Delta x) \right) (\Delta x)$. This is nothing else than the mean
+displacement. The way to see this is as follows: recall that in our discrete
+approach for sufficiently small $\Delta t$ we only really have to consider the
+three contiguous bins $x$ and $x \pm \Delta x$. To be consistent with the
+notation in the population genetics literature, let us define $M(x)\Delta t$ as
+the mean change in allele frequency during a small time window $\Delta t$. This
+is analogous to the definition of $\phi(x \mid x')$ in which only the product of
+$\phi(x \mid x')\Delta t$ satisfies the dimensionless nature of probabilities.
+In other words, we can think of $M(x)$ as the mean rate with which the allele
+frequency changes. The mean change in allele frequency is then computed as
+\begin{equation}
+M(x)\Delta t = \left\langle \Delta x \mid x \right\rangle_{\Delta x}\Delta t,
+\end{equation}
+where $\langle \cdot \rangle_{\Delta x}$ means to take the average over possible
+jumps in allele frequency. What this equation says is that $M(x)\Delta t$
+represents the expected shift in allele frequency on a small time window $\Delta
+t$ given that the current allele frequency is $x$. Computing this average
+displacement for our discrete case has only three options: a jump of size
+$\Delta x$, a jump of size $- \Delta x$ and no jump. The average jump is then
+given by.
+\begin{equation}
+    M(x)\Delta t = 
+    \overbrace{(-\Delta x) \phi(x, - \Delta x)\Delta t}
+    ^{\text{jump from $x$ to $x - \Delta x$}}
+    + \overbrace{(\Delta x) \phi(x, + \Delta x)\Delta t}
+    ^{\text{jump from $x$ to $x _ \Delta x$}}
+    + \overbrace{(0) (1 - \phi(x, + \Delta x) - \phi(x, - \Delta x)\Delta t}
+    ^{\text{no jump}}
+\label{eq:Mx}
+\end{equation}
+From this we can easily see that
+\begin{equation}
+    M(x) = \left(\phi(x; + \Delta x) - \phi(x; - \Delta x) \right) (\Delta x).
+\end{equation}
+Notice this the change in the order in the terms compared with the first term in
+Eq.~\ref{eq:PDE_diffusion}. This change of order will be carried as a minus sign
+in our final result. In the same way let us define $V(x)\Delta t$ as the
+variance in displacement during a small time window. This is written as
+\begin{equation}
+    V(x)\Delta t = \left[\langle (\Delta x)^2 \mid x \rangle_{\Delta x}
+    - \left(\langle \Delta x \mid x \rangle_{\Delta x}\right)^2\right]\Delta t.
+\end{equation}
+As we showed in Eq.~\ref{eq:Mx}, the mean displacement scales with $\Delta x$.
+This means that the second term on the right hand side of
+Eq.~\ref{eq:variance_displacement} scales with $(\Delta x)^2$, which for very
+small $\Delta x$ we will consider as negligible. With this simplification, the
+variance in displacement during a small time window $\Delta t$ is then simply
+given by
+\begin{equation}
+    V(x)\Delta t = \langle (\Delta x)^2 \mid x \rangle_{\Delta x} \Delta t.
+\label{eq:variance_displacement}
+\end{equation}
+This can be computed again considering the three possible jumps as
+\begin{equation}
+    V(x)\Delta t = 
+    \overbrace{(\Delta x)^2 \phi(x; \Delta x)\Delta t}
+    ^{\text{jump from $x$ to $x + \Delta x$}}
+    + \overbrace{(-\Delta x)^2 \phi(x; \Delta x)\Delta t}
+    ^{\text{jump from $x$ to $x - \Delta x$}}
+    + \overbrace{(0)^2 (1 - \phi(x, + \Delta x) - \phi(x, - \Delta x)\Delta t)
+    \Delta t}
+    ^{\text{no jump}}.
+\end{equation}
+From this we can see that 
+\begin{equation}
+    V(x) = \left(\phi(x; + \Delta x) - \phi(x; - \Delta x)\right) (\Delta x)^2.
+\label{eq:Vx}
+\end{equation}
+Substituting Eqs.~\ref{eq:Mx}~and~\ref{eq:Vx} into Eq.~\ref{eq:PDE_diffusion} 
+results in the diffusion-advection equation for allele frequency we were after
+\begin{equation}
+    \frac{\partial P(x, t)}{\partial t} = 
+    - \frac{\partial}{\partial x}\left[ P(x, t) M(x) \right]
+    + \frac{1}{2}\frac{\partial^2}{\partial x^2}\left[ P(x, t) V(x) \right].
+\end{equation}
+The reason for writing this general Fokker-Planck equation in terms of the mean
+displacement rate $M(x)$ and the variance in the displacement rate $V(x)$ is
+that the evolutionary are assigned to each of these functions. As we will see in
+the next section, selection and mutation, being deterministic evolutionary
+forces belong to the advection term, and therefore they define $M(x)$, while
+genetic drift, a stochastic force, defines the term $V(x)$.

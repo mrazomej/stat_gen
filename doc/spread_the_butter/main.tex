@@ -1,0 +1,125 @@
+% Preamble
+\input{./TeX_preamble.tex}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Document settings
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% References
+\usepackage[
+	backend=bibtex,
+	style=numeric-comp, % show references as [1-3] instead of [1,2,3]
+	sorting=none,				% Do not sort bibliography
+	url=false, 					% Do not show url in reference
+	doi=false, 					% Do not show doi in reference
+	isbn=false, 				% Do not show isbn link in reference
+	eprint=false, 			% Do not show eprint link in reference
+	maxbibnames=9, 			% Include up to 9 names in citation
+]{biblatex}
+% Add library
+\addbibresource{./chann_cap_bib}
+
+% Bold the 'Figure #' in the caption and separate it from the title/caption
+% with a period
+% Captions will be left justified
+\usepackage[
+	aboveskip=1pt,
+	labelfont=bf,
+	labelsep=period,
+	justification=raggedright,
+	singlelinecheck=off
+]{caption}
+
+% Add numbered lines
+\usepackage{lineno}
+\linenumbers
+
+% Package to include multiple title pages
+% This will allow me to add a tile to the main text and to the SI
+\usepackage{titling}
+
+% This package will allow me to define booleans to compile main text or SI
+\usepackage{ifthen}
+\newboolean{maintext}
+\newboolean{sitext}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Personalized functions
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Commenting
+\newcommand{\mrm}[1]{\textcolor{purple}{(MR:~#1)}} % Commenting
+\newcommand{\rp}[1]{\textcolor{red}{(RP:~#1)}} % Commenting
+\newcommand{\note}[1]{\textcolor{ForestGreen}{(NOTE~#1)}} % Commenting
+
+% To define more useful LaTeX commands
+\usepackage{xparse}
+
+% Equation referencing
+\newcommand{\eref}[1]{Eq.~\ref{#1}}
+% Figure referencing
+\newcommand{\fref}[1]{Fig.~\ref{#1}}
+% Table referencing
+\newcommand{\tref}[1]{Table~\ref{#1}}
+% Section referencing
+\newcommand{\secref}[1]{Section~\ref{#1}}
+% SI referencing
+\newcommand{\siref}[1]{Appendix~\ref{#1}}
+
+% Define command to begin the supplementary section
+\newcommand{\beginsupplement}{
+				\setcounter{section}{0} % Restart section counter
+        \renewcommand{\thesection}{S\arabic{section}}%
+        \setcounter{table}{0} % Restart table counter
+        \renewcommand{\thetable}{S\arabic{table}}%
+        \setcounter{figure}{0} % Restart figure counter
+        \renewcommand{\thefigure}{S\arabic{figure}}%
+        \setcounter{equation}{0} % Restart equation counter
+        \renewcommand{\theequation}{S\arabic{equation}}%
+     }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Personalized math functions
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Specify i^th entry
+\newcommand{\tth}{^{\text{th}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Begin document
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{
+\textbf{Introduction to Population Genetics Diffusion Theory}
+}
+% Authors
+\author[1]{Manuel Razo-Mejia}
+\author[1, 2, 3, *]{Rob Phillips}
+
+% Affiliations
+\affil[1]{Division of Biology and Biological Engineering, California Institute
+of Technology, Pasadena, CA 91125, USA}
+\affil[2]{Department of Physics, California Institute of Technology, Pasadena,
+CA 91125, USA}
+\affil[3]{Department of Applied Physics, California Institute of Technology,
+Pasadena, CA 91125, USA}
+\affil[*]{Correspondence: phillips@pboc.caltech.edu}
+
+% date
+% \date{\today}
+
+\setcounter{Maxaffil}{0}
+% Set affiliations in small font
+\renewcommand\Affilfont{\itshape\small}
+
+\begin{document}
+%% MAIN TEXT
+\maketitle % Set title for paper
+
+% \tableofcontents
+
+\input{section_00_abstract.tex}
+\input{section_01_introduction.tex}
+\input{section_02_general_fokker_planck.tex}
+% \input{section_03_selection.tex}
+
+\end{document}

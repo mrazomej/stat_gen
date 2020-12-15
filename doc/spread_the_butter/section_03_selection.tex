@@ -1,0 +1,153 @@
+% !TEX root = ./main.tex
+\section{Natural selection (survival of the fittest)}
+\label{sec_selection}
+1859 marked the year that Charles Darwin shocked the world with the incredible
+insights contained in his book \textit{On the origin of Species}. The complete
+title of the book \textit{On the Origin of Species by Means of Natural
+Selection, or the Preservation of Favoured Races in the Struggle for Life}
+captures perfectly Darwin's proposed mechanism for how evolution takes place.
+Natural selection is intrinsically associated with the concept of fitness. The
+phrase ``survival of the fittest'' first used by Darwin guided and still guides
+the way that biologists think about the evolution of many organisms. But despite
+the fact that fitness is part of the daily jargon of many biologists, it is a
+subtle and highly debated concept. After all what defines the ability of an
+organism to survive the challenges that surround them are completely context
+dependent. Roughly speaking we can think of fitness as the ability of an
+organism, or a population of organisms to survive and reproduce in the given
+ecological niche they occupy. The term ecology has to be included because
+fitness is a result of the interplay between organisms with their environment
+including all biotic and abiotic interactions. 
+
+It is common both in theory and in experiments to use the relative growth rates
+of organisms, i.e. the speed at which they can reproduce and generate
+offspring, as a proxy for fitness. This is a convenient approximation both
+for experiments and for theory, but one should not lose track of the relevant
+context dependence on the fitness. Just because redwoods have an average life
+span of 500-700 years and a very low growth rate that doesn't mean they are not
+fit. Having said that we will first begin with the simplest form of fitness,
+i.e. frequency independent selection. The term frequency independence simply
+refers to the assumption that the fitness of a particular allele does not
+depend on the relative abundance of such allele. This assumption could break
+down for cases such as some pathogenic bacteria that coordinate their attack
+via cell-to-cell communication known as quorum sensing. 
+
+\subsubsection{Frequency independent selection (haploids)}
+
+Haploidy refers to the biological feature of having a single copy of a
+chromosome. Given tthat many of the most interesting experiments in evolution
+have been and are being done in haploid microorganisms, we will first focus our
+efforts on these single-cell organisms. As bacteria divide into two cells they
+segregate (split) one copy of the genome to each of the daughter cells
+(extrachromosomal elements such as plasmids behave differently). This in
+contrast with diploidy where organisms such as humans that receive one copy of
+each chromosome form each parent. What haploidy means for our task of modeling
+selection on a one-locus two-allele system is that we only need to focus on the
+fitness value of each of the alleles without having to worry about combination
+of alleles.
+
+In order to write an analogous equation to \ref{eq:inflow_outflow_diffusion} we
+need to define the transition probabilities to contiguous bins due to selection.
+Let us define $f_A$ and $f_a$ to be the corresponding fitness of allele $A$ and
+$a$, respectively. What these effective parameters represent is a net change in
+the number of organisms with certain allele accounting for new organisms being
+born and older organisms dying. This means that the net change in the number of
+organisms carrying allele $A$ during a time window $\Delta t$ is given by
+$\Delta N_A \approx f_A N_A \Delta t$. Likewise the net change of organisms
+carrying allele $a$ is given by $\Delta N_a \approx f_a N_a \Delta t$. For a
+large population and a sufficiently small time window we can assume that the
+changes in population are negligible compared to the population size, i.e.,
+$\Delta N_A, \Delta N_a \ll N_A + N_a$. This simplifying assumption allows us to
+write the changes in the frequency of allele $A$ due to changes in the number of
+organisms with allele $A$ as
+\begin{equation}
+    \Delta x(\Delta N_A) \approx \frac{\Delta N_A}{N_A + N_a} = f_A x \Delta t.
+\end{equation}
+Likewise, the change in $x$ due to changes in the number of organisms carrying
+allele $a$ is given by
+\begin{equation}
+    \Delta x(\Delta N_a) \approx \frac{\Delta N_a}{N_A + N_a} = - f_a (1 - x) \Delta t,
+\end{equation}
+where the minus sign indicates that when $N_a$ increases while $N_A$ remains
+fix, the change in the allele frequency of allele $A$ decreases. With this in
+hand we can write the checks and balances equation for the probability mass
+function $p(x, t)$ due to selection. For this we will assume that $f_A, f_a >
+1$. This simply reflects the assumption that organisms with either allele are
+viable, i.e., they can reproduce faster than they die. The resulting checks and
+balances is of the form
+\begin{equation}
+\begin{split}
+    p(x, t + \Delta t) &= p(x, t) \Delta t
+    +\overbrace{[f_A (x - \Delta x) \Delta t] p(x - \Delta x, t)}
+    ^{x - \Delta x \rightarrow x \text{ via change in } N_A}
+    -\overbrace{[f_A x \Delta t] p(x, t)}
+    ^{x \rightarrow x + \Delta x \text{ via change in } N_A}\\
+    &+ \overbrace{[f_a (1 - (x + \Delta x)) \Delta t] p(x + \Delta x, t)}
+    ^{x + \Delta x \rightarrow x \text{ via change in } N_a}
+    -\overbrace{[f_a (1 - x) \Delta t] p(x, t)}
+    ^{x \rightarrow x - \Delta x \text{ via change in } N_a}.
+\end{split}
+\end{equation}
+As before, we send the first term on the right hand side to the left and divide
+both sides by $\Delta t$. Upon taking the limit $\Delta t \rightarrow 0$ we
+obtain the master equation for selection
+\begin{equation}
+    \frac{d p(x, t)}{d t} =[ f_A x+f_{a} (1 - x) ] p(x, t)
+    +[f_A (x-\Delta x) ] p(x-\Delta x, t)
+    +\left[f_{a}(1-(x+\Delta x))\right] p(x+\Delta x, t).
+\end{equation}
+The next step consists of performing the Taylor expansion of the terms involving
+$x \pm \Delta x$. As in \ref{eq:master_eq_density} here is where we substitute
+the probability mass function by the probability density function, which carries
+a factor of $\Delta x$ with it. Since this factor is applied to both sides of
+the equation, it ends up canceling out, resulting in
+\begin{equation}
+    \frac{d P(x, t)}{d t} =[ f_A x+f_{a} (1 - x) ] P(x, t)
+    +[f_A (x-\Delta x) ] P(x-\Delta x, t)
+    +\left[f_{a}(1-(x+\Delta x))\right] P(x+\Delta x, t).
+\label{eq:master_fitness}
+\end{equation}
+The Taylor expansion of the second term on the right hand side of
+Eq.~\ref{eq:master_fitness} is of the form
+\begin{equation}
+f_{A}(x-\Delta x) P(x-\Delta x, t) \approx f_{A} x P(x, t)
+- f_A \frac{\partial}{\partial x} [x {P(x, t)]} \Delta x
++\frac{1}{2} f_{A} \frac{\partial^{2}}{\partial x^{2}}[x P(x, t)] \Delta x^{2}.
+\end{equation}
+Likewise, the Taylor expansion of the third on the right hand side of
+Eq.~\ref{eq:master_fitness} is of the form
+\begin{equation}
+    f_{a} (1 - (x + \Delta x)) P(x + \Delta x, t) \approx 
+    f_a(1 - x) P(x, t)
+    + f_a \frac{\partial}{\partial x}[(1-x) P(x, t)] \Delta x
+    + \frac{1}{2} f_a \frac{\partial^{2}}{\partial x^{2}}[(1-x) P(x, t)] 
+    \Delta x^{2}.
+\end{equation}
+Substituting these Taylor expansions into Eq.~\ref{eq:master_fitness} results in
+\begin{equation}
+\begin{split}
+\frac{\partial P(x, t)}{\partial t} = 
+&- \left[f_{A} x + f_{a}(1-x)\right] P(x, t) \\
+&+ f_{A} x P(x, t)-f_{A} \frac{\partial}{\partial x} \left[x P(x, t) \right] \Delta x \\
+&+ f_{A} \frac{\partial^{2}}{\partial x^{2}} [x P(x, t)] \Delta x^{2} \\
+&+ f_{a}(1-x) P(x, t)+f a \frac{\partial}{\partial x}[(1-x) P(x, t)] \Delta x \\
+&+ f_{a} \frac{\partial^{2}}{\partial x^{2}}[(1-x) P(x, t)] \Delta x^{2}.
+\end{split}
+\end{equation}
+Simplifying terms and using the linearity of derivatives allows us to write
+\begin{equation}
+\frac{\partial P(x, t)}{\partial t} =
+- \frac{\partial}{\partial x}\left[\left(f_{A} x-f_{a}(1-x)\right)
+P(x, t)\right] \Delta x 
++ \frac{1}{2} \frac{\partial^{2}}{\partial x^{2}}
+\left[\left(f_{A} x + f_{a} (1-x) \right) P(x, t)\right] \Delta x^{2}
+\label{eq:pde_fitness_2nd}
+\end{equation}
+Since the second term on the right hand side of Eq.~\ref{eq:pde_fitness_2nd} is
+proportional to $\Delta x^2$, for very small $\Delta x$ we can consider this
+term to be negligible. Note that for the first term on
+Eq.~\ref{eq:pde_fitness_2nd} right hand side we can write
+\begin{equation}
+    \frac{\partial P(x, t)}{\partial t}=
+    -\frac{\partial}{\partial x}
+    \left[\left(f_A x \Delta x+f_{a}(1-x)(-\Delta x)\right) P(x, t)\right].
+\end{equation}
