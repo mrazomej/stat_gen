@@ -1,0 +1,61 @@
+% !TEX root = ./main.tex
+\section{Implementing the evolutionary forces}
+
+As hinted in Fig.~\ref{fig01:moran}(A), the Moran process gives us a simple
+recipe on how to encode the different evolutionary forces on the transition
+rates $W^\pm(x)$. Recall that since the transition rates in allele frequency are
+the same as the transition rates in number of organisms, we can more easily
+conceptualize the forces in the latter space. This means that the general form
+in which the number of organisms with allele $A$ can chance looks like
+\begin{equation}
+    W^+(x) = w^+(n) = 
+    \text{Rate of $A$ dying} \times
+    \text{Probability of replacement by $a$},
+\end{equation}
+and 
+\begin{equation}
+    W^-(x) = w^-(n) = 
+    \text{Rate of $a$ dying} \times
+    \text{Probability of replacement by $A$},
+\end{equation}
+Having these general forms let us define the rates for different evolutionary
+forces.
+
+\subsection{Genetic drift}
+
+Given the intrinsic stochasticity of the Moran process, the easiest evolutionary
+force to implement is that of genetic drift. For simplicity, we assume that both
+allele types have the same death rate per organism $\gamma$. For the case where
+only genetic drift is changing the population composition, we assume that the
+reproduction probability per organism is the same (equivalent to saying both
+genotypes have the same fitness), so the probability of replacement is given by
+the allele frequency. Mathematically this means that we can express the rate
+with which the number of organisms with allele $A$ increases as
+\begin{equation}
+    W^+(x) = w^+(n) = \gamma (N-n) \frac{n}{N},
+\end{equation}
+where the term $\gamma (N-n)$ defines the rate at which an organism with an
+allele $a$ dies, and the term $n/N$ defines the probability of an organism with
+allele $A$ reproducing. Equivalently the rate with which the number of organisms
+with allele $a$ decreases takes the form
+\begin{equation}
+    W^+(x) = w^+(n) = \gamma n \frac{(N-n)}{N}.
+\end{equation}
+Given that both rates are equal, we can see that the first term in
+Eq.~\ref{eq:master_x} involving $W^+(x) - W^-(x)$ is zero. Substituting the sum
+of the rates into the second term of Eq.~\ref{eq:master_x} results in
+\begin{equation}
+\begin{aligned}
+    \frac{\partial P(x, t)}{\partial t} &=\frac{1}{2 N^{2}} 
+    \frac{\partial^{2}}{\partial x^{2}}[2 \gamma(N-n) n P(x, t)], \\
+    &=\frac{\partial^{2}}{\partial x^{2}}
+    \left[\frac{1}{2 N^{2}} 2 \gamma\left(\frac{N-n) n}{N} \right) P(x, t)\right],\\
+    &=\frac{\gamma}{N} \frac{\partial^{2}}{\partial x^{2}}[x(1-x) P(x, t)].
+\end{aligned}
+\end{equation}
+We redefine the time scale to be in units of $\gamma^{-1}$, allowing us to write
+\begin{equation}
+    \frac{\partial P(x, t)}{\partial t} =
+    \frac{1}{N} \frac{\partial^{2}}{\partial x^{2}}[x(1-x) P(x, t)],
+\end{equation}
+the classic Kimura diffusion equation for genetic drift only.
