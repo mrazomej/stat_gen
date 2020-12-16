@@ -68,7 +68,7 @@ sense that there is a force associated with every point in our abstract space of
 allele frequencies; just as there is a gravitational force associated with every
 position nearby an object with mass. A schematic of this force field is depicted
 in Firgure~\ref{fig01:diffusion_basics}(A). Following up with this gravity
-analogy, two of the forces --selection and mutation-- are deterministic forces,
+analogy, two of the forces--selection and mutation--are deterministic forces,
 meaning that given certain initial conditions for the allele composition of a
 population, the dynamics always reach the same end point if only these forces
 are included. For example, if allele $A$ confers higher fitness, as long as $x(t
@@ -100,21 +100,3 @@ evolutionary dynamics significantly more difficult. To gain intuition into this
 effect we will derive the partial differential equation (known as the
 Fokker-Planck equation in the physics literature) from a discrete master
 equation approach.
-
-\begin{figure}[h!]
-	\centering \includegraphics
-  {../../fig/spread_the_butter/fig01_diffusion_basics.pdf}
-  \caption{\textbf{Diffusion theory as a framework to put together all
-  evolutionary forces}. (A) Schematic representation of the deterministic
-  (mutation and selection) and stochastic (drift) force fields in the allele
-  frequency space. The arrows show the direction of the expected change in
-  allele frequency with the length proportional to the magnitude of the change.
-  The curves show two different allele frequency probability distributions $P(x,
-  t)$. (B) Discretization of the allele distribution into bins of width $\Delta
-  x$. This discretization allows us to manipulate the continuous probability
-  density function $P(x, t)$ as a discrete probability mass function $p(x, t)$.
-  (C) Probability mass flow on a small time window $\Delta t$. Under the
-  assumption that $\Delta t$ is sufficiently small we only consider the two
-  contiguous bins to $x$, $x+\Delta x$ and $x-\Delta x$.}
-  \label{fig01:diffusion_basics}
-\end{figure}
