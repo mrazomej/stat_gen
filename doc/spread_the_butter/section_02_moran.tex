@@ -5,8 +5,8 @@ Our approach to derive the equation that governs the time evolution of the
 allele frequency starts from a discrete state space. As mentioned before, we
 will be working in the context of the one-locus two-allele model. To capture the
 stochastic nature of the reproduction of these organisms we will adopt the Moran
-process shown schematically in Fig.~\ref{fig01:moran}(A). The Moran process is a
-stochastic process with a fix population size $N$. Organisms in this discrete
+process, shown schematically in Fig.~\ref{fig01:moran}(A). The Moran process is
+a stochastic process with a fix population size $N$. Organisms in this discrete
 population die with a characteristic rate $\gamma$. The type of organism that
 dies during a small time window $\Delta t$ depends on the relative abundance of
 each allele type. The organism that dies is immediately replaced when any of the
@@ -98,9 +98,9 @@ we can then approximate the PMF of $n$ as
   \overbrace{\Delta x}^{\text{width}}.
 \end{equation}
 The transition rates $w^\pm(n)$, having units of time$^{-1}$, are not affected
-by this approximation. In other words the transition rate to jump from $n$ to $n
-\pm 1$ is the exact same transition rate to jump from $x$ to $x \pm \Delta x$.
-We then define the transition rates in allele frequency as
+by this approximation. In other words, the transition rate to jump from $n$ to
+$n \pm 1$ is the exact same transition rate to jump from $x$ to $x \pm \Delta
+x$. We then define the transition rates in allele frequency as
 \begin{equation}
   W^\pm(x) \equiv w^\pm(n).
 \end{equation}
@@ -160,7 +160,7 @@ as
 -\frac{\partial}{\partial x}
 \left[\left(W^{+}(x)-W^{-}(x)\right) P(x, t)\right] \Delta x 
 +\frac{1}{2} \frac{\partial^{2}}{\partial x^{2}}
-\left[\left(W^{t}(x)+W^{-}(x)\right) P(x, t)\right](\Delta x)^{2}
+\left[\left(W^{+}(x)+W^{-}(x)\right) P(x, t)\right](\Delta x)^{2}
 \end{equation}
 Finally, recall that we define $\Delta x \equiv 1 / N$. Substituting this gives
 us the partial differential equation in which we will implement the different

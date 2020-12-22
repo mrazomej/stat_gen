@@ -22,6 +22,7 @@ Having these general forms let us define the rates for different evolutionary
 forces.
 
 \subsection{Genetic drift}
+\mrm{Further discussion of what genetic drift is?}
 
 Given the intrinsic stochasticity of the Moran process, the easiest evolutionary
 force to implement is that of genetic drift. For simplicity, we assume that both
@@ -59,3 +60,161 @@ We redefine the time scale to be in units of $\gamma^{-1}$, allowing us to write
     \frac{1}{N} \frac{\partial^{2}}{\partial x^{2}}[x(1-x) P(x, t)],
 \end{equation}
 the classic Kimura diffusion equation for genetic drift only.
+
+\subsection{Genetic drift plus selection}
+
+Natural selection is intrinsically associated with the concept of fitness. The
+phrase ``survival of the fittest'' first used by Darwin guided and still guides
+the way that biologists think about the evolution of many organisms. But
+despite the fact that fitness is part of the daily jargon of many biologists,
+it is a subtle and highly debated concept. After all what defines the ability
+of an organism to survive the challenges that surround them are completely
+context dependent. Roughly speaking we can think of fitness as the ability of
+an organism, or a population of organisms to survive and reproduce in the given
+ecological niche they occupy. The term ecology has to be included because
+fitness is a result of the interplay between organisms with their environment
+including all biotic and abiotic interactions. 
+
+It is common both in theory and in experiments to use the relative growth rates
+of organisms, i.e. the speed at which they can reproduce and generate
+offspring, as a proxy for fitness. This is a convenient approximation both
+for experiments and for theory, but one should not lose track of the relevant
+context dependence on the fitness. Just because redwoods have an average life
+span of 500-700 years and a very low growth rate that doesn't mean they are not
+fit. Having said that we will first begin with the simplest form of fitness,
+i.e. frequency independent selection. The term frequency independence simply
+refers to the assumption that the fitness of a particular allele does not
+depend on the relative abundance of such allele. This assumption could break
+down for cases such as some pathogenic bacteria that coordinate their attack
+via cell-to-cell communication known as quorum sensing. 
+
+To implement the effect of different reproductive success for different alleles
+we introduce parameters $f_A$ and $f_a$ as the fitness values for allele $A$ and
+$a$, respectively. With these parameters in hand we must redefine the
+probability of an organism reproducing to replace the one that dies in the Moran
+process. The replacement probability for allele $A$ is now given by
+\begin{equation}
+    \text{Prob. of $A$ replacing} = \frac{f_A n}{f_A n + f_a (N - n)}.
+\end{equation}
+Likewise for allele $a$ we have
+\begin{equation}
+    \text{Prob. of $a$ replacing} = \frac{f_a (N - n)}{f_A n + f_a (N - n)}.
+\end{equation}
+Let us now assume that $f_A \approx (1 + s) f_a$ for a small $s$. This parameter
+$s$ is the so-called selection coefficient, which in nature can be of the order
+of $10^{-3}$ or less. With these assumptions we can simplify these substitution
+probabilities to be
+\begin{equation}
+    \text{Prob. of $A$ replacing} \approx \frac{n}{N}(1 + s),
+\end{equation}
+and
+\begin{equation}
+    \text{Prob. of $a$ replacing} \approx \frac{(N - n)}{N}.
+\end{equation}
+This small change in the replacement probability results in transition rates for
+Eq.~\ref{eq:master_x} of the form
+\begin{equation}
+    W^+(x) = \gamma (N - n) \frac{n}{N} (1 + s),
+\end{equation}
+and
+\begin{equation}
+    W^-(x) = \gamma n \frac{(N - n)}{N}.
+\end{equation}
+The difference of these two rates takes the form
+\begin{equation}
+    W^+(x) - W^-(x) = \gamma s \frac{n(N-n)}{N}.
+\end{equation}
+The sum results in
+\begin{equation}
+    W^+(x) + W^-(x) = \gamma (2 + s) \frac{n(N-n)}{N}.
+\end{equation}
+Substituting this into Eq.~\ref{eq:master_x} results in
+\begin{equation}
+    \frac{\partial}{\partial t} P(x, t) =
+    -\frac{1}{N} 
+    \frac{\partial}{\partial x}\left[\gamma s \frac{(N-n) n}{N} P(x, t)\right] 
+    +\frac{1}{2 N^{2}} 
+    \frac{\partial^{2}}{\partial x^{2}}
+    \left[\gamma (2+s)\left(\frac{N-n) n}{N}\right) P(x, t)\right].
+\end{equation}
+Simplifying terms and substituting the definition of the allele frequency gives
+\begin{equation}
+    \frac{\partial}{\partial t} P(x, t) =
+    -\gamma_{S} \frac{\partial}{\partial x}[x(1-x) P(x, t)] 
+    +\frac{\gamma\left(1+\frac{s}{2}\right)}{N}
+    \frac{\partial^{2}}{\partial x^{2}}[x(1-x) P(x, t)].
+\end{equation}
+To obtain the final form we again write the time scale in units of
+$\gamma^{-1}$. Furthermore we use the simplification that $s \ll 1$, obtaining
+the classic Kimura diffusion equation for selection and drift
+\begin{equation}
+    \frac{\partial}{\partial t} P(x, t) =
+    -\frac{\partial}{\partial x}[s x(1-x) P(x, t)] 
+    +\frac{1}{N} \frac{\partial^{2}}{\partial x^{2}}[x(1-x) P(x, t)].
+\end{equation}
+
+\subsection{Genetic drift plus selection plus mutation}
+
+One of the ingredients for evolution to take place is the constant appearance of
+genetic variability. After all, the raw material for evolution to act on is the
+appearance of new mutations in the population. The implementation of this third
+force changes the possibilities on how to change the composition of the
+population. As depicted in Fig.~\ref{fig01:moran}(A), if mutation is taken into
+account, there are two possible substitutions which would modify the allele
+frequency: 1. The usual path in which an organism with the opposite allele to
+the one that died reproduces and does not mutate when doing so, and 2. the
+possibility of an organism of the same allele as the one that died reproducies,
+but when doing so, it mutates to the opposite allele. For simplicity we will
+assume that the mutation probability from $A$ to $a$, $\mu_{A\rightarrow a}$, is
+the same as from $a$ to $A$, $\mu_{a\rightarrow A}$. The state transition rate
+to increase the allele frequency now take the form
+\begin{equation}
+    W^{+}(x) = \gamma(N-n) \frac{n}{N}(1+s)(1-\mu)+\gamma(N-n) \frac{(N-n)}{N} \mu,
+\end{equation}
+where the factor of $(1 - \mu)$ represents the probability of not mutating.
+Equivalently for the rate that decreases the allele frequency we have
+\begin{equation}
+    W^{-}(x)=\gamma n \frac{(N-n)}{N}(1-\mu)+\gamma n \frac{n}{N}(1+s) \mu.
+\end{equation}
+After some algebra, we find that the difference between these rates is of the
+form
+\begin{equation}
+    W^+(x) - W^-(x) = 
+    \frac{\gamma}{N}\left[n s\left(N-n-N\mu\right)+N{\mu}(N-2 n)\right].
+\end{equation}
+For the sum of the rates we find
+\begin{equation}
+    W^+(x) + W^-(x) =
+    \frac{\gamma}{N}\left[N n(2-4 \mu+s-\mu s) + 
+    n^{2}(-2+4 \mu-s+2 \mu s)\right].
+\end{equation}
+Substituting these rates in Eq.~\ref{eq:master_x} gives
+\begin{equation}
+\begin{split}
+    \frac{\partial}{\partial t} P(x, t)=
+    &-\frac{1}{N} \frac{\partial}{\partial x}
+    \left[\frac{\gamma}{N}\left(n s\left(N-n-N\mu\right)+
+    N\mu(N-2 n)\right) P(x, t)\right] \\
+    &+\frac{1}{2 N^{2}} \frac{\partial^2}{\partial x^{2}}
+    \left[\frac{\gamma}{N}\left(N_{n}(z-4 \mu+s-\mu s)
+    -n^{2}\left(z-4 \mu+s-2\mu s\right)\right) P(x, t)\right].
+\end{split}
+\end{equation}
+Substituting the definition of the allele frequency results in
+\begin{equation}
+\begin{split}
+    \frac{\partial}{\partial t} P(x, t)=
+    &-\gamma \frac{\partial}{\partial x}[x s(1-x-\mu)+\mu(1-2 x) P(x, t)] \\
+    &+\frac{\gamma}{2 N} \frac{\partial^{2}}{\partial x}
+    \left[x(2-4 \mu+s-\mu s)-x^{2}(2-4 \mu+s-2 \mu s) P(x, t)\right].
+\end{split}
+\end{equation}
+To get to the final equation we simply make use of the approximation that both
+$s, \mu \ll 1$. Implementing this, and writing the time scale in units of
+$\gamma^{-1}$ results in the classic diffusion theory equation with all three
+forces implemented
+\begin{equation}
+    \frac{\partial}{\partial t} P(x, t) =
+    -\frac{\partial}{\partial x}[s x(1-x) + \mu (1 - 2x) P(x, t)] 
+    +\frac{1}{N} \frac{\partial^{2}}{\partial x^{2}}[x(1-x) P(x, t)].
+\end{equation}

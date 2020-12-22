@@ -16,17 +16,17 @@ The concept of evolution is commonly associated with biology, but one may argue
 that evolution on a broader sense has been a topic of physics for a much longer.
 From Galileo's pioneering studies of the movement of objects on earth, to
 Kepler's insight into planetary movements, physicists have been intrigue by the
-time evolution of natural phenomena for centuries. But it wasn't until Newton's
+time evolution of natural phenomena for centuries. But it was not until Newton's
 Principia that calculus gave us a formal language to understand dynamical
 processes. The mathematical theory for evolutionary dynamics is no exception.
-Our objective will then be to write down differential equations for the time
+Our objective in this paper is to derive the differential equations for the time
 trajectories of dynamical variables having to do with the genetic composition of
 a population.
 
 Since evolution is a population-level rather than a single-organism phenomena,
 the relevant quantities we must keep track of in a mathematical theory of
 evolution are relative abundances (frequencies) at this population level.
-Specifically, a lot of the classic population genetics theory was casted in the
+Specifically, a lot of the classic population genetics theory is casted in the
 language of allele frequencies. An allele can be thought as a version of a gene.
 In Mendel's original work he cross-pollinated different pea plants that
 presented different physical characteristics (phenotypes) associated with
@@ -39,25 +39,25 @@ The equivalent of the hydrogen atom in population genetics is the so-called
 one-locus two-allele model in which a single gene (locus for its location on the
 genome) presents only two possible versions (alleles). This simplified setup
 will allow us to write down the dynamics of the relative frequency of both
-alleles as a population evolves under different evolutionary forces. We then
-imagine a population with $N$ organisms that carries two possible alleles, $A$
-and $a$, for a particular gene of interest. The number of organisms carrying
-allele $A$ or $a$ are given by $n$ and $(N - n)$, respectively, where $N$ is the
-total population size. The population size can in principle take any value
-between zero and infinity. But even if a population in which one of the two
-alleles took over were to keep growing, we would not say that such a population
-is evolving anymore. The population could still be growing, but nothing about
-their characteristics (in this simplified model where we only track a single
-gene) would change over time. That is why the quantity we care about is not the
+alleles as a population evolves under different evolutionary forces. We imagine
+a population with $N$ organisms that carries two possible alleles, $A$ and $a$,
+for a particular gene of interest. The number of organisms carrying allele $A$
+or $a$ are given by $n$ and $(N - n)$, respectively, where $N$ is the total
+population size. The population size can in principle take any value between
+zero and infinity. But even if a population in which one of the two alleles took
+over were to keep growing, we would not say that such a population is evolving
+anymore. The population could still be growing, but nothing about their
+characteristics (in this simplified model where we only track a single gene)
+would change over time. That is why the quantity we care about is not the
 absolute number of organisms carrying a specific allele, but their relative
-frequency. We then define the allele frequency $x$ as
+frequency. We define the allele frequency $x$ as
 \begin{equation}
     x \equiv \frac{n}{N}.
 \end{equation}
 Our main objective will then be to write down dynamical equations for how this
 allele frequency evolves over time. To write these dynamics we will need to work
-in the regime where $N$ is very large. This will allow us to approximate both
-$N$ and $x$ as continuous variables.
+in the regime where $N$ is very large. This will allow us to approximate $x$ as
+continuous variables.
 
 \subsection{Deterministic vs. stochastic evolutionary forces, and diffusion 
 theory}
@@ -66,15 +66,12 @@ Throughout this work we will deal with three evolutionary forces: natural
 selection, mutation, and genetic drift. These are force-fields in the very real
 sense that there is a force associated with every point in our abstract space of
 allele frequencies; just as there is a gravitational force associated with every
-position nearby an object with mass. A schematic of this force field is depicted
-in Firgure~\ref{fig01:diffusion_basics}(A). Following up with this gravity
-analogy, two of the forces--selection and mutation--are deterministic forces,
-meaning that given certain initial conditions for the allele composition of a
-population, the dynamics always reach the same end point if only these forces
-are included. For example, if allele $A$ confers higher fitness, as long as $x(t
-= 0) > 0$, allele $A$ will always take over the population if selection is the
-only force present. This means we can write ordinary differential equations for
-the allele frequency $\dot{x}$ that include mutation and selection.
+position nearby an object with mass. Following up with this gravity analogy, two
+of the forces--selection and mutation--are deterministic forces, meaning that
+given certain initial conditions for the allele composition of a population, the
+dynamics always reach the same end point if only these forces are included. For
+example, if allele $A$ confers higher fitness, as long as $x(t = 0) > 0$, allele
+$A$ will always take over the population if selection is the only force present.
 
 Genetic drift, the process through which allele frequency changes due to random
 sampling of alleles, is by definition a stochastic force. Analogous to the
