@@ -1,12 +1,19 @@
 % !TEX root = ./main.tex
 \section{Implementing the evolutionary forces}
 
-As hinted in Fig.~\ref{fig01:moran}(A), the Moran process gives us a simple
-recipe on how to encode the different evolutionary forces on the transition
-rates $W^\pm(x)$. Recall that since the transition rates in allele frequency are
-the same as the transition rates in number of organisms, we can more easily
-conceptualize the forces in the latter space. This means that the general form
-in which the number of organisms with allele $A$ can chance looks like
+As hinted at in Fig.~\ref{fig01:moran}(A), the Moran process gives us a simple
+recipe for how to encode the different evolutionary forces on the transition
+rates $W^\pm(x)$. Recall that since the transition rates in allele frequency
+space are the same as the transition rates in number of organisms space, we can
+more easily conceptualize the forces in the latter. In other words, the rate to
+transition from $x$ to $x + \Delta x$ is by construction equal to the rate to
+transition from $n$ to $n + 1$; therefore we can define the transition rates in
+the more convenient space of organism number. In the Moran process changes in
+population composition happen when one of the organisms in the population chosen
+randomly dies and it is immediately replaced by an organism with a different
+allele (since replacement with the same allele does not change the population
+composition). This means that the general form in which the number of organisms
+with allele $A$ can change looks like
 \begin{equation}
     W^+(x) = w^+(n) = 
     \text{Rate of $A$ dying} \times
@@ -26,35 +33,47 @@ forces.
 
 Given the intrinsic stochasticity of the Moran process, the easiest evolutionary
 force to implement is that of genetic drift. For simplicity, we assume that both
-allele types have the same death rate per organism $\gamma$. For the case where
+allele types have the same death rate per organism, $\gamma$. For the case where
 only genetic drift is changing the population composition, we assume that the
 reproduction probability per organism is the same (equivalent to saying both
-genotypes have the same fitness), so the probability of replacement is given by
-the allele frequency. Mathematically this means that we can express the rate
+genotypes have the same fitness), so the probability of an organism that died
+being replaced by an organism with the opposite allele is given by the relative
+frequency of such allele. Mathematically this means that we can express the rate
 with which the number of organisms with allele $A$ increases as
 \begin{equation}
-    W^+(x) = w^+(n) = \gamma (N-n) \frac{n}{N},
+    W^+(x) = w^+(n) = 
+    \overbrace{\gamma \times (N-n)}^{\text{rate of $a$ dying}} \times
+    \overbrace{\frac{n}{N}}^
+    {\substack{\text{prob. of $A$} \\ \text{replacing}}},
 \end{equation}
-where the term $\gamma (N-n)$ defines the rate at which an organism with an
-allele $a$ dies, and the term $n/N$ defines the probability of an organism with
-allele $A$ reproducing. Equivalently the rate with which the number of organisms
-with allele $a$ decreases takes the form
+where the term $\gamma \times (N-n)$ defines the rate at which an organism with
+an allele $a$ dies, and the term $n/N$ defines the probability of an organism
+with allele $A$ reproducing. Equivalently the rate with which the number of
+organisms with allele $a$ decreases takes the form
 \begin{equation}
-    W^+(x) = w^+(n) = \gamma n \frac{(N-n)}{N}.
+    W^+(x) = w^+(n) = 
+    \overbrace{\gamma n}^{\substack{\text{rate of $A$}\\ \text{dying}}}
+    \overbrace{\frac{(N-n)}{N}}^
+    {\substack{\text{prob. of $a$} \\ \text{replacing}}}.
 \end{equation}
 Given that both rates are equal, we can see that the first term in
-Eq.~\ref{eq:master_x} involving $W^+(x) - W^-(x)$ is zero. Substituting the sum
-of the rates into the second term of Eq.~\ref{eq:master_x} results in
+Eq.~\ref{eq:pde_x_general} involving $W^+(x) - W^-(x)$ is zero. This means that
+there are no deterministic (directional) forces when only genetic drift is
+considered, just pure randomness. Substituting the sum of the rates into the
+second term of Eq.~\ref{eq:pde_x_general} results in
 \begin{equation}
 \begin{aligned}
     \frac{\partial P(x, t)}{\partial t} &=\frac{1}{2 N^{2}} 
     \frac{\partial^{2}}{\partial x^{2}}[2 \gamma(N-n) n P(x, t)], \\
     &=\frac{\partial^{2}}{\partial x^{2}}
-    \left[\frac{1}{2 N^{2}} 2 \gamma\left(\frac{N-n) n}{N} \right) P(x, t)\right],\\
-    &=\frac{\gamma}{N} \frac{\partial^{2}}{\partial x^{2}}[x(1-x) P(x, t)].
+    \left[\frac{1}{2 N^{2}} 2 \gamma\left(\frac{(N-n) n}{N} \right) P(x, t)\right],\\
+    &=\frac{\gamma}{N} \frac{\partial^{2}}{\partial x^{2}}[x(1-x) P(x, t)],
 \end{aligned}
 \end{equation}
-We redefine the time scale to be in units of $\gamma^{-1}$, allowing us to write
+where for the last step we substitute the definition of $x\equiv n/N$. We
+redefine the time scale to be in units of $\gamma^{-1}$, meaning that the time
+units are measured in terms of the mean life expectancy of an organism. This
+allows us to write
 \begin{equation}
     \frac{\partial P(x, t)}{\partial t} =
     \frac{1}{N} \frac{\partial^{2}}{\partial x^{2}}[x(1-x) P(x, t)],
@@ -65,15 +84,19 @@ the classic Kimura diffusion equation for genetic drift only.
 
 Natural selection is intrinsically associated with the concept of fitness. The
 phrase ``survival of the fittest'' first used by Darwin guided and still guides
-the way that biologists think about the evolution of many organisms. But
-despite the fact that fitness is part of the daily jargon of many biologists,
-it is a subtle and highly debated concept. After all what defines the ability
-of an organism to survive the challenges that surround them are completely
-context dependent. Roughly speaking we can think of fitness as the ability of
-an organism, or a population of organisms to survive and reproduce in the given
-ecological niche they occupy. The term ecology has to be included because
-fitness is a result of the interplay between organisms with their environment
-including all biotic and abiotic interactions. 
+the way that biologists think about the evolution of many organisms. But despite
+the fact that fitness is part of the daily jargon of many biologists, it is a
+subtle and highly debated concept. After all, what defines the ability of an
+organism to survive the challenges that surround them are completely context
+dependent. Roughly speaking we can think of fitness as the ability of an
+organism, or a population of organisms to survive and reproduce in the given
+ecological niche they occupy. The concept of fitness only makes sense when there
+is a competition between organisms. The intrinsic growth rate of a completely
+homogeneous population is irrelevant since, as we mentioned before, a population
+with a single allele growing is not evolving since there are no changes to the
+population composition. The term ecology has to be included because fitness is a
+result of the interplay between organisms with their environment including all
+biotic and abiotic interactions. 
 
 It is common both in theory and in experiments to use the relative growth rates
 of organisms, i.e. the speed at which they can reproduce and generate
@@ -109,18 +132,25 @@ probabilities to be
 \end{equation}
 and
 \begin{equation}
-    \text{Prob. of $a$ replacing} \approx \frac{(N - n)}{N}.
+    \text{Prob. of $a$ replacing} \approx \frac{(N - n)}{N},
 \end{equation}
-This small change in the replacement probability results in transition rates for
-Eq.~\ref{eq:master_x} of the form
+where, after canceling $f_a$ from the numerator and denominator, we assume that
+$(1 + s)n + (N - n) \approx N$ since $s \ll 1$. With these updated replacement
+probabilities we again compute the population change rates $W^\pm(x)$ as the
+product of the rate of certain type of organism dying times the probability of
+being replaced by the opposite allele. These rates take the form
 \begin{equation}
-    W^+(x) = \gamma (N - n) \frac{n}{N} (1 + s),
+    W^+(x) = 
+    \overbrace{\gamma \times (N - n)}^{\text{rate of $a$ dying}} \times
+    \overbrace{\frac{n}{N} (1 + s)}^
+    {\substack{\text{prob. of $A$ replacing}\\ \text{with fitness difference}}},
 \end{equation}
 and
 \begin{equation}
-    W^-(x) = \gamma n \frac{(N - n)}{N}.
+    W^-(x) = \gamma n \frac{(N - n)}{N},
 \end{equation}
-The difference of these two rates takes the form
+With these rates we ca now compute the sum and difference required by
+Eq.~\ref{eq:pde_x_general}. The difference of these two rates takes the form
 \begin{equation}
     W^+(x) - W^-(x) = \gamma s \frac{n(N-n)}{N}.
 \end{equation}
@@ -128,14 +158,15 @@ The sum results in
 \begin{equation}
     W^+(x) + W^-(x) = \gamma (2 + s) \frac{n(N-n)}{N}.
 \end{equation}
-Substituting this into Eq.~\ref{eq:master_x} results in
+Substituting this into Eq.~\ref{eq:pde_x_general} results in
 \begin{equation}
     \frac{\partial}{\partial t} P(x, t) =
     -\frac{1}{N} 
-    \frac{\partial}{\partial x}\left[\gamma s \frac{(N-n) n}{N} P(x, t)\right] 
+    \frac{\partial}{\partial x}
+    \left[\gamma s \left(\frac{(N-n) n}{N}\right) P(x, t)\right] 
     +\frac{1}{2 N^{2}} 
     \frac{\partial^{2}}{\partial x^{2}}
-    \left[\gamma (2+s)\left(\frac{N-n) n}{N}\right) P(x, t)\right].
+    \left[\gamma (2+s)\left(\frac{(N-n) n}{N}\right) P(x, t)\right].
 \end{equation}
 Simplifying terms and substituting the definition of the allele frequency gives
 \begin{equation}
@@ -157,27 +188,63 @@ the classic Kimura diffusion equation for selection and drift
 
 One of the ingredients for evolution to take place is the constant appearance of
 genetic variability. After all, the raw material for evolution to act on is the
-appearance of new mutations in the population. The implementation of this third
-force changes the possibilities on how to change the composition of the
+appearance of new mutations in the population. While both genetic drift and
+selection reduce population diversity, mutation creates more diversity. In the
+case of our one-locus two-allele case it can even resurrect alleles that wen
+extinct as one organism changes its genetic content. The implementation of this
+third force changes the possibilities on how to change the composition of the
 population. As depicted in Fig.~\ref{fig01:moran}(A), if mutation is taken into
 account, there are two possible substitutions which would modify the allele
-frequency: 1. The usual path in which an organism with the opposite allele to
-the one that died reproduces and does not mutate when doing so, and 2. the
-possibility of an organism of the same allele as the one that died reproducies,
+frequency: (1) The usual path in which an organism with the opposite allele to
+the one that died reproduces and does not mutate when doing so, and (2) the
+possibility of an organism of the same allele as the one that died reproducing,
 but when doing so, it mutates to the opposite allele. For simplicity we will
 assume that the mutation probability from $A$ to $a$, $\mu_{A\rightarrow a}$, is
-the same as from $a$ to $A$, $\mu_{a\rightarrow A}$. The state transition rate
-to increase the allele frequency now take the form
+the same as from $a$ to $A$, $\mu_{a\rightarrow A}$. For simplicity let us
+define the transition rate $W^+(x)$ as
 \begin{equation}
-    W^{+}(x) = \gamma(N-n) \frac{n}{N}(1+s)(1-\mu)+\gamma(N-n) \frac{(N-n)}{N} \mu,
+    W^+(x) = W^+_{(1)}(x) + W^+_{(2)}(x),
 \end{equation}
-where the factor of $(1 - \mu)$ represents the probability of not mutating.
-Equivalently for the rate that decreases the allele frequency we have
+where we break the rate into the two possible paths. The first path in which an
+organism of the opposite allele to the one that died replaces it and does not
+mutate when doing so takes the form
 \begin{equation}
-    W^{-}(x)=\gamma n \frac{(N-n)}{N}(1-\mu)+\gamma n \frac{n}{N}(1+s) \mu.
+    W^{+}_{(1)}(x) = 
+    \overbrace{\gamma(N-n)}^{\text{rate of $a$ dying}}\times
+    \overbrace{\frac{n}{N}(1+s)}^
+    {\substack{\text{prob. of $A$ replacing}\\ \text{with fitness diff.}}}\times
+    \overbrace{(1-\mu)}^
+    {\substack{\text{prob. of not} \\ \text{mutating}}},
 \end{equation}
-After some algebra, we find that the difference between these rates is of the
+where the evolutionary forces appear as a product of the rates and probabilities
+of each of the steps taking place. For the second path in which the organism 
+that replaces the one that dies is of the same type, but when it reproduces 
+there is a mutation to the opposite allele, we have a rate of the form
+\begin{equation}
+    W^{+}_{(2)}(x) = 
+    \overbrace{\gamma(N-n)}^{\text{rate of $a$ dying}}\times
+    \overbrace{\frac{(N - n)}{N}}^
+    {\text{prob. of $a$ replacing}}\times
+    \overbrace{\mu}^{\text{prob. of mutating}}.
+\end{equation}
+Putting these two rates together results in a transition rate $W^{+}(x)$ of the
 form
+\begin{equation}
+    W^{+}(x) = 
+    \overbrace{\gamma(N-n) \frac{n}{N}(1+s) (1-\mu)}^{\text{path (1)}}
+    + \overbrace{\gamma(N-n) \frac{(N-n)}{N} \mu}^{\text{path (2)}}.
+\end{equation}
+Equivalently, we can write the rate $W^{-}(x)$ as a decomposition of the two 
+possible paths that lead to population structure changes. Putting these two 
+rates back together results in
+\begin{equation}
+    W^{-}(x)=
+    \overbrace{\gamma n \frac{(N-n)}{N}(1-\mu)}^{\text{path (1)}}
+    +\overbrace{\gamma n \frac{n}{N}(1+s) \mu}^{\text{path (2)}}.
+\end{equation}
+Again we follow Eq.~\ref{eq:pde_x_general} and compute the sum and the
+difference between these rates. After some algebra, we find that the difference
+between these rates is of the form
 \begin{equation}
     W^+(x) - W^-(x) = 
     \frac{\gamma}{N}\left[n s\left(N-n-N\mu\right)+N{\mu}(N-2 n)\right].
@@ -188,16 +255,16 @@ For the sum of the rates we find
     \frac{\gamma}{N}\left[N n(2-4 \mu+s-\mu s) + 
     n^{2}(-2+4 \mu-s+2 \mu s)\right].
 \end{equation}
-Substituting these rates in Eq.~\ref{eq:master_x} gives
+Substituting these rates in Eq.~\ref{eq:pde_x_general} gives
 \begin{equation}
 \begin{split}
     \frac{\partial}{\partial t} P(x, t)=
     &-\frac{1}{N} \frac{\partial}{\partial x}
-    \left[\frac{\gamma}{N}\left(n s\left(N-n-N\mu\right)+
-    N\mu(N-2 n)\right) P(x, t)\right] \\
-    &+\frac{1}{2 N^{2}} \frac{\partial^2}{\partial x^{2}}
-    \left[\frac{\gamma}{N}\left(N_{n}(z-4 \mu+s-\mu s)
-    -n^{2}\left(z-4 \mu+s-2\mu s\right)\right) P(x, t)\right].
+    \left[ \frac{\gamma}{N} \left(n s \left(N - n - N \mu \right)+
+    N \mu (N - 2 n) \right) P(x, t)\right] \\
+    & + \frac{1}{2 N^{2}} \frac{\partial^2}{\partial x^{2}}
+    \left[\frac{\gamma}{N}\left(N n (2 - 4 \mu+s-\mu s)
+    -n^{2}\left(2-4 \mu+s-2\mu s\right)\right) P(x, t)\right].
 \end{split}
 \end{equation}
 Substituting the definition of the allele frequency results in

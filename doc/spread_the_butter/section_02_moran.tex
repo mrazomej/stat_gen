@@ -6,14 +6,18 @@ allele frequency starts from a discrete state space. As mentioned before, we
 will be working in the context of the one-locus two-allele model. To capture the
 stochastic nature of the reproduction of these organisms we will adopt the Moran
 process, shown schematically in Fig.~\ref{fig01:moran}(A). The Moran process is
-a stochastic process with a fix population size $N$. Organisms in this discrete
-population die with a characteristic rate $\gamma$. The type of organism that
-dies during a small time window $\Delta t$ depends on the relative abundance of
-each allele type. The organism that dies is immediately replaced when any of the
-organisms in the population reproduces. The probability of which organism gets
-to reproduce can depend on the relative fitness values of each allele.
-Furthermore, when the organism reproduces, there is an intrinsic probability
-that the progeny mutates to the opposite allele.
+a stochastic process with a fixed population size $N$. Organisms in this
+discrete population die with a characteristic rate $\gamma$. Which type of
+organisms, $A$ or $a$, dies during a small time window $\Delta t$ depends only
+on the relative abundance of each allele type. When the organism that dies it is
+immediately replaced when any of the organisms in the population reproduces. The
+probability of which organism gets to reproduce depends on the relative fitness
+values of each allele. Furthermore, when the organism reproduces, there is an
+intrinsic probability that the progeny mutates to the opposite allele. As we
+will show below for the different evolutionary forces, all of these stochastic
+events--type of organism that dies, type of organism that replaces the dead
+organism, change of allele type due to mutation--are taken as multiplicative
+factors in the rate of change of the population structure.
 
 \begin{figure}[h!]
 	\centering \includegraphics {../../fig/spread_the_butter/fig01_moran.pdf}
@@ -21,13 +25,13 @@ that the progeny mutates to the opposite allele.
   population size $N$ remains constant at all times. Organisms stochastically
   die at a rate $\gamma$ to be immediately replaced by another organism that is
   able to reproduce. For the composition of the population to change two things
-  can happen: 1. An organism of the same type than the one that died reproduces
+  can happen: 1. An organism of the same type as the one that died reproduces
   --with a probability depending on the fitness--,and then this organism mutates
   to the opposite allele type, or 2. An organism of the opposite allele
   reproduces--also with a probability depending on the fitness--, and this
   organism does not mutate when doing so. (B) Schematic representation of the
   construction of the master equation for the number of organisms carrying
-  allele $A$. On a small discrete time step $\Delta t$ the proabbility of
+  allele $A$. On a small discrete time step $\Delta t$ the probability of
   transitioning to from a number $n$ to a number $n + 1$ or $n-1$ is given by
   $w^+(n)$ and $w^-(n)$, respectively. (C) In the limit of a large population we
   can approximate the probability mass function for the number of organisms
@@ -40,15 +44,16 @@ that the progeny mutates to the opposite allele.
 
 Given the discrete nature of the Moran process, our first task consists of
 writing the probability mass function (PMF) for the number of organisms carrying
-allele $A$. Fig~\ref{fig01:moran}(B) shows a schematic of how to build
-such distribution. Focusing on a particular number of organisms $n$, during a
-sufficiently small time window $\Delta t$ we must take into account all of the
-inflow and outflow of probability from this particular bin. Let us define
-$W^+(n)$ and $W^-(n)$ to be the transition rates (in units of time$^{-1}$) of
-jumping from bin $n$ to bin $n+1$ and from bin $n$ to bin $n-1$, respectively.
-Writing down the checks and balances during this small time window allows us to
-predict the probability of having a particular number of organisms. This is
-mathematically written as
+allele $A$. Fig~\ref{fig01:moran}(B) shows a schematic of how to build such
+distribution. Focusing on a particular number of organisms $n$, during a
+sufficiently small time window $\Delta t$ such that we can neglect changes
+larger than one organism, we must take into account all of the inflow and
+outflow of probability from this particular bin. Let us define $w^+(n)$ and
+$w^-(n)$ to be the transition rates (in units of time$^{-1}$) of jumping from
+bin $n$ to bin $n+1$ and from bin $n$ to bin $n-1$, respectively. Writing down
+the checks and balances during this small time window allows us to predict the
+probability of having a particular number of organisms. This is mathematically
+written as
 \begin{equation}
     p(n, t + \Delta t) = 
     p(n, t)
@@ -63,7 +68,7 @@ mathematically written as
     \label{eq:master_n_discrete}
 \end{equation}
 It is in the definition of these rates $w^\pm(n)$ that we include the effects
-that difference evolutionary forces have on the probability of changing the
+that different evolutionary forces have on the probability of changing the
 composition of the population as schematized in Fig.~\ref{fig01:moran}(A).
 
 We can further simplify Eq.~\ref{eq:master_n_discrete} by sending the first term
@@ -84,14 +89,14 @@ equation for the number of organisms carrying allele $A$
 Part of the beauty and power of diffusion theory is that we can work with smooth
 continuous equations that track the evolution of the population composition.
 Therefore, rather than tracking the discrete number of organisms, we will work
-instead with allele frequency. In the limit of a very large populations--one of
+instead with allele frequency. In the limit of a very large population--one of
 the conditions for diffusion theory to apply--we can approximate the allele
 frequency $x$ to be a continuous variable between 0 and 1. As schematized in
 Fig.~\ref{fig01:moran}(C), we can bin the continuous probability density
-function for the allele frequency $P(x, t)$ into small bins of $\Delta x$. The
-natural width of such bins is given by the minimum change that can happen in the
-discrete language, i.e., $\Delta x \approx 1 / N$. With this definition in hand
-we can then approximate the PMF of $n$ as
+function for the allele frequency $P(x, t)$ into small bins of width $\Delta x$.
+The natural width of such bins is given by the minimum change that can happen in
+the discrete language, i.e., $\Delta x \approx 1 / N$. With this definition in
+hand we can then approximate the PMF of $n$ as
 \begin{equation}
   p(n, t) \approx
   \overbrace{P(x, t)}^{\text{base}} \;
@@ -111,7 +116,7 @@ Substituting these definitions we can rewrite Eq.~\ref{eq:master_n} as
     &W^+(x - \Delta x) P(x - \Delta x, t) \Delta x
     + W^-(x + \Delta x) P(x + \Delta x, t) \Delta x\\
     &- W^+(x) P(x, t) \Delta x
-    - W^-(x) p(x, t) \Delta x.
+    - W^-(x) P(x, t) \Delta x.
 \end{split}
 \end{equation}
 Given that $\Delta x$ does not depend on the time $t$ we can take it out of the
@@ -122,7 +127,7 @@ the time evolution of the probability density function of the allele frequency
     W^+(x - \Delta x) P(x - \Delta x, t)
     + W^-(x + \Delta x) P(x + \Delta x, t)
     - W^+(x) P(x, t) 
-    - W^-(x) p(x, t).
+    - W^-(x) P(x, t).
     \label{eq:master_x} 
 \end{equation}
 Given the continuous nature of Eq.~\ref{eq:master_x} we can Taylor expand the
@@ -170,7 +175,7 @@ evolutionary forces via the transition rates
 -\frac{1}{N}\frac{\partial}{\partial x}
 \left[\left(W^{+}(x)-W^{-}(x)\right) P(x, t)\right] 
 +\frac{1}{2N^2} \frac{\partial^{2}}{\partial x^{2}}
-\left[\left(W^{t}(x)+W^{-}(x)\right) P(x, t)\right]
+\left[\left(W^{+}(x)+W^{-}(x)\right) P(x, t)\right]
 \label{eq:pde_x_general}
 \end{equation}
 
