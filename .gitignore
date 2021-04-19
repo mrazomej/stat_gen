@@ -74,6 +74,7 @@ graphicspath.tex
 
 
 # Local directories to ignore
+data/
 doc/stat_gen/fig/
 doc/spread_the_butter/comments
 statgen.egg-info/
