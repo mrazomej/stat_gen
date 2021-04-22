@@ -13,7 +13,7 @@ import numpy as np
 Title:
     viz.py
 Last update:
-    2019-07-15
+    2021-04-22
 Author(s):
     Manuel Razo-Mejia
 Purpose:
@@ -93,3 +93,32 @@ def pboc_style_bokeh():
             }}}
 
     return theme_json
+
+def pboc_palette():
+    '''
+    Dictionary with the PBoC colors
+    '''
+    colors = {
+        "green_1": "#7AA974",
+        "green_2": "#BFD598",
+        "green_3": "#DCECCB",
+        "yellow_1": "#EAC264",
+        "yellow_2": "#F3DAA9",
+        "yellow_3": "#FFEDCE",
+        "blue_1": "#738FC1",
+        "blue_2": "#A9BFE3",
+        "blue_3": "#C9D7EE",
+        "red_1": "#D56C55",
+        "red_2": "#E8B19D",
+        "red_3": "#F1D4C9",
+        "purple_1": "#AB85AC",
+        "purple_2": "#D4C2D9",
+        "sand_1": "#C2B59B",
+        "sand_2": "#E3DCD1",
+        "dark_green": "#7E9D90",
+        "gray": "#CDD6D1",
+        "brown_1": "#905426",
+        "brown_2": "#CFB293"
+    }
+
+    return colors
