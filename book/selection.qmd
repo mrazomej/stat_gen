@@ -1,0 +1,152 @@
+## Natural selection (survival of the fittest) {#sec-ch01.01_selection}
+
+1859 marked the year that Charles Darwin shocked the world with the incredible
+insights in his book *On the origin of Species*. The complete title of the book
+*On the Origin of Species by Means of Natural Selection, or the Preservation of
+Favoured Races in the Struggle for Life* perfectly captures Darwin's proposed
+mechanism for how evolution takes place. Nowadays, with the so-called
+modern-synthesis of evolution, we know natural selection is not the only
+evolutionary force that shapes living organisms. In the coming sections, we will
+mathematically explore mechanisms such as mutation and genetic drift that all
+contribute to forming the many *endless forms, most beautiful* that live on our
+planet. But we will begin with the first evolutionary force discovered by Darwin
+and Alfred Russel Wallace.
+
+Natural selection is intrinsically associated with the concept of fitness. The
+phrase "*survival of the fittest*," first used by Darwin, guided and still
+guides the way that biologists think about the evolution of many organisms. But
+even though fitness is part of the daily jargon of many biologists, it is a
+subtle and highly debated concept. After all, what defines the ability of an
+organism to survive the challenges surrounding them are entirely
+context-dependent. Roughly speaking, we can think of fitness as the ability of
+an organism or a population of organisms to survive and reproduce in the given
+ecological niche they occupy. The term ecology must be included because
+fitness results from the interplay between organisms and their environment,
+including all biotic and abiotic interactions.
+
+It is common both in theory and in experiments to use the relative growth rates
+of organisms, i.e., the speed at which they can reproduce and generate
+offspring, as a proxy for fitness. This is a convenient approximation, but we
+should not lose track of the relevant context-dependence on what fitness can
+mean. Just because redwoods have an average life span of 500-700 years and a
+meager growth rate, that does not mean they are not fit. Having said that, we
+will begin with the simplest form of fitness, i.e., frequency-independent
+selection. The term frequency-independence refers to the assumption that the
+fitness of a particular allele does not depend on the relative abundance of such
+allele. This assumption could break down for cases such as some pathogenic
+bacteria coordinating their attack via cell-to-cell communication known as
+quorum sensing. But we need to learn how to crawl before we try to run.
+
+### Frequency independent selection (haploids)
+
+Because of our love for bacteria and the fact that many of the most exciting
+experiments in evolution have been and are being done in haploid organisms, we
+first focus our efforts on these single-cell organisms. Haploidy refers to the
+biological feature of having a single copy of a chromosome. As bacteria divide
+into two cells, they segregate (split) one copy of the genome into each daughter
+cell (extrachromosomal elements such as plasmids behave differently). This
+contrasts with diploidy, where organisms such as humans receive one copy of each
+chromosome from each parent. What haploidy means for our task of modeling
+selection on a one-locus two-allele system is that we only need to focus on the
+fitness value of each allele without having to worry about a combination of
+alleles.
+
+For the simplest case of one-locus two-alleles let us define the two alleles to
+be $A$ and $a$. Let $N_A(t)$ and $N_a(t)$ be the corresponding number of
+organisms carrying each allele at time $t$. For the frequency-independent
+selection we have that the change in number of organisms with allele $A$ is of
+the form $$\dt{N_A} = f_A N_A(t), \label{eq_expo_growth}$$ where $f_A$ is the
+  growth rate of organisms carrying this allele on a particular fixed
+environment. As discussed before we will use this growing rate as a proxy for
+fitness; this is sometimes called Malthusian fitness after Thomas Robert
+Malthus, a famous scholar whose assay on population growth inspired both Darwin
+and Wallace. We can define an equivalent equation for allele $a$ with fitness
+$f_a$.
+
+We are not particularly interested in tracking the absolute number of
+organisms with a specific genotype, but their relative abundance.
+Therefore let us define $N\tot(t) \equiv N_A(t) + N_a(t)$ and the
+relative abundance of allele $A$ as $$x(t) = {N_A(t) \over N\tot(t)}.$$
+The time dynamics for $N\tot(t)$ are of the form
+$$\dt{N\tot(t)} = \bar{f}(t) N\tot(t),$$ where $\bar{f}(t)$ is the
+average fitness of the population at time $t$. We can deduce the value
+of $\bar{f}(t)$ if we notice that the dynamics of the total population
+is just the sum of the individual alleles dynamics, i.e.
+$$\dt{N\tot(t)} = \dt{N_A(t)} + \dt{N_a(t)} = f_A N_A(t) + f_a N_a(t).$$
+We can factorize an $N\tot(t)$ out of the equation and use the
+frequencies of each allele to obtain
+$$\dt{N\tot(t)} = N\tot(t) \left[ f_A x(t) + f_a (1 - x(t)) \right].$$
+This shows us that the average fitness $\bar{f}(t)$ is of the form
+$$\bar{f}(t) = f_A x(t) + f_a (1 - x(t)).$$
+
+The dynamics that interest us are the dynamics of the allele frequency.
+We only need to define the dynamics for one of the alleles since we are
+assuming a two-allele model for which knowing the dynamics of one of
+them determines the dynamics of the other. This looks like
+$$\dt{x} = \dt{}\left( {N_A(t) \over N\tot(t)} \right).$$ Using the
+chain rule this gives
+$$\dt{x(t)} = {\dot{N}_A(t) N\tot(t) - N_A(t) \dot{N}\tot(t) \over N\tot(t)^2},$$
+where $\dot{N}_x = dN_x / dt$. Substituting the time derivatives gives
+$$\dt{x} = {[f_A N_A(t)] N\tot(t) \over N\tot(t)^2} -
+           {N_A(t)[\bar{f}(t) N\tot(t)] \over N\tot(t)^2}.$$ We now
+substitute the definition of the average fitness to obtain
+$$\dt{x} = {f_A N_A(t) - 
+           N_A(t) [f_a x(t) + f_a (1 - x(t))]
+          \over N\tot(t)},$$ This can be further simplify by using the
+definition of the allele frequency to obtain
+$$\dt{x} = f_A x(t) - x(t)[f_A x(t) + f_a (1 - x(t))].$$ Grouping terms
+by the fitness values results in
+$$\dt{x} = f_A x(t)(1 - x(t)) - f_a x(t)(1 - x(t))
+  = s x(t)(1 - x(t)),
+  \label{eq_freq_dynamics_selection}$$ where we defined $s = f_A - f_a$,
+the fitness difference between both alleles, also known as the selection
+coefficient. This differential equation is very revealing; what it is
+telling us is that for there to be changes in the population structure,
+i.e. for the population to evolve there needs to be a fitness difference
+between the competing members of the population. For now ignore that we
+are working under the unrealistic regime of unbounded exponential
+growth, meaning that as the model is written, there is no upper bound
+for how large a population could get. The central feature of is that for
+there to be a change in the composition of the population, which is what
+we define as evolution, the fitness values for each mutant must differ.
+
+For the specific case that we are studying in which $s$ is a constant,
+meaning that the fitness values of the alleles don't change over time we
+can solve this differential equation. Specifically we can use the
+separation of variables method to compute
+$$\int {dx \over x(1 - x)} = \int dt \;s,
+  \label{eq_sep_var}$$ where we drop the time dependence for notation
+convenience. For the left-hand side of the equation we can use partial
+fractions and write
+$${1 \over x(1 - x)} = {A \over x} + {B \over (1 - x)}
+  = {A - Ax + Bx \over x(1 - x)}.$$ For $A = 1$ and $B = 1$ we have
+$${1 - x + x \over x(1 - x)} = {1 \over x(1 - x)}.$$ This allows us to
+write as $$\int {dx \over x} + \int {dx \over 1 - x} = s \int dt.$$
+Solving these integrals results in
+$$\ln x - \ln(1 - x) = \ln\left( {x \over 1 - x} \right) 
+  = s t + C,
+  \label{eq_sep_var_sol}$$ where $C$ is an integration constant. If we
+set an initial condition $x(t = 0)
+= x_o$ we find that $$C = \ln \left( {x_o \over 1 - x_o} \right).$$
+Substituting this value for $C$ and exponentiating both sides of gives
+$${x \over 1 - x} = {x_o \over 1 - x_o} \E^{s t}$$ Let's now solve for
+$x$. First we send the denominator on the left-hand side to the other
+side $$x = (1 - x)\left( x_o \over 1 - x_o \right)\E^{st}$$ Now we
+expand the product and send the terms with $x$ back to the left-hand
+side $$x + x {x_o \over 1 - x_o}\E^{st} = {x_o \over 1 - x_o}\E^{st}.$$
+Factorizing $x$ results in
+$$x \left( 1 + {x_o \over 1 - x_o}\E^{st} \right) = {x_o \over 1 - x_o}\E^{st}.$$
+The term in parenthesis can be rewritten as
+$$x \left( {1 - x_o + x_o\E^{st} \over 1 - x_o} \right) =
+  {x_o \over 1 - x_o}\E^{st}.$$ This allows us to cancel the denominator
+on both sides of the equation to obtain
+$$x \left[ 1 + x_o \left( \E^{st} - 1 \right) \right] = x_o \E^{st}.$$
+Finally we can solve for the allele frequency
+$$x = {x_o \E^{st} \over 1 + x_o \left( \E^{st} - 1 \right)}.$$ This is
+the solution of the logistic equation. shows this solution for different
+selection coefficients. We can se that in this deterministic regime as
+long as there is a fitness difference, i.e. as long as $s \neq 0$, the
+fate of the population is set. If $s > 0$ allele $A$ will go into
+fixation. Otherwise if $s < 0$ the allele will go extinct.
+
+../../fig/deterministic_evo/01_01_01_deterministic_select.png

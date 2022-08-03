@@ -1,0 +1,29 @@
+# Deterministic evolution {#sec-deterministic_evo}
+
+The concept of evolution is commonly associated with biology. After all, this
+book aims to present the mathematization of Darwin's ideas on how organisms
+change over time. But one can argue that evolution, in a broader sense, has been
+a physics topic for much longer. From Galileo's pioneering studies of the
+movement of objects on earth to Kepler's insight into planetary motion,
+physicists have been intrigued by the time evolution of natural phenomena---the
+broader definition of what evolution means---for centuries. But it wasn't until
+Newton's Principia that the language of differential and integral calculus was
+finally applied to understand natural dynamical processes.
+
+In this chapter, we begin our journey into modeling various evolutionary forces
+that shape the structure of organisms' populations. Specifically, we will use
+the language of ordinary differential equations to model deterministic processes
+such as selection and mutation. This topic will be a good starting point to
+introduce several concepts we will use throughout the book.
+
+Notice this chapter's somewhat paradoxical title; we are usually taught that
+biological evolution is entirely random and unpredictable. So how can we then
+discuss the *deterministic* nature of evolution? Although evolution indeed has a
+stochastic nature---a topic we will explore in later chapters---not everything
+about this process is entirely random. As we will see, some evolutionary forces
+(selection and mutation) can be modeled as deterministic processes.
+Deterministic means that the population dynamics equations fully determine the
+final state. In other words, if the evolutionary process we introduce in this
+section were repeated multiple times, it would always end up at the same final
+point.
+
