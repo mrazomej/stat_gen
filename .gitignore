@@ -78,4 +78,9 @@ data/
 doc/stat_gen/fig/
 doc/spread_the_butter/comments
 statgen.egg-info/
+
+# Ignore book-related directories
 book/_book/*
+book/*_files/*
+book/_*.html
+book_*.pdf
