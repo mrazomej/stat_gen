@@ -8,15 +8,21 @@ book:
   chapters:
     - index.qmd
     - intro.qmd
-    - part: deterministic_evo.qmd
-      chapters:
-        - bio_theory_phys.qmd
-        - selection.qmd
-        - mutation.qmd
+    - forces_evolution.qmd
+      # - bio_theory_phys.qmd
+      # - detereministic_evo.qmd
+        # - selection.qmd
+        # - mutation.qmd
+      # - randomness_life.qmd
+        # - buri_experiment.qmd
+        # - intro_langevin.qmd
+        # - stochastic_growth.qmd
     - summary.qmd
     - references.qmd
 
 bibliography: references.bib
+
+number-depth: 3
 
 format:
   html:

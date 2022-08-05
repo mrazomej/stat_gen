@@ -1,0 +1,22 @@
+# Forces of evolution
+
+{{< include _bio_theory_phys.qmd >}}
+
+<!-- Deterministic forces -->
+{{< include _deterministic_evo.qmd >}}
+
+{{< include _selection.qmd >}}
+
+{{< include _mutation.qmd >}}
+
+<!-- Randomness of life -->
+{{< include _randomness_life.qmd >}}
+
+{{< include _buri_experiment.qmd >}}
+
+{{< include _intro_langevin.qmd >}}
+
+{{< include _stochastic_growth.qmd >}}
+
+
+

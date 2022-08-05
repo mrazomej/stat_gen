@@ -1,4 +1,4 @@
-## Natural selection (survival of the fittest) {#sec-ch01.01_selection}
+### Natural selection (survival of the fittest) {#sec-selection}
 
 1859 marked the year that Charles Darwin shocked the world with the incredible
 insights in his book *On the origin of Species*. The complete title of the book
@@ -32,12 +32,12 @@ mean. Just because redwoods have an average life span of 500-700 years and a
 meager growth rate, that does not mean they are not fit. Having said that, we
 will begin with the simplest form of fitness, i.e., frequency-independent
 selection. The term frequency-independence refers to the assumption that the
-fitness of a particular allele does not depend on the relative abundance of such
-allele. This assumption could break down for cases such as some pathogenic
-bacteria coordinating their attack via cell-to-cell communication known as
-quorum sensing. But we need to learn how to crawl before we try to run.
+fitness of a particular allele does not depend on its own relative abundance.
+This assumption could break down for cases such as some pathogenic bacteria
+coordinating their attack via cell-to-cell communication known as quorum
+sensing. But we need to learn how to crawl before we try to run.
 
-### Frequency independent selection (haploids)
+#### Frequency independent selection (haploids) {#sec-freq_indep_haplo}
 
 Because of our love for bacteria and the fact that many of the most exciting
 experiments in evolution have been and are being done in haploid organisms, we

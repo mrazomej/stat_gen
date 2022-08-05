@@ -1,4 +1,4 @@
-# Deterministic evolution {#sec-deterministic_evo}
+## Deterministic evolution {#sec-deterministic_evo}
 
 The concept of evolution is commonly associated with biology. After all, this
 book aims to present the mathematization of Darwin's ideas on how organisms
