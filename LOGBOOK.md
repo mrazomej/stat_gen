@@ -1,5 +1,9 @@
 # Loogbook for the population genetics notes
 
+**2022-08-08**
+- Generated Julia package
+- Generated first plot using Makie
+
 **2019-12-05**
 
 - I fixed all the references to the figures. Rather than putting the numbers of

@@ -27,8 +27,12 @@ number-depth: 3
 format:
   html:
     theme: cosmo
+    default-image-extension: png
   pdf:
     documentclass: scrreprt
+    default-image-extension: pdf
+    pdf-engine: pdflatex
+
 
 
 
