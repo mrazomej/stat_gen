@@ -82,97 +82,149 @@ of each gene. Therefore, we define $N_{\text{tot}}(t) \equiv N_A(t) + N_a(t)$ as
 the total number of organisms and the relative abundance of allele $A$, $x(t)$,
 as
 $$
-x(t) = \frac{N_A(t)}{N_\text{tot}}.
+x(t) = \frac{N_A(t)}{N_\text{tot}(t)}.
 $${#eq-allele_frac_def}
 We can write an equivalent equation to @eq-expo_growth for $N_\text{tot}(t)$.
 But, in this case, the change in the total number of organisms is the sum of the
-changes in both types of organisms, i.e.,
+changes in both types, i.e.,
 $$
-\frac{d N_\text{tot}(t)}{dt} = \frac{dN_A(t)}{dt} + \frac{dN_a(t)}{dt} 
+\frac{d N_\text{tot}}{dt} = \frac{dN_A}{dt} + \frac{dN_a}{dt} 
 = f_A N_A(t) + f_a N_a(t),
 $${#eq-dNtot_dt}
-where for the second equality, we substituted the right hand side of
-@eq-expo_growth for each of the alleles.
+where for the second equality, we substituted the right-hand side of
+@eq-expo_growth for each of the alleles. The time dynamics for $N_\text{tot}(t)$
+are of the form
+$$
+\frac{dN_\text{tot}}{dt} = \bar{f}(t) N_\text{tot}(t),
+$${#eq-dNtot_fbar}
+where $\bar{f}(t)$ is the average population fitness at time $t$. We can deduce
+the value of $\bar{f}(t)$ if we notice that the dynamics of the total population
+is the sum of the individual alleles dynamics. This implies we can factorize an
+$N_\text{tot}(t)$ out of the right-hand side of @eq-dNtot_dt using
+@eq-allele_frac_def, obtaining
+$$
+\frac{dN_\text{tot}}{dt} = 
+N_\text{tot}(t) \left[ f_A x(t) + f_a (1 - x(t)) \right].
+$${#eq-dNot_factorized}
+From this, we can see the average fitness $\bar{f}(t)$ is of the form
+$$
+\bar{f}(t) = f_A x(t) + f_a (1 - x(t)).
+$${#eq-pop_fitness_def}
 
-The time dynamics for $N\tot(t)$ are of the form
-$$\dt{N\tot(t)} = \bar{f}(t) N\tot(t),$$ where $\bar{f}(t)$ is the
-average fitness of the population at time $t$. We can deduce the value
-of $\bar{f}(t)$ if we notice that the dynamics of the total population
-is just the sum of the individual alleles dynamics, i.e.
-We can factorize an $N\tot(t)$ out of the equation and use the
-frequencies of each allele to obtain
-$$\dt{N\tot(t)} = N\tot(t) \left[ f_A x(t) + f_a (1 - x(t)) \right].$$
-This shows us that the average fitness $\bar{f}(t)$ is of the form
-$$\bar{f}(t) = f_A x(t) + f_a (1 - x(t)).$$
+Since we care about the relative abundance of allele $A$, $x(t)$, we can take
+the time derivative on both sides of @eq-allele_frac_def
+$$
+\frac{dx}{dt} = \frac{d}{dt}\left( {N_A(t) \over N_\text{tot}(t)} \right).
+$${#eq-dx_dt}
+Applying the chain rule on the right-hand side of @eq-dx_dt results in
+$$
+\frac{dx}{dt} = \frac{\dot{N}_A(t) N_\text{tot}(t) - 
+N_A(t) \dot{N}_\text{tot}(t)}{N_\text{tot}(t)^2},
+$${#eq-dx_dt_chainrule}
+where we define $\dot{N}_x = dN_x / dt$ for brevity. Substituting the time
+derivatives from @eq-expo_growth and @eq-allele_frac_def on @eq-dx_dt_chainrule
+gives
+$$
+\frac{dx}{dt} = \frac{\left[f_A N_A(t)\right] 
+N_\text{tot}(t) - N_A(t)[\bar{f}(t) N_\text{tot}(t)]}{N_\text{tot}(t)^2}.
+$${#eq-dx_dt_chainrule_2}
+We now substitute the definition of the average fitness from @eq-pop_fitness_def
+to obtain
+$$
+\frac{dx}{dt} = \frac{f_A N_A(t) - N_A(t) [f_a x(t) + f_a (1 - x(t))]}
+{N_\text{tot}(t)}.
+$${#eq-dx_Dt_chainrule_3}
+This can be further simplified by using the definition of the allele frequency
+from @eq-allele_frac_def to obtain
+$$
+\frac{dx}{dt} = f_A x(t) - x(t) \left[f_A x(t) + f_a (1 - x(t))\right].
+$${#eq-dx_Dt_chainrule_4}
+Grouping terms by the fitness values results in
+$$
+\frac{dx}{dt} = f_A x(t)(1 - x(t)) - f_a x(t)(1 - x(t)) = s x(t)(1 - x(t)),
+$${#eq-freq_dynamics_selection}
+where we defined $s = f_A - f_a$, the fitness difference between alleles, also
+known as the *selection coefficient*. @eq-freq_dynamics_selection is telling us
+that for the population to change its relative composition---what we define as
+the evolution of the population---there must be a difference in fitness (growth
+rates) between the competing organisms. 
 
-The dynamics that interest us are the dynamics of the allele frequency.
-We only need to define the dynamics for one of the alleles since we are
-assuming a two-allele model for which knowing the dynamics of one of
-them determines the dynamics of the other. This looks like
-$$\dt{x} = \dt{}\left( {N_A(t) \over N\tot(t)} \right).$$ Using the
-chain rule this gives
-$$\dt{x(t)} = {\dot{N}_A(t) N\tot(t) - N_A(t) \dot{N}\tot(t) \over N\tot(t)^2},$$
-where $\dot{N}_x = dN_x / dt$. Substituting the time derivatives gives
-$$\dt{x} = {[f_A N_A(t)] N\tot(t) \over N\tot(t)^2} -
-           {N_A(t)[\bar{f}(t) N\tot(t)] \over N\tot(t)^2}.$$ We now
-substitute the definition of the average fitness to obtain
-$$\dt{x} = {f_A N_A(t) - 
-           N_A(t) [f_a x(t) + f_a (1 - x(t))]
-          \over N\tot(t)},$$ This can be further simplify by using the
-definition of the allele frequency to obtain
-$$\dt{x} = f_A x(t) - x(t)[f_A x(t) + f_a (1 - x(t))].$$ Grouping terms
-by the fitness values results in
-$$\dt{x} = f_A x(t)(1 - x(t)) - f_a x(t)(1 - x(t))
-  = s x(t)(1 - x(t)),
-  \label{eq_freq_dynamics_selection}$$ where we defined $s = f_A - f_a$,
-the fitness difference between both alleles, also known as the selection
-coefficient. This differential equation is very revealing; what it is
-telling us is that for there to be changes in the population structure,
-i.e. for the population to evolve there needs to be a fitness difference
-between the competing members of the population. For now ignore that we
-are working under the unrealistic regime of unbounded exponential
-growth, meaning that as the model is written, there is no upper bound
-for how large a population could get. The central feature of is that for
-there to be a change in the composition of the population, which is what
-we define as evolution, the fitness values for each mutant must differ.
+We can solve @eq-freq_dynamics_selection equation for the specific case where
+$s$ is a constant, meaning that the fitness values of the alleles don't change
+over time. Specifically, we can use the separation of variables, and integrate
+on both side, obtaining
+$$
+\int \frac{dx}{x(1 - x)} = s\int dt,
+$${#eq-sep_var}
+where we drop the time dependence for notation convenience. For the left-hand
+side of @eq-sep_var, let us use partial fractions to write the integrand as a
+sum of two terms of the form
+$$
+\frac{1}{x(1 - x)} = \frac{A}{x} + \frac{B}{(1 - x)}
+= \frac{A - Ax + Bx}{x(1 - x)},
+$${#eq-partial_frac}
+where $A$ and $B$ are coefficients to be found. Substituting $A = 1$ and $B = 1$
+in @eq-partial_frac we have
+$$
+\frac{1 - x + x}{x(1 - x)} = \frac{1}{x(1 - x)},
+$${#eq-partial_frac_2}
+thus, these coefficients recover the left-hand side of @eq-partial_frac. This
+allows us to split @eq-sep_var into two integrals of the form
+$$
+\int \frac{dx}{x} + \int \frac{dx}{1 - x} = s \int dt.
+$${#eq-sep_var_split}
+Integrating both sides of @eq-sep_var_split results in
+$$
+\ln x - \ln(1 - x) = \ln\left( {x \over 1 - x} \right) = s t + C,
+$${#eq-sep_var_sol}
+where $C$ is an integration constant for which we need initial conditions. If we
+set an initial condition $x(t = 0) = x_o$ we find that
+$$
+C = \ln \left( \frac{x_o}{1 - x_o} \right).
+$${#eq-const_int_fitness}
+Substituting @eq-const_int_fitness in @eq-sep_var_sol and exponentiating both
+sides gives
+$$
+\frac{x}{1 - x} = \frac{x_o}{1 - x_o} \mathrm{e}^{s t}.
+$${#eq-sep_var_int}
+We can now solve @eq-sep_var_int for $x$. First, we send the denominator on the
+left-hand side to the right, obtaining
+$$
+x = (1 - x)\left( x_o \over 1 - x_o \right)\mathrm{e}^{st}
+$${#eq-fitness_solve_x}
+Next, we expand the product on the right-hand side of @eq-fitness_solve_x and
+send the terms with $x$ back to the left, resulting in
+$$
+x + x \frac{x_o}{1 - x_o}\mathrm{e}^{st} = \frac{x_o}{1 - x_o}\mathrm{e}^{st}.
+$${#eq-fitness_solve_x_2}
+Factorizing $x$ in @eq-fitness_solve_x_2 results in
+$$
+x \left( 1 + \frac{x_o}{1 - x_o}\mathrm{e}^{st} \right) = 
+\frac{x_o}{1 - x_o}\mathrm{e}^{st}.
+$${#eq-fitness_solve_x_3}
+The term in parenthesis on the left-hand side of @eq-fitness_solve_x_3 can be
+rewritten as
+$$
+x \left( \frac{1 - x_o + x_o\mathrm{e}^{st}}{1 - x_o} \right) =
+\frac{x_o}{1 - x_o}\mathrm{e}^{st}.
+$${#eq-fitness_solve_x_4} 
+This allows us to cancel the denominator on both sides of the equation to obtain
+$$
+x \left[ 1 + x_o \left( \mathrm{e}^{st} - 1 \right) \right] = 
+x_o \mathrm{e}^{st}.
+$${#eq-fitness_solve_x_5}
+Finally, we can solve @eq-fitness_solve_x_5 for the allele frequency $x(t)$,
+obtaining our final 
+result
+$$
+x(t) = \frac{x_o \mathrm{e}^{st}}{1 + x_o \left( \mathrm{e}^{st} - 1 \right)}.
+$${#eq-allele_freq_result}
+@eq-allele_freq_result is the solution of the so-called logistic equation.
+@fig-logistic_allele shows this solution for different selection coefficients.
+In this deterministic regime, the population's fate is set as long as there is a
+fitness difference, i.e., as long as $s \neq 0$. If $s > 0$ allele $A$ will go
+into fixation. Otherwise, if $s < 0$, the allele will go extinct.
 
-For the specific case that we are studying in which $s$ is a constant,
-meaning that the fitness values of the alleles don't change over time we
-can solve this differential equation. Specifically we can use the
-separation of variables method to compute
-$$\int {dx \over x(1 - x)} = \int dt \;s,
-  \label{eq_sep_var}$$ where we drop the time dependence for notation
-convenience. For the left-hand side of the equation we can use partial
-fractions and write
-$${1 \over x(1 - x)} = {A \over x} + {B \over (1 - x)}
-  = {A - Ax + Bx \over x(1 - x)}.$$ For $A = 1$ and $B = 1$ we have
-$${1 - x + x \over x(1 - x)} = {1 \over x(1 - x)}.$$ This allows us to
-write as $$\int {dx \over x} + \int {dx \over 1 - x} = s \int dt.$$
-Solving these integrals results in
-$$\ln x - \ln(1 - x) = \ln\left( {x \over 1 - x} \right) 
-  = s t + C,
-  \label{eq_sep_var_sol}$$ where $C$ is an integration constant. If we
-set an initial condition $x(t = 0)
-= x_o$ we find that $$C = \ln \left( {x_o \over 1 - x_o} \right).$$
-Substituting this value for $C$ and exponentiating both sides of gives
-$${x \over 1 - x} = {x_o \over 1 - x_o} \E^{s t}$$ Let's now solve for
-$x$. First we send the denominator on the left-hand side to the other
-side $$x = (1 - x)\left( x_o \over 1 - x_o \right)\E^{st}$$ Now we
-expand the product and send the terms with $x$ back to the left-hand
-side $$x + x {x_o \over 1 - x_o}\E^{st} = {x_o \over 1 - x_o}\E^{st}.$$
-Factorizing $x$ results in
-$$x \left( 1 + {x_o \over 1 - x_o}\E^{st} \right) = {x_o \over 1 - x_o}\E^{st}.$$
-The term in parenthesis can be rewritten as
-$$x \left( {1 - x_o + x_o\E^{st} \over 1 - x_o} \right) =
-  {x_o \over 1 - x_o}\E^{st}.$$ This allows us to cancel the denominator
-on both sides of the equation to obtain
-$$x \left[ 1 + x_o \left( \E^{st} - 1 \right) \right] = x_o \E^{st}.$$
-Finally we can solve for the allele frequency
-$$x = {x_o \E^{st} \over 1 + x_o \left( \E^{st} - 1 \right)}.$$ This is
-the solution of the logistic equation. shows this solution for different
-selection coefficients. We can se that in this deterministic regime as
-long as there is a fitness difference, i.e. as long as $s \neq 0$, the
-fate of the population is set. If $s > 0$ allele $A$ will go into
-fixation. Otherwise if $s < 0$ the allele will go extinct.
-
-../../fig/deterministic_evo/01_01_01_deterministic_select.png
+![**One-locus two-alleles model allele frequency dynamics**. Change in allele
+frequency over time as defined by @eq-allele_freq_result for different selection
+coefficients.](./figures/forces_evolution/_selection_logistic){#fig-logistic_allele}
