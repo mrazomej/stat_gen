@@ -51,29 +51,36 @@ selection on a one-locus two-allele system is that we only need to focus on the
 fitness value of each allele without having to worry about a combination of
 alleles.
 
+Furthermore, thinking about microbes whose populations can be on the order of
+$10^6-10^9$ cells allow us to simplify our calculations. Rather than keeping
+track of each individual life's history, we can approximate the population
+number as a **continuous variable**. This means that when discussing the number
+of organisms in the population, we won't worry about what it mean to have
+"fractional organisms."
+
 For the simplest case of one-locus two-alleles, let us label the two alleles as
 $A$ and $a$. Let $N_A(t)$ and $N_a(t)$ be the corresponding number of organisms
 carrying each allele at time $t$. We want to compute the number of organisms
 with, let's say, allele $A$ after a time $\Delta t$. For the
 frequency-independent selection, the only factor that matters is the current
 number of organisms with allele $N_A(t)$ and their corresponding growth rate
-$f_A$. As discussed before, we will use this growth rate as a proxy for fitness;
-this is sometimes called Malthusian fitness after Thomas Robert Malthus---famous
-scholar whose essay on population growth inspired both Darwin and Wallace. This
-growth rate has units of $f_A [=] \frac{\#\text{organisms}}{\text{time}}$.
-Therefore, the number of organisms at time $t + \Delta t$ can then be computed
-as
+$\lambda_A$. As discussed before, we will use this growth rate as a proxy for
+fitness; this is sometimes called Malthusian fitness after Thomas Robert
+Malthus---famous scholar whose essay on population growth inspired both Darwin
+and Wallace. This growth rate has units of $\lambda_A [=]
+\frac{\#\text{organisms}}{\text{time}}$. Therefore, the number of organisms at
+time $t + \Delta t$ can then be computed as
 $$
 N_A(t + \Delta t) = \overbrace{N_A(t)}^\text{current number of organisms}
-+ \overbrace{f_A N_A(t) \Delta t}^{\text{change in number in }\Delta t}.
++ \overbrace{\lambda_A N_A(t) \Delta t}^{\text{change in number in }\Delta t}.
 $${#eq-NA_t_delta_t}
 Sending the first term in @eq-NA_t_delta_t to the right and assuming $\Delta t$
 is a tiny time window (formally assuming the limit $\Delta t \rightarrow 0$)
 allows us to write an ordinary differential equation of the form
 $$
-\frac{d N_A}{dt} = f_A N_A(t).
+\frac{d N_A}{dt} = \lambda_A N_A(t).
 $${#eq-expo_growth}
-We can define an equivalent equation for allele $a$ with fitness $f_a$.
+We can define an equivalent equation for allele $a$ with fitness $\lambda_a$.
 
 Rather than tracking the *absolute number* of organisms carrying a particular
 allele, it is useful to track the relative abundances of each allele. This is
@@ -89,7 +96,7 @@ But, in this case, the change in the total number of organisms is the sum of the
 changes in both types, i.e.,
 $$
 \frac{d N_\text{tot}}{dt} = \frac{dN_A}{dt} + \frac{dN_a}{dt} 
-= f_A N_A(t) + f_a N_a(t),
+= \lambda_A N_A(t) + \lambda_a N_a(t),
 $${#eq-dNtot_dt}
 where for the second equality, we substituted the right-hand side of
 @eq-expo_growth for each of the alleles. The time dynamics for $N_\text{tot}(t)$
@@ -104,11 +111,11 @@ $N_\text{tot}(t)$ out of the right-hand side of @eq-dNtot_dt using
 @eq-allele_frac_def, obtaining
 $$
 \frac{dN_\text{tot}}{dt} = 
-N_\text{tot}(t) \left[ f_A x(t) + f_a (1 - x(t)) \right].
+N_\text{tot}(t) \left[ \lambda_A x(t) + \lambda_a (1 - x(t)) \right].
 $${#eq-dNot_factorized}
 From this, we can see the average fitness $\bar{f}(t)$ is of the form
 $$
-\bar{f}(t) = f_A x(t) + f_a (1 - x(t)).
+\bar{f}(t) = \lambda_A x(t) + \lambda_a (1 - x(t)).
 $${#eq-pop_fitness_def}
 
 Since we care about the relative abundance of allele $A$, $x(t)$, we can take
@@ -125,29 +132,29 @@ where we define $\dot{N}_x = dN_x / dt$ for brevity. Substituting the time
 derivatives from @eq-expo_growth and @eq-allele_frac_def on @eq-dx_dt_chainrule
 gives
 $$
-\frac{dx}{dt} = \frac{\left[f_A N_A(t)\right] 
+\frac{dx}{dt} = \frac{\left[\lambda_A N_A(t)\right] 
 N_\text{tot}(t) - N_A(t)[\bar{f}(t) N_\text{tot}(t)]}{N_\text{tot}(t)^2}.
 $${#eq-dx_dt_chainrule_2}
 We now substitute the definition of the average fitness from @eq-pop_fitness_def
 to obtain
 $$
-\frac{dx}{dt} = \frac{f_A N_A(t) - N_A(t) [f_a x(t) + f_a (1 - x(t))]}
-{N_\text{tot}(t)}.
+\frac{dx}{dt} = \frac{\lambda_A N_A(t) - 
+N_A(t) [\lambda_a x(t) + \lambda_a (1 - x(t))]}{N_\text{tot}(t)}.
 $${#eq-dx_Dt_chainrule_3}
 This can be further simplified by using the definition of the allele frequency
 from @eq-allele_frac_def to obtain
 $$
-\frac{dx}{dt} = f_A x(t) - x(t) \left[f_A x(t) + f_a (1 - x(t))\right].
+\frac{dx}{dt} = \lambda_A x(t) - x(t) \left[\lambda_A x(t) + \lambda_a (1 - x(t))\right].
 $${#eq-dx_Dt_chainrule_4}
 Grouping terms by the fitness values results in
 $$
-\frac{dx}{dt} = f_A x(t)(1 - x(t)) - f_a x(t)(1 - x(t)) = s x(t)(1 - x(t)),
+\frac{dx}{dt} = \lambda_A x(t)(1 - x(t)) - \lambda_a x(t)(1 - x(t)) = s x(t)(1 - x(t)),
 $${#eq-freq_dynamics_selection}
-where we defined $s = f_A - f_a$, the fitness difference between alleles, also
-known as the *selection coefficient*. @eq-freq_dynamics_selection is telling us
-that for the population to change its relative composition---what we define as
-the evolution of the population---there must be a difference in fitness (growth
-rates) between the competing organisms. 
+where we defined $s = \lambda_A - \lambda_a$, the fitness difference between
+alleles, also known as the *selection coefficient*. @eq-freq_dynamics_selection
+is telling us that for the population to change its relative composition---what
+we define as the evolution of the population---there must be a difference in
+fitness (growth rates) between the competing organisms. 
 
 We can solve @eq-freq_dynamics_selection equation for the specific case where
 $s$ is a constant, meaning that the fitness values of the alleles don't change

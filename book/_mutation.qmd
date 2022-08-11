@@ -1,25 +1,41 @@
 ## Mutation {#seq_determ_mut}
 
-One of the ingredients for evolution to take place is the constant
-appearance of genetic variability. After all, the raw material for
-evolution to act on is the appearance of new mutations in the
-population. This is what we will model now for our one-locus two-allele
-case. We will think of mutations between both alleles $A$ and $a$ as a
-simple first-order chemical reaction of the form
-$$A \xrightleftharpoons[\mu_{a A}]
-  {\,\mu_{A a}\,} a,$$ where $\mu_{A a}$ is the mutation rate from $A$
-to $a$ and $\mu_{a A}$ is the mutation rate from $a$ to $A$. A useful
-way to interpret the mutation rate is as the probability of switching
-allele per unit time. That means that on a small time window $\Dt$ a
-single organism has a probability of switching from $A$ to $a$ of
-$$P(A \rightarrow a \mid \Dt) = \mu_{A a} \Dt, \quad 
-  \text{for } \Dt \ll \mu_{Aa}.$$ What this implies is that for this
+In the previous section, we looked at the competition between two alleles, $A$
+and $a$. But we completely ignored how these two versions of a particular
+genetic element came into existence. Recall from [`cite chapter on ingredients
+of evolution`] that one of the ingredients for evolution is the generation of
+variability between organisms. We now know that this variability comes from
+modifications in the genetic sequence----mostly DNA, but RNA for some viruses---
+that happens randomly, as we saw in [`cite Luria-Delbruck section`]. So why do
+we include mutation as a deterministic evolutionary force if mutations happen
+randomly? As we mentioned in @sec-selection, we imagine working with a very
+large microbial population whose size we take to be a continuous variable. In
+this regime, the stochasticity of mutations in individual organisms is blurred
+as a deterministic fraction of the population acquiring the mutation. 
+
+Therefore, for our one-locus two-allele toy model, we think of mutations between
+both alleles $A$ and $a$ as a simple first-order chemical reaction of the form
+$$
+A \xrightleftharpoons[\mu_{a\rightarrow A}]
+  {\,\mu_{A\rightarrow a}\,} a,
+$${#eq-mut_rxn}
+where $\mu_{A\rightarrow a}$ is the rate at which organisms carrying allele $A$
+mutate to allele $a$ and $\mu_{a\rightarrow A}$ is the equivalent mutation rate
+from $a$ to $A$. It is useful to interpret the mutation rate is as the
+probability of switching allele per unit of time. That means that on a small
+time window $\Delta t$ the probability of a single organism switching from
+allele $A$ to $a$ is given by
+$$
+P_{\Delta t}(A \rightarrow a) = \mu_{A\rightarrow a} \Delta t.
+$${#eq-prob_mutation}
+From this, we can see that the mutation rate has units $\mu_{A\rightarrow a} [=]
+\frac{\text{#organisms}}{time}$. What @eq-prob_mutation implies is that for this
 small time window every organism carrying allele $A$ flips a coin with
-probability $\mu_{A a} \Dt$ of getting heads. If the outcome of the coin
-is indeed heads, the allele is mutated, otherwise it remains the same.
-So when writing a differential equation to model this phenomena we must
-multiply the number of organisms by the mutation rate. This results in a
-differential equation for the change in number of organisms carrying $A$
+probability $\mu_{A a} \Delta t$ of getting heads. If the outcome of the coin is
+indeed heads, the allele is mutated, otherwise it remains the same. So when
+writing a differential equation to model this phenomena we must multiply the
+number of organisms by the mutation rate. This results in a differential
+equation for the change in number of organisms carrying $A$
 of the form $$\dt{N_A} = 
   \underbrace{- \mu_{A a} N_A(t)}_{\text{loss } A \rightarrow a}
   \underbrace{- \mu_{a A} N_a(t)}_{\text{gain } a \rightarrow A},$$
@@ -74,12 +90,12 @@ result we can rewrite as $$-{1 \over \mu_{a A} + \mu_{A a}}
 both sides gives $$\left( { \mu_{A a} x - \mu_{a A} (1 - x)
     \over
   \mu_{A a} x_o - \mu_{a A} (1 - x_o)} \right)^{
-    -{1 \over \mu_{a A} + \mu_{A a}}} = \E^t$$ If we now elevate both
+    -{1 \over \mu_{a A} + \mu_{A a}}} = \mathrm{e}^t$$ If we now elevate both
 sides to the $\mu_{a A} + \mu_{A\rightarrow
 a}$ power we obtain $$\left( { \mu_{A a} x - \mu_{a A} (1 - x)
     \over
   \mu_{A a} x_o - \mu_{a A} (1 - x_o)} \right) =
-  \E^{- (\mu_{a A} + \mu_{A a}) t}.$$ We can now solve for $x$ and after
+  \mathrm{e}^{- (\mu_{a A} + \mu_{A a}) t}.$$ We can now solve for $x$ and after
 a little bit of algebra we find that $$x(t) = {\mu_{a A} 
   \over 
   \mu_{a A} + \mu_{A a}} -
@@ -87,7 +103,7 @@ a little bit of algebra we find that $$x(t) = {\mu_{a A}
   \mu_{a A} -
   (\mu_{a A} + \mu_{A a}) x_o
   \right] 
-  \E^{- (\mu_{a A} + \mu_{A a}) t}.
+  \mathrm{e}^{- (\mu_{a A} + \mu_{A a}) t}.
   \over
   \mu_{a A} + \mu_{A a}}.$$ A little tricky solution, but we can easily
 see that in the limit when $t
