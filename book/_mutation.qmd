@@ -1,119 +1,166 @@
 ## Mutation {#seq_determ_mut}
 
-In the previous section, we looked at the competition between two alleles, $A$
-and $a$. But we completely ignored how these two versions of a particular
-genetic element came into existence. Recall from [`cite chapter on ingredients
-of evolution`] that one of the ingredients for evolution is the generation of
-variability between organisms. We now know that this variability comes from
-modifications in the genetic sequence----mostly DNA, but RNA for some viruses---
-that happens randomly, as we saw in [`cite Luria-Delbruck section`]. So why do
-we include mutation as a deterministic evolutionary force if mutations happen
-randomly? As we mentioned in @sec-selection, we imagine working with a very
-large microbial population whose size we take to be a continuous variable. In
-this regime, the stochasticity of mutations in individual organisms is blurred
-as a deterministic fraction of the population acquiring the mutation. 
+In the previous section, we looked at the competition between two organisms
+carrying different alleles, $A$ and $a$. But we completely ignored how these two
+versions of a particular genetic element appeared in the population. Recall from
+[`cite chapter on ingredients of evolution`] that one of the ingredients for
+evolution is the generation of variability between organisms. We now know that
+this variability comes from modifications in the genetic sequence----mostly DNA,
+but RNA for some viruses---that happens randomly as they replicate their
+genomes, as we saw in [`cite Luria-Delbruck section`]. In this section, we will
+mathematize mutation as the second evolutionary force shaping the structure of
+populations. But why do we include mutation as a deterministic evolutionary
+force if mutations happen randomly? As we mentioned in @sec-selection, we
+imagine studying a very large microbial population whose size we take to be a
+continuous variable. In this regime, random mutations in individual organisms
+are blurred as we quantify them as a deterministic fraction of the population
+switching alleles.
 
-Therefore, for our one-locus two-allele toy model, we think of mutations between
-both alleles $A$ and $a$ as a simple first-order chemical reaction of the form
+For our one-locus two-allele toy model, we think of mutations between alleles
+$A$ and $a$ as a simple first-order chemical reaction of the form
 $$
 A \xrightleftharpoons[\mu_{a\rightarrow A}]
   {\,\mu_{A\rightarrow a}\,} a,
 $${#eq-mut_rxn}
 where $\mu_{A\rightarrow a}$ is the rate at which organisms carrying allele $A$
 mutate to allele $a$ and $\mu_{a\rightarrow A}$ is the equivalent mutation rate
-from $a$ to $A$. It is useful to interpret the mutation rate is as the
-probability of switching allele per unit of time. That means that on a small
-time window $\Delta t$ the probability of a single organism switching from
-allele $A$ to $a$ is given by
+from $a$ to $A$. It is useful to interpret the mutation rate as the probability
+of switching allele per unit of time. That means that on a small time window
+$\Delta t$ the probability of a single organism switching from allele $A$ to $a$
+is given by
 $$
 P_{\Delta t}(A \rightarrow a) = \mu_{A\rightarrow a} \Delta t.
 $${#eq-prob_mutation}
-From this, we can see that the mutation rate has units $\mu_{A\rightarrow a} [=]
-\frac{\text{#organisms}}{time}$. What @eq-prob_mutation implies is that for this
-small time window every organism carrying allele $A$ flips a coin with
-probability $\mu_{A a} \Delta t$ of getting heads. If the outcome of the coin is
-indeed heads, the allele is mutated, otherwise it remains the same. So when
-writing a differential equation to model this phenomena we must multiply the
-number of organisms by the mutation rate. This results in a differential
-equation for the change in number of organisms carrying $A$
-of the form $$\dt{N_A} = 
-  \underbrace{- \mu_{A a} N_A(t)}_{\text{loss } A \rightarrow a}
-  \underbrace{- \mu_{a A} N_a(t)}_{\text{gain } a \rightarrow A},$$
-where, as indicated, we must account for number of organisms that "exit"
-the $A$ allele state by mutating to $a$, and the number of organisms
-that "enter" the state by mutating from $a$ to $A$. We can write an
-equivalent equation for $N_a$ where the signs would be simply flipped
-since every time an organism is lost from allele $A$ it must be gained
-in allele $a$, and vice versa. This implies that for this case where
-there is only mutation $N\tot$ does not change over time since the
-number of organisms is assumed to be conserved.
+From this equation, we can see that the mutation rate has units
+$\mu_{A\rightarrow a} [=] \frac{\text{\#organisms}}{\text{time}}$. To compute
+the number of organisms with allele $A$ at time $t + \Delta t$, we take into
+account both the number of organisms switching from $a$ to $A$ and from $A$ to
+$a$; this is
+$$
+N_A(t + \Delta t) = N_A(t) + 
+\underbrace{N_a(t)\mu_{a\rightarrow A} \Delta t}_{\text{gain } a \rightarrow A}
+-\underbrace{N_A(t)\mu_{A\rightarrow a}\Delta t}_{\text{loss } A \rightarrow a}.
+$${#eq-NA_t_delta_t_mut}
+Just as in @eq-NA_t_delta_t, we can send the first term on the right-hand side
+of @eq-NA_t_delta_t_mut to the left, and divide both sides by $\Delta t$. For
+very small $\Delta t$, we can rewrite @eq-NA_t_delta_t_mut as a differential
+equation of the form
+$$
+\frac{dN_A}{dt} = N_a(t)\mu_{a\rightarrow A} - N_A(t)\mu_{A\rightarrow a}.
+$${#eq-dNA_dt_mut}
+We can write an equivalent equation for $N_a$ where the signs would be simply
+flipped since every time an organism is lost from allele $A$ it must be gained
+in allele $a$, and vice versa. Since the equation for $\frac{dN_a}{dt}$ is 
+given by $-\frac{dN_A}{dt}$, for this mutation-only scenario, the total number
+of organisms $N_\text{tot}$ does not change with time.
 
-Let us now write the dynamics that we actually care about, that is the
-allele frequency $x(t)$. This takes the form
-$$\dt{x} = \dt{}\left( {N_A \over N\tot} \right) = {1 \over N\tot} \dt{N_A},$$
-where we took $N\tot$ out of the derivative since for this case we said
-it doesn't change over time. Substituting the dynamics of $N_A$ and
-using the definition of the allele frequency we obtain
-$$\dt{x} = - \mu_{A a} x + \mu_{a A} (1 - x),
-  \label{eq_mutation_ode}$$ where we again suppressed the time
-dependence for notation simplicity. This equation can also be solved
-analytically, but before getting to that solution let's take a look at
-the steady state value. After all we know that these are deterministic
-dynamics so the allele fraction will reach a unique point. The steady
-state results in $$\mu_{A a} x_{ss} = \mu_{a A} (1 - x_{ss}),$$ where
-$x_{ss}$ indicates that it is the steady state allele frequency. If we
-now solve for $x_{ss}$ this results in
-$$x = {\mu_{a A} \over \mu_{a A} + \mu_{A a}}.$$ So the equilibrium
-allele frequency for this case is given by the rate of how often strains
-mutate from $a$ to $A$ divided by the sum of those rates. That means
-that in the limit where it is much more likely to mutate from $a$ to
-$A$, i.e. $\mu_{a A} \gg \mu_{A a}$ the allele frequency goes to one,
-i.e. allele $A$ will go into fixation. The opposite would be true for a
-much larger mutation rate from $A$ to $a$.
+Let us now write the dynamics for the allele frequency $x(t)$. As before, we
+simply substitute the definition of $x(t)$ on the differential equation, 
+obtaining
+$$
+\frac{dx}{dt} = \frac{d}{dt} \left( \frac{N_A}{N_\text{tot}} \right) = 
+\frac{1}{N_\text{tot}} \frac{dN_A}{dt},
+$${#eq-dx_dt_def_mut}
+where we took $N_\text{tot}$ out of the derivative since the total number of
+organisms doesn't change over time. Substituting @eq-dNA_dt_mut into
+@eq-dx_dt_def_mut results in
+$$
+\frac{dx}{dt} = - \mu_{A\rightarrow a} x + \mu_{a\rightarrow A} (1 - x),
+$${#eq-mutation_ode}
+where we again suppressed the time dependence for notation simplicity. Before
+attempting to solve @eq-mutation_ode let us take a look at the steady-state 
+value for $x(t)$. This means that we imagine this process of mutating back and
+forth between both alleles happening for a long time until it reaches a point
+where it does not change anymore. To compute the steady-state, we set the time
+derivative to zero, obtaining
+$$
+\mu_{A\rightarrow a} x_{ss} = \mu_{a\rightarrow A} (1 - x_{ss}),
+$${#eq-steady_state_mut}
+where the subscript $ss$ reminds us this is the steady state allele frequency.
+If we now solve for $x_{ss}$ this results in
+$$
+x_{ss} = \frac{\mu_{a\rightarrow A}}{\mu_{a\rightarrow A}+\mu_{A\rightarrow a}}.
+$${#eq-x_steady_state_mut}
+Thus, the steady-state allele frequency is given by the ratio of the mutation
+rate from $a$ to $A$ to the sum of the back and forth mutation rates. This
+result implies that in the limit where it is much more likely to mutate from $a$
+to $A$, i.e., $\mu_{a\rightarrow A} \gg \mu_{A\rightarrow a}$ the allele
+frequency goes to one, i.e., allele $A$ will go into fixation in the population.
+The opposite would be true for a much larger mutation rate from $A$ to $a$.
 
-Now let's go ahead and solve the actual dynamics. is an ordinary
-differential equation that can again be solved by separation of
-variables. This is
-$$\int {dx \over - \mu_{A a} x + \mu_{a A} (1 - x)} = 
-  \int dt.$$ Evaluating the integrals results in
-$$-{1 \over \mu_{a A} + \mu_{A a}}
-  \ln \left( \mu_{A a} x - \mu_{a A} (1 - x) \right) =
-  t + C,
-  \label{eq_mutation_int}$$ where $C$ is an integration constant. Using
-again the initial condition where $x(t=0) = x_o$ we have that
-$$C =  -{1 \over \mu_{a A} + \mu_{A a}}
-  \ln \left( \mu_{A a} x_o - \mu_{a A} (1 - x_o) \right).$$ Using this
-result we can rewrite as $$-{1 \over \mu_{a A} + \mu_{A a}}
-  \ln \left( { \mu_{A a} x - \mu_{a A} (1 - x)
-    \over
-  \mu_{A a} x_o - \mu_{a A} (1 - x_o)} \right) = t.$$ Exponentiating
-both sides gives $$\left( { \mu_{A a} x - \mu_{a A} (1 - x)
-    \over
-  \mu_{A a} x_o - \mu_{a A} (1 - x_o)} \right)^{
-    -{1 \over \mu_{a A} + \mu_{A a}}} = \mathrm{e}^t$$ If we now elevate both
-sides to the $\mu_{a A} + \mu_{A\rightarrow
-a}$ power we obtain $$\left( { \mu_{A a} x - \mu_{a A} (1 - x)
-    \over
-  \mu_{A a} x_o - \mu_{a A} (1 - x_o)} \right) =
-  \mathrm{e}^{- (\mu_{a A} + \mu_{A a}) t}.$$ We can now solve for $x$ and after
-a little bit of algebra we find that $$x(t) = {\mu_{a A} 
-  \over 
-  \mu_{a A} + \mu_{A a}} -
-  {\left[  
-  \mu_{a A} -
-  (\mu_{a A} + \mu_{A a}) x_o
-  \right] 
-  \mathrm{e}^{- (\mu_{a A} + \mu_{A a}) t}.
-  \over
-  \mu_{a A} + \mu_{A a}}.$$ A little tricky solution, but we can easily
-see that in the limit when $t
-\rightarrow \infty$ the second term on the right hand side goes to zero,
-leaving behind the steady state solution we found before. shows the
-dynamics for different ratios of the mutation rates. We can see that as
-expected the allele frequency converges to the steady state value we
-derived.
+Now let's go ahead and solve the dynamics from @eq-mutation_ode. We can solve
+this equation using the separation of variables method. We separate terms with
+the allele frequency to the left and the time-dependent ones to the right, and
+integrate both sides, obtaining
+$$
+\int \frac{dx}{- \mu_{A\rightarrow a} x + \mu_{a\rightarrow A} (1 - x)} = 
+\int dt.
+$${#eq-dx_dt_sep_variables_mut}
+To integrate the left-hand side we define
+$$
+u \equiv - \mu_{A\rightarrow a} x + \mu_{a\rightarrow A} (1 - x),
+$${#eq-dx_dt_sep_variables_mut_2}
+and compute $du$ as
+$$
+du = \left( - \mu_{A\rightarrow a} - \mu_{a\rightarrow A} \right) dx.
+$${#eq-dx_dt_sep_variables_mut_3}
+We can then substitute @eq-dx_dt_sep_variables_mut_2 and
+@eq-dx_dt_sep_variables_mut_3 into @eq-dx_dt_sep_variables_mut, obtaining
+$$
+-\frac{1}{\mu_{a\rightarrow A} + \mu_{A\rightarrow a}} \int \frac{du}{u} = 
+\int dx.
+$${#eq-dx_dt_sep_variables_mut_4}
+From @eq-dx_dt_sep_variables_mut_4 is easy to see that the integral in
+@eq-dx_dt_sep_variables_mut results in
+$$
+-{1 \over \mu_{a\rightarrow A} + \mu_{A\rightarrow a}}
+\ln \left( \mu_{A a} x - \mu_{a A} (1 - x) \right) =
+t + C,
+$${#eq-mutation_int}
+where $C$ is an integration constant. Substituting the initial condition $x(t=0)
+= x_o$ we have that this constant takes the form
+$$
+C =  -{1 \over \mu_{a\rightarrow A} + \mu_{A\rightarrow a}}
+\ln \left( \mu_{A\rightarrow a} x_o - \mu_{a\rightarrow A} (1 - x_o) \right).
+$${#eq-mutation_const}
+Substituting @eq-mutation_const into @eq-mutation_int results in
+$$
+-\frac{1}{\mu_{a\rightarrow A} + \mu_{A\rightarrow a}} \ln \left( 
+\frac{ \mu_{A\rightarrow a} x - \mu_{a\rightarrow A} (1 - x)}
+{\mu_{A\rightarrow a} x_o - \mu_{a\rightarrow A} (1 - x_o)} 
+\right) = t.
+$${#eq-mutation_sol}
+Exponentiating both sides of @eq-mutation_sol gives 
+$$
+\left( \frac{ \mu_{A\rightarrow a} x - \mu_{a\rightarrow A} (1 - x)}
+{\mu_{A\rightarrow a} x_o - \mu_{a\rightarrow A} (1 - x_o)} \right)^{
+-{1 \over \mu_{a\rightarrow A} + \mu_{A\rightarrow a}}} = \mathrm{e}^t.
+$${#eq-mutation_sol_2}
+Raising both sides of @eq-mutation_sol_2 to the $\mu_{a A} + \mu_{A\rightarrow
+a}$ power resulst in
+$$
+\left( \frac{ \mu_{A\rightarrow a} x - \mu_{a\rightarrow A} (1 - x)}
+{\mu_{A\rightarrow a} x_o - \mu_{a\rightarrow A} (1 - x_o)} \right) =
+\mathrm{e}^{- (\mu_{a A} + \mu_{A\rightarrow a}) t}.
+$${#eq-mutation_sol_3} 
+We can now solve for $x(t)$, and after a little messy algebra, we find that 
+$$
+x(t) = \frac{\mu_{a\rightarrow A}}
+{\mu_{a\rightarrow A} + \mu_{A\rightarrow a}} 
+- \frac{\left[  \mu_{a\rightarrow A} - (\mu_{a\rightarrow A} + 
+\mu_{A\rightarrow a}) x_o \right] 
+\mathrm{e}^{- (\mu_{a\rightarrow A} + \mu_{A\rightarrow a}) t}}
+{\mu_{a\rightarrow A} + \mu_{A\rightarrow a}}.
+$${#eq-allele_freq_mut}
+One can argue that @eq-allele_freq_mut does not give us a clear intuition of
+what the dynamics of the allele frequency will behave like. But we can easily
+see the second term on the right-hand side goes to zero in the limit when $t
+\rightarrow \infty$, leaving behind the steady state solution we found in
+@eq-x_steady_state_mut. shows the dynamics for different ratios of the mutation
+rates. We can see that, as expected, the allele frequency converges to the
+steady state value we derived.
 
-../../fig/deterministic_evo/01_02_01_deterministic_mut.png
+![Mutation dynamics](./figures/forces_evolution/_mutation_dynamics){#fig-mutation_dynamics}
 
 ### Mutation-Selection Balance
 
