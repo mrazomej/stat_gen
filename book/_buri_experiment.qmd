@@ -1,37 +1,4 @@
-# Genetic drift and the stochastic nature of evolution
-
-So far we have studied two of the forces of evolution from a
-deterministic perspective. This sounds contradictory given the intuition
-that biologists have about how the evolutionary process works. On the
-one hand any biologist will tell you that evolution is a completely
-random process; from the emergence of a beneficial mutation to the
-process of fixing this mutation in the population, these dynamics are
-hard if not impossible to predict.
-
-On the other hand in a conflicting view of evolution, biologists tend to
-associate every biological feature to a product of selection. Either by
-natural or sexual selection, the literature is full of "just-so-stories"
-that attribute a functional purpose to every aspect of biological
-systems. Therefore the claim is that the process occurs at random, but
-everything serves a purpose. The truth most likely lies somewhere in
-between.
-
-At the dawn of the modern synthesis of evolutionary theory Sewall Wright
-came to the conclusion that reproductive stochasticity could play an
-important role in the fate of populations. In other words, not because a
-beneficial mutation appeared in the population it would necessarily take
-over the population; or not because a deleterious mutation appeared in
-the population it would be immediately removed. Accidents in evolution
-still play an important role when it comes to setting the fate of a
-population. From a beneficial mutation being lost due to some
-non-selection related event such as a stochastic death of the organism
-carrying the mutation, to the fixation of deleterious mutations in the
-population. The first experimental demonstration of this non-selection
-based evolution came out of Wrights own academic lineage. His own
-student, Peter Buri, designed the first experiment to demonstrate the
-force of genetic drift.
-
-## The Buri experiment
+### The Buri experiment
 
 In 1956 Peter Buri, a student of Sewall Wright published the now classic
 paper "*Gene Frequency in Small Populations of Mutant Drosophila*" in

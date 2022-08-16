@@ -1,4 +1,4 @@
-## Mutation {#seq_determ_mut}
+### Mutation {#seq_determ_mut}
 
 In the previous section, we looked at the competition between two organisms
 carrying different alleles, $A$ and $a$. But we completely ignored how these two
@@ -15,6 +15,9 @@ imagine studying a very large microbial population whose size we take to be a
 continuous variable. In this regime, random mutations in individual organisms
 are blurred as we quantify them as a deterministic fraction of the population
 switching alleles.
+
+![One-locus two-allele mutation. Schematic of the toy model for mutation only
+case.](./figures/placeholder.jpg){#fig-mutation_schematic}
 
 For our one-locus two-allele toy model, we think of mutations between alleles
 $A$ and $a$ as a simple first-order chemical reaction of the form
@@ -38,8 +41,8 @@ account both the number of organisms switching from $a$ to $A$ and from $A$ to
 $a$; this is
 $$
 N_A(t + \Delta t) = N_A(t) + 
-\underbrace{N_a(t)\mu_{a\rightarrow A} \Delta t}_{\text{gain } a \rightarrow A}
--\underbrace{N_A(t)\mu_{A\rightarrow a}\Delta t}_{\text{loss } A \rightarrow a}.
+\overbrace{N_a(t)\mu_{a\rightarrow A} \Delta t}^{\text{gain } a \rightarrow A}
+-\overbrace{N_A(t)\mu_{A\rightarrow a}\Delta t}^{\text{loss } A \rightarrow a}.
 $${#eq-NA_t_delta_t_mut}
 Just as in @eq-NA_t_delta_t, we can send the first term on the right-hand side
 of @eq-NA_t_delta_t_mut to the left, and divide both sides by $\Delta t$. For
@@ -156,49 +159,70 @@ One can argue that @eq-allele_freq_mut does not give us a clear intuition of
 what the dynamics of the allele frequency will behave like. But we can easily
 see the second term on the right-hand side goes to zero in the limit when $t
 \rightarrow \infty$, leaving behind the steady state solution we found in
-@eq-x_steady_state_mut. shows the dynamics for different ratios of the mutation
-rates. We can see that, as expected, the allele frequency converges to the
-steady state value we derived.
+@eq-x_steady_state_mut. @fig-mutation_dynamics shows the dynamics for different
+ratios of the mutation rates. Notice that, as expected, the allele frequency
+converges to the steady state value we derived.
 
-![Mutation dynamics](./figures/forces_evolution/_mutation_dynamics){#fig-mutation_dynamics}
+![Allele frequency dynamics under mutation only. Each curve shows the time
+evolution of allele $A$ frequency for different ratios of mutation rates. In the
+long term, all frequencies reach the steady sate predicted by
+@eq-x_steady_state_mut.](./figures/forces_evolution/_mutation_dynamics){#fig-mutation_dynamics}
 
-### Mutation-Selection Balance
+### Combining evolutionary forces: mutation-selection balance
 
-Now that we have modeled two of the three forces we will be using
-throughout the notes let us try to put them together. Since both
-selection and mutation are directional deterministic forces we can
-easily add them together for our allele frequency dynamics and still
-obtain a deterministic answer. The dynamics for our single-locus
-two-allele system subject to both selection and mutation are given by
-the sum of the dynamics for each case. This is
-$$\dt{x} = s x (1 - x) - \mu_{Aa} x + \mu_{aA} (1 - x).
-  \label{eq_sel_mut}$$ This linear ODE can be solved analytically as you
-can asses yourself by plugin this equation into a symbolic math package
-such as Mathematica or Sympy. The problem is that the solution is not
-intuitive with a bunch of tangents and arctangents that make it very
-difficult to look at. Nevertheless we can still gain intuition from . An
-interesting setting to analyze is the case where one of the alleles,
-let's say $a$ is deleterious, i.e. $s < 0$. If that were the case our
-results from tell us that natural selection would remove this allele
-from the population. But if mutation keeps bringing the allele back over
-and over again, there should be a balance between mutation and
-selection. This is a plausible scenario if we think of allele $A$ as a
-functional protein, and $a$ is a coarse-grained state of all
-non-functional proteins for example. To compute this equilibrium we need
-to compute the steady state for as
-$$0 = s x_{ss}^2 + (\mu_{Aa} + \mu_{aA} - s) x_{ss} - \mu_{aA},$$ where
-we already expanded the terms and group by powers of $x_ss$, the steady
-state allele frequency. The roots of this quadratic equation are given
-by $$x_{ss} = {(s - \mu_{Aa} - \mu_{aA}) \pm 
-    \sqrt{(\mu_{Aa} - \mu_{aA} - s)^2 + 4 s \mu_{aA}}
-    \over 2s}.$$ If again we take $a$ as a coarse-grained state for a
-non-functional gene we can assume that reversing the mutation to the
-functional allele is very unlikely, therefore we can set
-$\mu_{aA} \approx 0$. This results in
-$$x_{ss} = {(s - \mu_{Aa}) \mp (s - \mu_{Aa}) \over 2s}.$$ The resulting
-two possible steady states are then
-$$x_{ss1} = 0, \quad x_{ss2} = 1 - {\mu_{Aa} \over s}.$$ The first case
-shows that if allele $A$ were to go extinct it would stay as such. The
-more interesting and relevant case is the second root. This shows that
-the allele frequency decreases from the fixation value 1 depending on
-the relative strengths of mutation and selection.
+So far, in this section and in @sec-selection, we modeled two of the
+evolutionary forces as deterministically modifying the population structure.
+Given that both selection and mutation are modeled in the same framework, we can
+combine them into a single description of the dynamics to study the effects of
+having both forces acting on a population. As we will see in later chapters,
+this regime is relevant for viruses with large populations and strong selection
+from the immune system acting on them. The dynamics for our single-locus
+two-allele system, subject to selection and mutation, is given by the sum of the
+right-hand side of @eq-dNA_dt_mut and @eq-mutation_ode. This is
+$$
+\frac{dx}{dt} = s x (1 - x) - 
+\mu_{A\rightarrow a} x + \mu_{a\rightarrow A} (1 - x).
+$${#eq-sel_mut} 
+This linear ODE can be solved analytically as you can assess yourself by plugin
+@eq-sel_mut into a symbolic math package such as `Mathematica`. The problem is
+that the solution is not intuitive, with a bunch of tangents and arctangents
+that make it very difficult to look at. Nevertheless, we can still gain
+intuition about the long-term behavior of @eq-sel_mut. An interesting setting to
+analyze is the case where one of the alleles, let's say $a$ is deleterious. For
+this case, our results from @sec-selection tell us that natural selection would
+remove this allele from the population, leading $A$ to fixation in the
+population. But if mutation keeps bringing the allele back repeatedly, a balance
+must exist between mutation and selection. This is a plausible scenario if we
+think of allele $A$ as the functional version of a particular protein, and $a$
+as a coarse-grained state of all non-functional proteins, for example. To
+compute this equilibrium, we need to compute @eq-sel_mut's steady-state by
+setting the left-hand side to zero
+$$
+0 = s x_{ss}^2 + (\mu_{Aa} + \mu_{aA} - s) x_{ss} - \mu_{aA},
+$${#eq-sel_mut_steady_state} 
+where we already expanded the terms and group by powers of $x_ss$, the steady
+state allele frequency. To solve for $x_{ss}$, we compute the roots of this
+quadratic equation, obtaining
+$$
+x_{ss} = \frac{(s - \mu_{A\rightarrow a} - \mu_{a\rightarrow A}) \pm 
+\sqrt{(\mu_{A\rightarrow a} - \mu_{a\rightarrow A} - s)^2 + 
+4 s \mu_{a\rightarrow A}}}{2s}.
+$${#eq-sel_mut_steady_state_roots} 
+Given that we take allele $a$ to be a coarse-grained state for all
+non-functional versions of the gene, which we expect to exceed in number the
+functional versions by several orders of magnitude [`Look for experimental
+evidence of this`], we can safely assume that $\mu_{a\rightarrow A} \approx 0$.
+In other words, there are many more ways to break the protein than to bring it
+back to its functional form. This assumption results in
+$$
+x_{ss} = \frac{(s - \mu_{A\rightarrow a}) \mp (s - \mu_{A\rightarrow a})}{2s}.
+$${#eq-sel_mut_roots_approx}
+The resulting two possible steady states are then
+$$
+x_{ss}^{(1)} = 0, \quad x_{ss}^{(2)} = 1 - \frac{\mu_{A\rightarrow a}}{s}.
+$${#eq-sel_mut_roots} 
+The first case in @eq-sel_mut_roots shows that if allele $A$ were to go extinct,
+it would stay as such, not being able to come back into the population. However,
+the more interesting and relevant case is the second root. This shows that the
+beneficial allele $A$ frequency decreases from the fixation value $x_{ss} = 1$
+depending on the relative strengths of mutation and selection.

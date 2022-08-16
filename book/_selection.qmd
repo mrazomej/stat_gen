@@ -55,19 +55,22 @@ Furthermore, thinking about microbes whose populations can be on the order of
 $10^6-10^9$ cells allow us to simplify our calculations. Rather than keeping
 track of each individual life's history, we can approximate the population
 number as a **continuous variable**. This means that when discussing the number
-of organisms in the population, we won't worry about what it mean to have
+of organisms in the population, we won't worry about what it means to have
 "fractional organisms."
 
+![One-locus two-allele selection. Schematic of the toy model for selection only
+case.](./figures/placeholder.jpg){#fig-selection_schematic}
+
 For the simplest case of one-locus two-alleles, let us label the two alleles as
-$A$ and $a$. Let $N_A(t)$ and $N_a(t)$ be the corresponding number of organisms
-carrying each allele at time $t$. We want to compute the number of organisms
-with, let's say, allele $A$ after a time $\Delta t$. For the
-frequency-independent selection, the only factor that matters is the current
-number of organisms with allele $N_A(t)$ and their corresponding growth rate
-$\lambda_A$. As discussed before, we will use this growth rate as a proxy for
-fitness; this is sometimes called Malthusian fitness after Thomas Robert
-Malthus---famous scholar whose essay on population growth inspired both Darwin
-and Wallace. This growth rate has units of $\lambda_A [=]
+$A$ and $a$ as depicted in @fig-selection_schematic. Let $N_A(t)$ and $N_a(t)$
+be the corresponding number of organisms carrying each allele at time $t$. We
+want to compute the number of organisms with, let's say, allele $A$ after a time
+$\Delta t$. For the frequency-independent selection, the only factor that
+matters is the current number of organisms with allele $N_A(t)$ and their
+corresponding growth rate $\lambda_A$. As discussed before, we will use this
+growth rate as a proxy for fitness; this is sometimes called Malthusian fitness
+after Thomas Robert Malthus---famous scholar whose essay on population growth
+inspired both Darwin and Wallace. This growth rate has units of $\lambda_A [=]
 \frac{\#\text{organisms}}{\text{time}}$. Therefore, the number of organisms at
 time $t + \Delta t$ can then be computed as
 $$
@@ -115,7 +118,7 @@ N_\text{tot}(t) \left[ \lambda_A x(t) + \lambda_a (1 - x(t)) \right].
 $${#eq-dNot_factorized}
 From this, we can see the average fitness $\bar{f}(t)$ is of the form
 $$
-\bar{f}(t) = \lambda_A x(t) + \lambda_a (1 - x(t)).
+\bar{\lambda}(t) = \lambda_A x(t) + \lambda_a (1 - x(t)).
 $${#eq-pop_fitness_def}
 
 Since we care about the relative abundance of allele $A$, $x(t)$, we can take
@@ -144,11 +147,13 @@ $${#eq-dx_Dt_chainrule_3}
 This can be further simplified by using the definition of the allele frequency
 from @eq-allele_frac_def to obtain
 $$
-\frac{dx}{dt} = \lambda_A x(t) - x(t) \left[\lambda_A x(t) + \lambda_a (1 - x(t))\right].
+\frac{dx}{dt} = \lambda_A x(t) - x(t) \left[\lambda_A x(t) + 
+\lambda_a (1 - x(t))\right].
 $${#eq-dx_Dt_chainrule_4}
 Grouping terms by the fitness values results in
 $$
-\frac{dx}{dt} = \lambda_A x(t)(1 - x(t)) - \lambda_a x(t)(1 - x(t)) = s x(t)(1 - x(t)),
+\frac{dx}{dt} = \lambda_A x(t)(1 - x(t)) - \lambda_a x(t)(1 - x(t)) 
+= s x(t)(1 - x(t)),
 $${#eq-freq_dynamics_selection}
 where we defined $s = \lambda_A - \lambda_a$, the fitness difference between
 alleles, also known as the *selection coefficient*. @eq-freq_dynamics_selection
