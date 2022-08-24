@@ -1,0 +1,5 @@
+**Math behind the models: The binomial coefficient**
+
+$$
+{n \choose k} = \frac{n!}{(n - k)! k!}
+$$

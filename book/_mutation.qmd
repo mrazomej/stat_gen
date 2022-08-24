@@ -22,8 +22,9 @@ case.](./figures/placeholder.jpg){#fig-mutation_schematic}
 For our one-locus two-allele toy model, we think of mutations between alleles
 $A$ and $a$ as a simple first-order chemical reaction of the form
 $$
-A \xrightleftharpoons[\mu_{a\rightarrow A}]
-  {\,\mu_{A\rightarrow a}\,} a,
+A
+\underset{\mu_{A\rightarrow a}}{\stackrel{\mu_{a\rightarrow A}}{\rightleftharpoons}}
+a,
 $${#eq-mut_rxn}
 where $\mu_{A\rightarrow a}$ is the rate at which organisms carrying allele $A$
 mutate to allele $a$ and $\mu_{a\rightarrow A}$ is the equivalent mutation rate

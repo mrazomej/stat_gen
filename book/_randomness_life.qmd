@@ -13,7 +13,7 @@ attribute a functional purpose to every aspect of biological systems. Therefore,
 the claim is that the process occurs randomly, but everything serves a purpose.
 The truth most likely lies somewhere in between.
 
-At the dawn of the modern synthesis of evolutionary theory Sewall Wright
+At the dawn of the modern synthesis of evolutionary theory, Sewall Wright
 concluded that reproductive stochasticity could play an important role in the
 fate of populations. In other words, not because a beneficial mutation appeared
 in the population, it would necessarily take over. Equivalently, a deleterious
@@ -25,7 +25,6 @@ fixation of deleterious mutations. This stochasticity is especially important
 when we think about small populations. The effects that the randomness of
 reproduction and survival of organisms can have on the structure of a population
 is the evolutionary force that we call *genetic drift*.
-
 
 As we will see next, the first experimental demonstration of this
 non-selection-based evolution came from Wright's academic lineage. His student,

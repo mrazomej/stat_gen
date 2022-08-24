@@ -5,6 +5,7 @@ book:
   title: "Statistical Genetics"
   author: "Manuel Razo-Mejia"
   date: "8/3/2022"
+  page-navigation: true
   chapters:
     - index.qmd
     - intro.qmd
@@ -32,7 +33,3 @@ format:
     documentclass: scrreprt
     default-image-extension: pdf
     pdf-engine: pdflatex
-
-
-
-

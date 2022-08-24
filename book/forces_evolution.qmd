@@ -1,5 +1,9 @@
 # Forces of evolution
 
+> I am an unrepentant ‘beanbag geneticist.’ Non-mathematicians often fail to
+realise the complexity of behaviour and sometimes the self-regulatory capacity
+of material systems composed of simple components. (J. B. S. Haldane)
+
 {{< include _bio_theory_phys.qmd >}}
 
 <!-- Deterministic forces -->
@@ -14,9 +18,11 @@
 
 {{< include _buri_experiment.qmd >}}
 
-{{< include _intro_langevin.qmd >}}
+{{< include _wright_fisher.qmd >}}
 
-{{< include _stochastic_growth.qmd >}}
+<!-- {{< include _intro_langevin.qmd >}}
+
+{{< include _stochastic_growth.qmd >}} -->
 
 
 

@@ -1,63 +1,61 @@
 ### The Buri experiment
 
-In 1956 Peter Buri, a student of Sewall Wright published the now classic
-paper "*Gene Frequency in Small Populations of Mutant Drosophila*" in
-which he experimentally demonstrated the concept of genetic drift. The
-idea for this beautiful experiment is depicted in . Briefly, Buri began
-with eight female and eight male flies, all heterozygotes of the *bw*
-locus. This means that all of the flies had 1 copy of the gene
-associated with white eyes, and one copy of the gene associated with red
-eyes. The phenotype that this combination of alleles gives is flies with
-orange eyes. He then allowed the flies to reproduce, and after removing
-the adults, he randomly chose 8 males and females from the next
-generation of offspring without looking at the eye color. These new 8
-males and 8 females were transferred to a new flask and the procedure
-was repeated for 19 generations.
+In 1956 Peter Buri, a student of Sewall Wright, published the now classic paper
+"*Gene Frequency in Small Populations of Mutant Drosophila*" in which he
+experimentally demonstrated the concept of genetic drift. The idea for this
+beautiful experiment is depicted in @fig-buri_schematic. Briefly, Buri's
+experimental setup consisted of starting vials with eight female and eight male
+flies, all heterozygotes on the *bw* locus. The heterozygosity in this locus
+meant that all flies had one copy of the allele associated with white eyes and
+one copy associated with red eyes. Recall that diploid organisms such as flies
+and us have two copies of each gene, one coming from the mother and one from the
+father. This allele combination results in flies with orange eyes. Buri then
+allowed the flies to mate, and after removing the adults, he randomly chose
+eight males and eight females from the next generation of offspring without
+looking at the eye color. These eight new males and eight females were then
+transferred to a new flask, and the procedure was repeated for 19 generations.
+The beautiful thing about this experimental setup is that just by looking at the
+eye colors, Buri knew which alleles each fly carried---a red-eyed fly was
+homozygote for the red-eye allele, a white-eyed fly was homozygote for the
+white-eye allele, and the orange-eyed fly was a heterozygote.
 
-![**Buri's experimental setup.** At time $t=0$ eight heterozygote
-females and eight heterozygote males were allowed to reproduce. From
-their offspring, eight males and eight females were chosen at random and
-transferred into a new
-flask.](../../fig/drift_langevin/02_01_01_buri_schematic.png){#fig_buri_schematic}
+![**Buri's experimental setup.** At time $t=0$ eight heterozygote females and
+eight heterozygote males were allowed to reproduce. From their offspring, eight
+males and eight females were chosen at random and transferred into a new
+vial.](./figures/forces_evolution/_buri_schematic.png){#fig-buri_schematic}
 
-Since the offspring that made it to the next generation were chosen at
-random, Buri knew that the outcome would be different if he repeated an
-identical experiment in different vials. As a result, for statistical
-power he simultaneously tracked 107 flasks as shown in . Each
-generation, he counted the number of red-eyed, white-eyed and
-orange-eyed flies he had randomly chosen. shows the outcomes for these
-different vials after 19 generations. Because the flies are allegedly
-mating at random, with each generation there is an accumulation of
-fluctuations. As a result, after 19 generations, many vials contained
-only white-eyed or red-eyed flies, though some vials still contained a
-mixture of eye colors.
+Since the offspring that made it to the next generation were chosen at random,
+Buri knew the outcome would be different if he repeated an identical experiment
+in additional vials. Therefore, he simultaneously tracked 107 flasks that
+followed the same procedure, as depicted in @fig-buri_generations. At each
+generation, Buri counted the number of red-eyed, white-eyed and orange-eyed
+flies he had randomly chosen. Because the flies were allegedly mating randomly,
+i.e., without any sexual preference for eye color, with each generation, the
+number of each type of fly fluctuated. As a result, after 19 generations, some
+vials contained only white-eyed or red-eyed flies, though some vials still
+contained a mixture of eye colors.
 
-![**Multiple replicates of the Buri experiment.** Buri repeated his
-experiment in 107 separate vials, with the evolutionary trajectory
-different each time as a result of genetic drift. Note that in the long
-time limit, many of the vials have gone to fixation with all flies
-having either white or red
-eyes.](../../fig/drift_langevin/02_01_02_buri_generations.png){#fig_buri_generations}
+![**Multiple replicates of the Buri experiment.** Buri repeated the experiment
+in 107 separate vials. Note that in the long time limit, many of the vials have
+gone to fixation with all flies having either white or red
+eyes.](./figures/forces_evolution/_buri_generations.png){#fig-buri_generations}
 
-Having quantified the number of red-eyed, white-eyed and orange-eyed
-flies Buri was able to quantify the frequency of alleles in the
-population. Since none of the alleles were dominant, he could infer the
-genotype by looking at the phenotype of the flies.
+Having counted the number of red-eyed, white-eyed and orange-eyed flies, Buri
+could quantify the allele frequency in the population. @fig-buri_experiment
+summarizes the results from this experiment. By tracking alleles over time with
+these 107 populations exposed to the same conditions, Buri observed evolution
+driven entirely by genetic drift! In other words, he saw how one of the alleles
+went extinct in some populations not because of natural selection but because of
+the fluctuations intrinsic to small population sizes.
 
-summarizes the results of the experiment. By tracking alleles over time
-with these 107 populations exposed to the same conditions, Buri was able
-to observe evolution driven entirely by genetic drift! He saw how in
-some of the populations one of the alleles went extinct, arising from
-nothing more than the fluctuations inherent in small populations.
+![**Results of the Buri experiment.** By tracking the flies' phenotypes, Buri
+inferred the allele frequencies for each population. These frequencies changed
+as a result of genetic drift and, after only 19 generations, many of the vials
+contain flies all with the same eye color, implying fixation of alleles and
+evolution due to genetic
+drift.](./figures/forces_evolution/_buri_experiment.png){#fig-buri_experiment}
 
-![**Results of the Buri experiment.** By tracking the phenotypes of the
-flies, Buri was able to infer the allele frequencies for each
-population. The allele frequencies change as a result of genetic drift
-and after 19 generations, many of the vials contain flies all with the
-same eye color, implying fixation of alleles and evolution due to
-genetic
-drift.](../../fig/drift_langevin/02_01_03_buri_experiment.png){#fig_buri_experiment}
-
-Now that we have looked at an experimental evidence of genetic drift on
-a laboratory experiment let's go back to the mathematical modeling of
-this phenomena.
+This simple but clever experimental setup calls for an equally simple
+mathematical description. In the next section, we will look into the so-called
+Wright-Fisher model to mathematize this experiment and simulate the Buri
+expeiment.
