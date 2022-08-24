@@ -1,5 +1,16 @@
 # Loogbook for the population genetics notes
 
+**2022-08-24**
+- Finished reading the beanbag genetics paper
+- Made sure that the book can be properly compiled into a PDF
+- Started working on the Wright-Fisher model
+
+**2022-08-23**
+- Read about the "Beanbag Genetics" controversy between Haldane and Mayr
+
+**2022-08-17**
+- Started working on the Buri experiment and "randomness of life" section
+
 **2022-08-08**
 - Generated Julia package
 - Generated first plot using Makie
