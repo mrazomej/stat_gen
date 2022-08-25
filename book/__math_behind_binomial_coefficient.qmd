@@ -1,4 +1,4 @@
-**Math behind the models: The binomial coefficient**
+#### Math behind the models: The binomial coefficient{#sec-math_behin_bioniaml_coefficient}
 
 $$
 {n \choose k} = \frac{n!}{(n - k)! k!}

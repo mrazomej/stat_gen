@@ -1,5 +1,8 @@
 # Loogbook for the population genetics notes
 
+**2022-08-25**
+- Rewrote math for the Wright-Fisher model
+
 **2022-08-24**
 - Finished reading the beanbag genetics paper
 - Made sure that the book can be properly compiled into a PDF

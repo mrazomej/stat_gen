@@ -28,32 +28,39 @@ frequency in the population changes over time.
 ![Beanbag genetics schematic](./figures/placeholder.jpg){#fig-beanbag_genetics}
 
 Thinking about the Buri experiment from the previous section, let us assume that
-$N_\text{pop} = 16$ individuals conform each generation. We are interested in
-tracking the allele frequency of the red-eye allele in the *bw* locus in the
-population. To stick to our previous notation, we will define $A$ as the red-eye
-allele and $a$ as the white-eye allele. At generation $t = 0$, when all flies
-are heterozygote, there are $N_A^{(0)} = 16$ copies of allele $A$ and $N_a^{(0)}
-= 2N_\text{pop} - N_A^{(0)} = 16$ copies of allele $a$ in the population. To
-form generation $t = 1$ we draw $2N_\text{pop}$ alleles from this pool with
-replacement as depicted in @fig-beanbag_genetics. Assume we draw an allele $A$
-on the first trial. The probability of this is given by the fraction allele $A$
-occupies in the population, i.e.,
+$N = 16$ individuals conform each generation. To stick to our previous notation,
+we will define $A$ as the red-eye allele and $a$ as the white-eye allele. Our
+objective is to build the transition probability $P_{i\rightarrow j}(t)$ of
+transitioning from having $i$ copies of, say, allele $A$ in generation $t-1$ to
+$j$ copies in generation $t$. At generation $t$, the probability of drawing a
+copy of allele $A$, $p_A(t)$ is given by
 $$
-\text{Probability of drawing }A = \frac{N_A^{(0)}}{2N_\text{pop}}.
-$${#eq-prob_draw_A}
-Once we draw the first allele, we write it down and put it back in the beanbag.
-Let us assume that the second draw is also allele $A$. Since these two events 
-are independent, the probability of both events happening is the product of the
-probabilities of each occurrence [`cite Appendix on basic probability`], i.e.,
+p_A(t) = \frac{i}{2N},
+$${#eq-prob_A_wf}
+where, as before, $i$ is the number of copies of allele $A$ in generation $t-1$.
+Likewise, the probability of drawing a copy of allele $a$ at generation $t$ is
 $$
-\text{Probability of drawing two }A\text{s} = 
-\left( \frac{N_A^{(0)}}{2N_\text{pop}} \right)^2.
-$${#eq-prob_draw_two_A}
+p_a(t) = 1 - p_A(t) = 1 - \frac{i}{2N}.
+$${#eq-prob_a_wf}
+Given that each time we draw an allele, we replace it in the beanbag, each draw
+is independent of the others. Thus, the probability of drawing, say, $j$ copies
+of allele $A$ in consecutive trials is given as the multiplication of
+@eq-prob_A_wf by itself $j$ times. Finally, to construct our transition
+probability, we must take into account that drawing $j$ copies of allele $A$ and
+$2N - j$ copies of allele $a$ can happen in many different ways (see [Math
+behind the model @sec-math_behin_bioniaml_coefficient]), resulting in
+$$
+P_{i\rightarrow j}(t) = 
+\overbrace{\frac{2N!}{i! \left(2N! - i\right)!}}
+^{\text{order doesn't matter}}
+\underbrace{\left( \frac{i}{2N}\right)^j}_
+{\text{draw $j$ copies of $A$}}
+\overbrace{\left( 1 - \frac{i}{2N} \right)^{2N - j}}^
+{\text{draw $j - 2N$ copies of $a$}}.
+$${#eq-pij_wf}
 
 
-The probability of drawing
-$N_A^{(1)}$ alleles in generation 1, where $N_A^{(1)}$ can be any number between
-0 and $2N_\text{pop}$
+
 
 ___
 {{< include __math_behind_binomial_coefficient.qmd >}}
