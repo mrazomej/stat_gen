@@ -29,11 +29,22 @@ frequency in the population changes over time.
 
 Thinking about the Buri experiment from the previous section, let us assume that
 $N = 16$ individuals conform each generation. To stick to our previous notation,
-we will define $A$ as the red-eye allele and $a$ as the white-eye allele. Our
-objective is to build the transition probability $P_{i\rightarrow j}(t)$ of
-transitioning from having $i$ copies of, say, allele $A$ in generation $t-1$ to
-$j$ copies in generation $t$. At generation $t$, the probability of drawing a
-copy of allele $A$, $p_A(t)$ is given by
+we will define $A$ as the red-eye allele and $a$ as the white-eye allele.
+Mathematically speaking, the Wright-Fisher model is an example of a so-called
+discrete-time discrete-states Markov process. This means that the probability of
+transitioning from one state to another––from one allele frequency in generation
+$t-1$ to another in generation $t$––depends on the current state and not on the
+entire history. In other words, to compute how likely a population is to jump
+from having $Y_{t-1}$ copies of allele $A$ at generation $Y_{t}$ at generation
+$t$, we do not need information from the population state in previous
+generations. Notice that we define the allele copy number using an uppercase 
+letter. Throughout the book, *random variables* will be defined using uppercase
+letters. See [`cite prbability appendix`] for our notation conventions.
+
+ Our objective is to build the transition probability $P(X_t=j \mid X_{t-1}=i)$
+ of transitioning from having $i$ copies of, say, allele $A$ in generation $t-1$
+ to $j$ copies in generation $t$. At generation $t$, the probability of drawing
+ a copy of allele $A$, $p_A(t)$ is given by
 $$
 p_A(t) = \frac{i}{2N},
 $${#eq-prob_A_wf}
@@ -48,10 +59,10 @@ of allele $A$ in consecutive trials is given as the multiplication of
 @eq-prob_A_wf by itself $j$ times. Finally, to construct our transition
 probability, we must take into account that drawing $j$ copies of allele $A$ and
 $2N - j$ copies of allele $a$ can happen in many different ways (see [Math
-behind the model @sec-math_behin_bioniaml_coefficient]), resulting in
+behind the model @sec-math_behind_binomial_coefficient]), resulting in
 $$
-P_{i\rightarrow j}(t) = 
-\overbrace{\frac{2N!}{i! \left(2N! - i\right)!}}
+P(X_t=j \mid X_{t-1}=i) = 
+\overbrace{\frac{2N!}{i! \left(2N - i\right)!}}
 ^{\text{order doesn't matter}}
 \underbrace{\left( \frac{i}{2N}\right)^j}_
 {\text{draw $j$ copies of $A$}}
@@ -59,8 +70,83 @@ P_{i\rightarrow j}(t) =
 {\text{draw $j - 2N$ copies of $a$}}.
 $${#eq-pij_wf}
 
+#### Properties of the Wright-Fisher model
 
-
+With @eq-eq-pij_wf in hand, let's now compute some of the important properties
+of the Wright-Fisher model. First, let's compute the expected value for the
+allele copy number $\langle X_t \rangle$. Since the information we have about
+$X_t$ is conditioned on the value of $X_{t-1}$, We cannot directly compute
+$\rangle X_t \langle$. $X_t \mid X_{t-1}$ is a random variable as any other. The
+only difference is that we take the value of $X_t$ as random given that we
+pretend to know the value of $X_{t-1}$. Therefore we can compute its expected
+values as 
+$$ 
+\left\langle X_t \mid X_{t-1} \right\rangle_{X_t} = 
+\sum_{j=0}^{2N} j \; P\left(X_t = j \mid X_{t-1}\right).
+$${#eq-E_Xt_Xt-1_wf}
+Notice that we use a subscript on the left-hand side to make it clear that the
+expected value is taken over all possible values of $X_t$. One important feature
+to highlight about @eq-E_Xt_Xt-1_wf is that $\left\langle X_t \mid X_{t-1}
+\right\rangle_{X_t}$ is a random variable since $X_{t-1}$ needs not to take a
+fixed value. [see `cite prob appendix` for conditional expectation]. Thus, to
+compute the expected value we want, we must take a second expected value,
+$$
+\left\langle X_t \right\rangle = \left\langle \left\langle X_t \mid X_{t-1}
+\right\rangle_{X_t} \right\rangle_{X_{t-1}}.
+$${#eq-E_Xt_wf}
+This is an instance of Adam's law of total expectation [see `cite prob
+appendix`]. To compute @eq-E_Xt_wf, we first substitute @eq-E_Xt_Xt-1_wf,
+obtaining
+$$
+\left\langle X_t \right\rangle = \left\langle
+\sum_{j=0}^{2N} j \; P\left(X_t = j \mid X_{t-1}\right)
+\right\rangle_{X_{t-1}}.
+$${#eq-E_Xt_1_wf}
+Next, we use the definition of the expected value to write
+$$
+\left\langle X_t \right\rangle = \sum_{i=0}^{2N} \left[ 
+\sum_{j=0}^{2N} j \; P\left(X_t = j \mid X_{t-1} = i \right)
+\right] P\left(X_{t-1} = i \right).
+$${#eq-E_Xt_2_wf}
+Rearranging the sums in @eq-E_Xt_2_wf results in
+$$
+\left\langle X_t \right\rangle = \sum_{i=0}^{2N} P\left( X_{t-1} = i\right)
+\left[
+\sum_{j=0}^{2N} j \; P\left(X_t = j \mid X_{t-1} = i \right)
+\right].
+$${#eq-E_Xt_3_wf}
+Notice that the term inside the square brackets in @eq-E_Xt_3_wf is the expected
+value of $X_t$ given a fixed value of $X_{t-1}$. From @eq-pij_wf, we know that
+this conditional probability is binomial, making computing this expected value
+straightforward. This allows us to write
+$$
+\left\langle X_t \right\rangle = \sum_{i=0}^{2N} P\left( X_{t-1} = i\right)
+\left[
+2N \left( \frac{i}{2N}\right)
+\right].
+$${#eq-E_Xt_4_wf}
+Simplifying terms we find that
+$$
+\left\langle X_t \right\rangle = \sum_{i=0}^{2N} i \; P\left( X_{t-1} = i\right)
+= \left\langle X_{t-1} \right\rangle,
+$${#eq-E_Xt_5_wf}
+where for the second equality, we used the definition of the expected value of
+$X_{t-1}$. Notice the curious result in @eq-E_Xt_5_wf. This is an iterative
+relationship that must apply to all generations. Therefore, @eq-E_Xt_5_wf 
+implies that
+$$
+\left\langle X_t \right\rangle =
+\left\langle X_{t-1} \right\rangle =
+\cdots
+\left\langle X_{1} \right\rangle =
+X_o.
+$${#eq-E_Xt_iteration}
+In our current setup, it does not make sense to take an expected value For the
+initial condition $X_o$, since we assume this is not a random variable but a
+fixed value––just like every vial in the Buri experiment started with the same
+allele copy number. Therefore, our result leading to @eq-E_Xt_iteration implies
+that the expected copy allele copy number at any generation is the same as the
+initial condition.
 
 ___
 {{< include __math_behind_binomial_coefficient.qmd >}}
