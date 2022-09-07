@@ -72,7 +72,7 @@ $${#eq-pij_wf}
 
 #### Properties of the Wright-Fisher model
 
-With @eq-eq-pij_wf in hand, let's now compute some of the important properties
+With @eq-pij_wf in hand, let's now compute some of the important properties
 of the Wright-Fisher model. First, let's compute the expected value for the
 allele copy number $\langle X_t \rangle$. Since the information we have about
 $X_t$ is conditioned on the value of $X_{t-1}$, We cannot directly compute
@@ -125,7 +125,7 @@ $$
 2N \left( \frac{i}{2N}\right)
 \right].
 $${#eq-E_Xt_4_wf}
-Simplifying terms we find that
+Simplifying terms, we find that
 $$
 \left\langle X_t \right\rangle = \sum_{i=0}^{2N} i \; P\left( X_{t-1} = i\right)
 = \left\langle X_{t-1} \right\rangle,
@@ -143,10 +143,118 @@ X_o.
 $${#eq-E_Xt_iteration}
 In our current setup, it does not make sense to take an expected value For the
 initial condition $X_o$, since we assume this is not a random variable but a
-fixed value––just like every vial in the Buri experiment started with the same
+constant––just like every vial in the Buri experiment started with the same
 allele copy number. Therefore, our result leading to @eq-E_Xt_iteration implies
 that the expected copy allele copy number at any generation is the same as the
-initial condition.
+initial condition. Although this result makes intuitive sense mathematically––on
+average, an ensemble of populations will maintain the same allele copy number as
+their initial condition––the intuition we are trying to capture has to do more
+with populations deviating from this initial condition. For this, we should
+compute the variance since we expect this quantity to increase over generations.
+
+Just as we did for the mean, to compute the variance $\text{Var}(X_t)$, we must
+take into account the dependence of $X_t$ on $X_{t-1}$. For this, we can use
+Eve's law of total variance [see `cite prob appendix`] which states that
+$$
+\text{Var}(X_t) = \left\langle 
+    \text{Var}_{X_t} \left(X_t \mid X_{t-1} \right) 
+\right\rangle_{X_{t-1}} +
+\text{Var}_{X_{t-1}} \left( 
+    \left\langle X_t \mid X_{t-1} \right\rangle_{X_t}
+\right),
+$${#eq-VarXt_eves_wf}
+where again the subindexes indicate over which random variable to compute the
+statistic when not obvious. Given the binomial nature of @eq-pij_wf, we know the
+functional form of both terms on the right-hand side of @eq-VarXt_eves_wf.
+Substituting the mean and the variance of the binomial distribution results in
+$$
+\text{Var}(X_t) = \left\langle 
+    2N \left(\frac{X_{t-1}}{2N} \right)\left( 1 - \frac{X_{t-1}}{2N} \right)
+\right\rangle +
+\text{Var} \left(
+    \left\langle 2N \left(\frac{X_{t-1}}{2N}\right) \right\rangle
+\right).
+$${#eq-VarXt_1_wf}
+Simplifying terms in @eq-VarXt_1_wf results in
+$$
+\text{Var}(X_t) - \left\langle 
+    X_{t-1} - \frac{X_{t-1}^2}{2N}
+\right\rangle +
+\text{Var} \left( X_{t-1} \right)
+$${#eq-VarXt_2_wf}
+Using the linearity of expected values, we can split the first term on the 
+right-hand side of @eq-VarXt_2_wf, and use our result from @eq-E_Xt_iteration to
+write
+$$
+\text{Var}(X_t) = X_o - \frac{\left\langle X_{t-1}^2 \right\rangle}{2N} +
+\text{Var}(X_{t-1}).
+$${#eq-VarXt_3_wf}
+To simplify @eq-VarXt_3_wf further, we use the fact that $\text{Var}(X) =
+\langle X^2 \rangle - \langle X \rangle^2$ to substitute the second term on the
+right-hand side, obtaining
+$$
+\text{Var}(X_t) = X_o -
+\frac{1}{2N} \left( 
+    \text{Var}(X_{t-1}) + \left\langle X_{t-1} \right\rangle^2
+\right) +
+\text{Var}(X_{t-1}).
+$${#eq-VarXt_4_wf}
+Grouping terms in @eq-VarXt_4_wf and using our result for the expected value
+results in
+$$
+\text{Var}(X_t) = \text{Var}(X_{t-1}) \left(1 - \frac{1}{2N} \right) +
+X_o \left( 1 - \frac{X_o}{2N} \right).
+$${#eq-VarXt_5_wf}
+@eq-VarXt_5_wf is already a recursive relationship that connects the variance in
+generation $t$ to the variance in $t-1$. But the second added term on the
+right-hand side makes this recursion very cumbersome to handle. To simplify the
+relationship, we want the left- and the right-hand side to look more symmetric.
+To achieve this symmetry, we must factor a $(1 - 1/2N)$ from both terms on the
+right-hand side. This can be done by adding a factor of $2N X_o \left(1 -
+\frac{X_o}{2N}\right)$ to both sides of @eq-VarXt_5_wf, obtaining
+$$
+\text{Var}(X_t) - 2N X_o \left(1 - \frac{1}{2N} \right) =
+\left(1 - \frac{1}{2N} \right) \left[
+    \text{Var}(X_{t-1}) - 2N X_o \left(1 - \frac{X_o}{2N} \right)
+\right].
+$${#eq-VarXt_6_wf}
+Notice that this addition makes the recursive relationship symmetric. For
+example, to relate the variance of $X_t$ with that of $X_{t-2}$ only one extra
+multiplicative factor of $\left(1 - \frac{1}{2N} \right)$ needs to be added.
+Thus, the general form of this recursive relationship takes the form
+$$
+\text{Var}(X_t) - 2N X_o \left(1 - \frac{1}{2N} \right) =
+\left(1 - \frac{1}{2N} \right)^{r} \left[
+    \text{Var}(X_{t-r}) - 2N X_o \left(1 - \frac{X_o}{2N} \right)
+\right].
+$${#eq-VarXt_7_wf}
+We can take this relationship back to generation 0 and use the fact that since
+the initial condition is fixed, it follows that $\text{Var}(X_o) = 0$. This
+then results in
+$$
+\text{Var}(X_t) - 2N X_o \left(1 - \frac{1}{2N} \right) =
+\left(1 - \frac{1}{2N} \right)^{t} \left[
+    - 2N X_o \left(1 - \frac{X_o}{2N} \right)
+\right].
+$${#eq-VarXt_8_wf}
+Solving for $\text{Var}(X_t)$ gives us our final result
+$$
+\text{Var}(X_t) = 2N X_o \left( 1 - \frac{X_o}{2N} \right)
+\left[ 1 - \left( 1 - \frac{1}{2N} \right)^t \right].
+$${#eq-VarXt_wf}
+As a sanity check, we know that for $t = 1$ @eq-VarXt_wf must be equal to the
+variance of the binomial distribution with $p = \frac{X_o}{2N}$. We leave it to
+the reader to check that @eq-VarXt_wf result satisfies this result. More
+interestingly, let us take the limit when $t \rightarrow \infty$.
+$$
+\lim_{t \rightarrow \infty} \text{Var}(X_t) = 
+2N X_o \left( 1 - \frac{X_o}{2N} \right) =
+(2N)^2 \left( \frac{X_o}{2N} \right) \left( 1 - \frac{X_o}{2N} \right).
+$${#eq-VarXt_infty_wf}
+This means that in the long run, the variance in the allele copy number will be
+2N times larger than the variance in the first generation.
+
+
 
 ___
 {{< include __math_behind_binomial_coefficient.qmd >}}
