@@ -1,5 +1,21 @@
 # Loogbook for the population genetics notes
 
+**2022-09-15**
+- Worked on the Wright-Fisher simulation.
+
+**2022-09-07**
+- Tried to make interactive plots. Partially complete, still missing details
+
+**2022-09-07**
+- Wrote down the section for the variance of the Wright-Fisher model.
+- Digitized Buri's 1956 data
+
+**2022-09-05**
+- Wrote down the section for the expected value of the Wright-Fisher model.
+
+**2022-08-26**
+- Work through some of the Wright-Fisher math to compute moments.
+
 **2022-08-25**
 - Rewrote math for the Wright-Fisher model
 
