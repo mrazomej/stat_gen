@@ -62,7 +62,7 @@ $2N - j$ copies of allele $a$ can happen in many different ways (see [Math
 behind the model @sec-math_behind_binomial_coefficient]), resulting in
 $$
 P(X_t=j \mid X_{t-1}=i) = 
-\overbrace{\frac{2N!}{i! \left(2N - i\right)!}}
+\overbrace{\frac{2N!}{j! \left(2N - j\right)!}}
 ^{\text{order doesn't matter}}
 \underbrace{\left( \frac{i}{2N}\right)^j}_
 {\text{draw $j$ copies of $A$}}
@@ -75,7 +75,7 @@ $${#eq-pij_wf}
 With @eq-pij_wf in hand, let's now compute some of the important properties
 of the Wright-Fisher model. First, let's compute the expected value for the
 allele copy number $\langle X_t \rangle$. Since the information we have about
-$X_t$ is conditioned on the value of $X_{t-1}$, We cannot directly compute
+$X_t$ is conditioned on the value of $X_{t-1}$, we cannot directly compute
 $\rangle X_t \langle$. $X_t \mid X_{t-1}$ is a random variable as any other. The
 only difference is that we take the value of $X_t$ as random given that we
 pretend to know the value of $X_{t-1}$. Therefore we can compute its expected
@@ -249,12 +249,11 @@ interestingly, let us take the limit when $t \rightarrow \infty$.
 $$
 \lim_{t \rightarrow \infty} \text{Var}(X_t) = 
 2N X_o \left( 1 - \frac{X_o}{2N} \right) =
-(2N)^2 \left( \frac{X_o}{2N} \right) \left( 1 - \frac{X_o}{2N} \right).
+(2N)^2 \left( \frac{X_o}{2N} \right) \left( 1 - \frac{X_o}{2N} \right) =
+2N \;\text{Var}(X_1).
 $${#eq-VarXt_infty_wf}
 This means that in the long run, the variance in the allele copy number will be
 2N times larger than the variance in the first generation.
-
-
 
 ___
 {{< include __math_behind_binomial_coefficient.qmd >}}
