@@ -255,6 +255,8 @@ $${#eq-VarXt_infty_wf}
 This means that in the long run, the variance in the allele copy number will be
 2N times larger than the variance in the first generation.
 
+- Plot dynamics (time evolution of distribution and stochastic simulations).
+- Compare theory vs. data.
 ___
 {{< include __math_behind_binomial_coefficient.qmd >}}
 ---
