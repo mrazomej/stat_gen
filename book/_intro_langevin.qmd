@@ -1,157 +1,178 @@
-## Stochastic process
+  ## Stochastic process
 
-When describing how a quantity evolves over time with a
-non-deterministic trajectory we often use what is commonly known as
-stochastic processes. For example imagine we are keeping track of a
-random variable $X$ that changes over time. This stochastic variable $X$
-could describe things such as count of a specific chemical species,
-average price of an asset over a period of time, frequency of a
-particular allele on a population, etc. To describe how this variable
-$X$ changes over time we could in principle list an infinite number of
-functions $$X(t) = f(X, t).$$ This is what we call a stochastic process,
-i.e. the time evolution of a random variable $X$. What we are doing here
-is considered notation abuse by the more scrupulous mathematicians.
-Usually people prefer to define a random process as
-$Y_X(t) \equiv f(X, t)$ to specify that we are studying how a random
-variable $X$ evolves over time $t$ without compromising the use of $X$
-as the sole random variable, but I personally find that notation too
-strict. Most of our efforts in these notes will go into describing the
-probability distribution of such processes $P(x, t)$, i.e. the
-probability of our particular random process taking the specific value
-$X(t) = x(t)$. More on that later.
+Although introducing the idea of genetic drift with the Buri experiment gave us
+an intuition on how a population can evolve due to random sampling of alleles in
+a population, the mathematical description of the Wright-Fisher model is not
+compatible with the ordinary differential equations-based model we developed for
+the selection- and mutation-driven evolution. Combining the stochasticity of
+genetic drift into the framework of ordinary differential equations sounds
+almost contradictory. Different equations' solutions depend on well-behaved
+functions that vary smoothly without kinks or discontinuities that, when given
+an initial condition, the system converges to a single solution. Nevertheless,
+extending the calculus formalism to systems that can vary stochastically is
+possible. In this section, we will introduce such formalism.
 
-Let's clarify all these subtle but important notation differences: The
-random variable $X$ is a mapping from a random event to the real line;
-in other words, for a particular quantity that we want to describe we
-assign a number to represent the event that happened. A useful example
-is to think about it as getting to observe a specific face once we roll
-a die, and assigning a number from 1 to 6 to represent the face we
-observed. The stochastic process $X(t)$ describes the values that our
-random variable $X$ can take over time. Following up with the die
-example this could be rolling a die every so often and keeping track of
-the numbers that we obtain. This process $X(t)$ represents the
-**ensemble** of possible realizations $x(t)$. In other words, as shown
-schematically in $X(t)$ describes all possible values that the quantity
-$X$ can take over time, and $x(t)$ describes a specific trajectory that
-happened to occur for a specific realization of the process.
+When describing how a quantity evolves with a non-deterministic trajectory, we
+often use what is commonly known as stochastic processes. For example, imagine
+we are keeping track of a random variable $X$. This stochastic variable $X$
+could describe things such as the count of a specific chemical species, an
+asset's average price over time, the frequency of a particular allele on a
+population, etc. To describe how this variable $X$ changes over time, we could,
+in principle, list an infinite number of functions 
+$$
+X(t) = f(X, t).
+$${#eq-stochastic_langevin}
+@eq-stochastic_langevin is a stochastic process that defines the time evolution
+of a random variable $X$. What we are doing here is considered notation abuse by
+the more scrupulous mathematicians. Usually, mathematicians prefer to define a
+random process as $Y_X(t) \equiv f(X, t)$ to specify that we are studying how a
+random variable $X$ evolves without compromising the use of $X$ as the sole
+random variable, but we find that notation too strict. Most of our efforts
+throughout the following chapters will go into describing the probability
+distribution of such processes $P(x, t)$, i.e., the probability of our
+particular random process taking the specific value $X(t) = x(t)$ changes over
+time. More on that later.
 
-![**Schematic description of a stochastic process**. The shaded region
-describes the stochastic process $X(t)$, i.e. all the possible values
-that the random variable $X$ can take over time. The particular
-realization $x(t)$ describes a specific trajectory that the random
-variable $X$ took in one particular
-case.](../../fig/drift_langevin/02_02_01_ensemble_realization.jpeg){#fig_ensemble_realization
+Let's clarify subtle but significant notation differences when defining a
+non-stochastic vs. a stochastic process: First, the random variable $X$ is a
+mapping from a random event to the real line. In other words, we assign a number
+to represent the event that happened for a particular observable we want to
+describe. For example, for an evolving population, we want to track how the
+frequency of a specific allele changes. In this case, $X$ will map the
+composition of the population into a number. This process $X(t)$ represents the
+**ensemble** of possible realizations $x(t)$. In other words, $X(t)$ describes
+all possible values that the quantity $X$ can take over time, and $x(t)$
+describes a specific trajectory that happened to occur for a specific
+realization of the process, as shown schematically in @fig-ensemble_realization.
+
+![**Schematic description of a stochastic process**. The shaded region describes
+the stochastic process $X(t)$, i.e., all the possible values that the random
+variable $X$ can take over time. The particular realization $x(t)$ describes a
+specific trajectory that the random variable $X$ took in one particular
+case.](./figures/forces_evolution/_ensemble_realization.jpeg){#fig-ensemble_realization
 width="50%"}
 
-From the intuition presented in we understand that all possible
-trajectories that our stochastic process can take are contained in the
-function $X(t)$. But some particular paths $x(t)$ are more likely to
-happen than others. This is what the language of probability theory
-allows us to compute! In principle we are interested in writing how
-likely it is for our process to take a specific value $x(t)$. This is
-described by the probability function $P(x, t)$ which will be at the
-center of our endeavors for these notes. Once we define our stochastic
-process we might want to compute a moment of the distribution. Recall
-that for a continuous random variable $X$ with probability density
-function $P_X(x)$, a moment is defined as
-$$\ee{X^m} \equiv \int dx \; x^m P_X(x),$$ where the integral is taken
-over all the values that $X$ can take. Notice that our notation for the
-distribution $P_X(x)$ highlights that we are only considering values
-that $X$ can take, no time involved so far. For our case in which the
-random variable can change over time what we have to do is settle for a
-specific time point $t^*$ and compute the average at that time point
-$$\ee{X(t^*)^m} \equiv \int dx \; x^m P(x, t^*).
-  \label{eq_process_moment}$$ Notice that this is still not making a
-statement about the time evolution of our variable $X$, but rather
-committing to a specific time point $t^*$ and then computing the $m\tth$
-moment at that time point. An intuitive way to think about this is to
-take a frequentist approach for probability. We imagine that we get to
-observe many many individual trajectories $\{x_1(t), \ldots
-x_n(t)\}$, as schematically shown in then what is doing is computing the
-moment at a specific time point $t^*$ highlighted also in .
+@fig-ensemble_realization schematizes how all possible trajectories our
+stochastic process can take are contained in the function $X(t)$. In principle,
+we are interested in writing how likely it is for our process to take a specific
+value $x(t)$. This likelihood is described by the probability function $P(x, t)$
+which will be at the center of our endeavors for the coming chapters. Once we
+define our stochastic process, we might want to compute a moment of the
+distribution. Recall that for a continuous random variable $X$ with probability
+density function $P_X(x)$, the $m^{\text{th}}$ moment is defined as (see [`cite
+probability appendix`])
+$$
+\left\langle X^m \right\rangle \equiv \int dx \; x^m P(x),
+$${#eq-moment_def_langevin}
+where the integral is taken over all the values that $X$ can take. Notice that
+our notation for the distribution $P(x)$ highlights that we only consider
+values that $X$ can take, with no time involved. For our case in which the
+random variable can change over time, we must settle for a specific time point
+$t^*$ and compute the average at that time point
+$$
+\left\langle X(t^*)^m \right\rangle \equiv \int dx \; x^m P(x, t^*).
+$${#eq-process_moment_langevin}
+Notice that @eq-process_moment_langevin does not make a statement about
+the time evolution of $X$, but rather commits to a specific time
+point $t^*$ and then computes the $m^{\text{th}}$ moment at that time point. An
+intuitive way to think about this is to imagine that we get to observe many
+individual trajectories $\{x_1(t), \ldots x_n(t)\}$, as schematically shown in
+then what is doing is computing the moment at a specific time point $t^*$
+highlighted also in @fig-average_langevin.
 
-![**Computing a moment of a distribution $\ee{X(t)}$**. Multiple
-realizations of the stochastic process $\{x_1(t), \ldots x_n(t)\}$ are
-highlighted. In the limit where we have many many of these trajectories
-we can then compute a moment of the distribution $P(x, t^*)$ for a
-specific time point $t^*$.
-](../../fig/drift_langevin/02_02_02_average_langevin.jpeg){#fig_average_langevin
+![**Computing a moment of a distribution $\left\langle X(t)\right\rangle$**.
+Multiple realizations of the stochastic process $\{x_1(t), \ldots x_n(t)\}$ are
+highlighted. In the limit where we have many of these trajectories, we can
+compute a moment of the distribution $P(x, t^*)$ for a specific time point
+$t^*$.
+](./figures/forces_evolution/_average_langevin.jpeg){#fig-average_langevin
 width="50%"}
 
-There is no reason why we have to limit ourselves to a single time point
-$t^*$. In particular there are interesting quantities such as the
-autocorrelation function $\kappa(t_1, t_2)$ that analyze how two
-different time points $t_1$ and $t_2$ covary with each other. This
-quantity is defined as
-$$\kappa(t_1, t_2) = \ee{\left(X(t_1) - \ee{X(t_1)}\right)
-                         \left(X(t_2) - \ee{X(t_2)}\right)}.$$
+There is no reason why we have to limit ourselves to a single time point $t^*$.
+In particular there are interesting quantities such as the autocorrelation
+function $\kappa(t_1, t_2)$ that analyze how two different time points $t_1$ and
+$t_2$ covary with each other. This quantity is defined as
+$$
+\kappa(t_1, t_2) = \left\langle 
+    \left(
+        X(t_1) - \left\langle X(t_1) \right\rangle
+    \right)
+    \left(
+        X(t_2) - \left\langle X(t_2) \right\rangle
+    \right)
+\right\rangle.
+$$
 
-Having understood conceptually what stochastic process are and what they
-allow us to do we are ready to see their practical implementation. The
-stochastic process literature is rich and very formal, but it can be
-daunting to grasp the basics of it. For our purposes we will take a more
-pragmatic approach rather than diving into the intricacies of the
-formalism. Our fundamental equation to model stochastic processes will
-be the Langevin equation.
+Having understood conceptually what stochastic process are and what they allow
+us to do we are ready to see their practical implementation. The stochastic
+process literature is rich and very formal, but it can be daunting to grasp the
+basics of it. For our purposes we will take a more pragmatic approach rather
+than diving into the intricacies of the formalism. Our fundamental equation to
+model stochastic processes will be the Langevin equation.
 
 ## The Langevin equation {#sec_langevin_intro}
 
-Since Robert Brown systematically described the jiggling of particles of
-organic and inorganic origin under the microscope, physicists of the
-caliber of Einstein and Smoluchowski tried to describe the phenomena.
-The first success came from Einstein himself who in 1905 published a
-microscopic description of Brownian motion at the time where the atomic
-structure of matter was still up in the air. In 1908 only three years
-later, motivated by this theoretical predictions, Jean Baptiste Perrin
-experimentally confirmed Einstein's theory to unambiguously settle the
-controversy behind the existence of atoms. That same year Paul Langevin
-published a seminal paper in which he proposed an "infinitely simpler"
-formulation of Brownian dynamics according to himself. In doing so
-Langevin made use of what we know nowadays as a stochastic differential
-equation. Ever since, the study of microscopic particles jiggling under
-thermal forces has had enormous consequences in our understanding of the
-structure of matter, and has motivated the development of the
-mathematical formalism of stochastic calculus with great impact in
-physics, economics, and as we are concerned here biological evolution.
+Since Robert Brown systematically described the jiggling of particles of organic
+and inorganic origin under the microscope, physicists of the caliber of Einstein
+and Smoluchowski tried to describe the phenomena. The first success came from
+Einstein himself who in 1905 published a microscopic description of Brownian
+motion at the time where the atomic structure of matter was still up in the air.
+In 1908 only three years later, motivated by this theoretical predictions, Jean
+Baptiste Perrin experimentally confirmed Einstein's theory to unambiguously
+settle the controversy behind the existence of atoms. That same year Paul
+Langevin published a seminal paper in which he proposed an "infinitely simpler"
+formulation of Brownian dynamics according to himself. In doing so Langevin made
+use of what we know nowadays as a stochastic differential equation. Ever since,
+the study of microscopic particles jiggling under thermal forces has had
+enormous consequences in our understanding of the structure of matter, and has
+motivated the development of the mathematical formalism of stochastic calculus
+with great impact in physics, economics, and as we are concerned here biological
+evolution.
 
-The mathematical object that Langevin proposed that now carries his name
-is different form the standard ordinary differential equations in the
-sense that it includes a stochastic term. More specifically for a 1D
-system the Langevin equation that describes the dynamics of $x(t)$ is of
-the form $$\dt{x} = A(x, t) + B(x, t) \xi(t),
-  \label{eq_langevin}$$ where $A(x, t)$ is the directional deterministic
-field that could depend on the variable $x$ itself as well as time,
-$B(x, t)$ is the scale associated with the stochasticity of the process
-and $\xi(t)$ is the random variable associated with the dynamics of
-$x(t)$. Without the second term on the right-hand side we have a regular
-differential equation for which there is most likely a method to solve
-it given that $A(x, t)$ is a well behaved function. The solution of
-without this second term would be of the form
-$$x(t) = x_o + \int_{t_o}^t dt\; A(x, t),$$ where $x_o$ is the initial
-condition, i.e. $x(t = t_o) = x_o$. This solution would be a smooth
-deterministic trajectory for $x(t)$. The extra element that makes
-special is the stochastic term $B(x, t) \xi(t)$. $B(x, t)$ is simply a
-coefficient that determines the amplitude of the noise, i.e. it sets the
-scale for how noisy the stochastic process $x(t)$ must be. But the true
-innovative feature of is $\xi(t)$, sometimes called white noise. This
-term is itself a random variable, meaning that it is defined by a
-probability distribution $P(\xi, t)$. The reason this term is called
-white noise is because the noise is assumed to have mean zero, i.e.
-fluctuations that randomly increase the value of $x(t)$ cancel with
-fluctuations that tend to decrease $x(t)$ on average. This is
-mathematically expressed as $$\ee{\xi(t)} = 0.$$ The second reason this
-term is called white noise is because the noise at time $t$ is
-independent of the noise at any other point in time $t'$. This is
-sometimes referred as delta-correlated noise because the way we express
-this lack of time correlation between time points is through a
-$\delta$-function as $$\ee{\xi(t) \xi(t')} = 2D \delta(t - t'),
-  \label{eq_noise_delta}$$ where the prefactor $2D$ is put to resemble
-the origins of this equation where $D$ represented the diffusion
-coefficient of the Brownian particle. What is saying is that only when
-$t = t'$ the noise autocorrelation function takes the magnitude $2D$ -
-that's what the $\delta$-function role is. In other words, independently
-of what the noise magnitude was at time $t'$, the noise at time $t$ is
-sampled from a distribution with mean $\ee{\xi(t)} = 0$ and variance
+The mathematical object that Langevin proposed that now carries his name is
+different form the standard ordinary differential equations in the sense that it
+includes a stochastic term. More specifically for a 1D system the Langevin
+equation that describes the dynamics of $x(t)$ is of the form $$\dt{x} = A(x, t)
++ B(x, t) \xi(t), \label{eq_langevin}$$ where $A(x, t)$ is the directional
+  deterministic field that could depend on the variable $x$ itself as well as
+time, $B(x, t)$ is the scale associated with the stochasticity of the process
+and $\xi(t)$ is the random variable associated with the dynamics of $x(t)$.
+Without the second term on the right-hand side we have a regular differential
+equation for which there is most likely a method to solve it given that $A(x,
+t)$ is a well behaved function. The solution of without this second term would
+be of the form 
+$$
+x(t) = x_o + \int_{t_o}^t dt\; A(x, t),
+$$ 
+where $x_o$ is the initial condition, i.e. $x(t = t_o) = x_o$. This solution
+would be a smooth deterministic trajectory for $x(t)$. The extra element that
+makes special is the stochastic term $B(x, t) \xi(t)$. $B(x, t)$ is simply a
+coefficient that determines the amplitude of the noise, i.e. it sets the scale
+for how noisy the stochastic process $x(t)$ must be. But the true innovative
+feature of is $\xi(t)$, sometimes called white noise. This term is itself a
+random variable, meaning that it is defined by a probability distribution
+$P(\xi, t)$. The reason this term is called white noise is because the noise is
+assumed to have mean zero, i.e. fluctuations that randomly increase the value of
+$x(t)$ cancel with fluctuations that tend to decrease $x(t)$ on average. This is
+mathematically expressed as 
+$$
+\ee{\xi(t)} = 0.
+$$ 
+The second reason this term is called white
+noise is because the noise at time $t$ is independent of the noise at any other
+point in time $t'$. This is sometimes referred as delta-correlated noise because
+the way we express this lack of time correlation between time points is through
+a $\delta$-function as 
+$$
+\ee{\xi(t) \xi(t')} = 2D \delta(t - t'),
+\label{eq_noise_delta}
+$$ 
+where the prefactor $2D$ is put to resemble the origins of this equation where
+$D$ represented the diffusion coefficient of the Brownian particle. What is
+saying is that only when $t = t'$ the noise autocorrelation function takes the
+magnitude $2D$ - that's what the $\delta$-function role is. In other words,
+  independently of what the noise magnitude was at time $t'$, the noise at time
+$t$ is sampled from a distribution with mean $\ee{\xi(t)} = 0$ and variance
 $\ee{\xi(t)^2} = 2D$.
 
 Since we are characterizing the noise via only its first two moments,
@@ -160,9 +181,12 @@ be Gaussian. This assumption is justified because of the central limit
 theorem that tells us that the distribution of the sum of many
 independent random variables tends to a Gaussian distribution. That
 means the the probability density function of $\xi(t)$ is of the form
-$$P(\xi(t)) = {1 \over \sqrt{4 \pi D}} 
-  \E^{- {\xi(t)^2 \over 4D}}.$$ To get a better feeling for how this
-equation works let's work through a very simple example.
+$$
+P(\xi(t)) = {1 \over \sqrt{4 \pi D}} 
+  \E^{- {\xi(t)^2 \over 4D}}.
+$$ 
+To get a better feeling for how this equation works let's work through a very
+simple example.
 
 ### Biased random walk
 
@@ -314,3 +338,5 @@ distribution of possible realizations of the random process $P(x, t)$.
 Our goal will be to derive the famous partial differential equation
 known as the Fokker-Plank equation that exactly describes this time
 evolution.
+
+  
